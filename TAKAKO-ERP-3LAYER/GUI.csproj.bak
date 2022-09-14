@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7DF6DDE2-4963-406B-9418-35350B4DCBC8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>TAKAKO_ERP_3LAYER</RootNamespace>
+    <AssemblyName>TAKAKO-ERP-3LAYER</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationIcon>logo_takako_pts.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Data.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Printing.v19.2.Core, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Utils.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraGrid.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPrinting.v19.2, Version=19.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="EPPlus, Version=4.5.2.1, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.2.1\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BUS\PO_BUS.cs" />
+    <Compile Include="BUS\SEARCH_BUS.cs" />
+    <Compile Include="BUS\USER_BUS.cs" />
+    <Compile Include="Common.cs" />
+    <Compile Include="DAL\InvDetail_DAL.cs" />
+    <Compile Include="DAL\InvMS_DAL.cs" />
+    <Compile Include="DAL\PLDetail_DAL.cs" />
+    <Compile Include="DAL\PO_DAL.cs" />
+    <Compile Include="DAL\SYSTEM_DAL.cs" />
+    <Compile Include="DAL\USER_DAL.cs" />
+    <Compile Include="DAO\EXPORT_DAO.cs" />
+    <Compile Include="DAO\SHIPPING_DAO.cs" />
+    <Compile Include="DAO\INV_DAO.cs" />
+    <Compile Include="DAO\LOG_DAO.cs" />
+    <Compile Include="DAO\PO_DAO.cs" />
+    <Compile Include="DAO\SEARCH_DAO.cs" />
+    <Compile Include="DAO\USER_DAO.cs" />
+    <Compile Include="DBConnection.cs" />
+    <Compile Include="Form_Flash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Flash.Designer.cs">
+      <DependentUpon>Form_Flash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Export_Data.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Export_Data.Designer.cs">
+      <DependentUpon>Form_Export_Data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Import_PO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Import_PO.Designer.cs">
+      <DependentUpon>Form_Import_PO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Invoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Invoice.Designer.cs">
+      <DependentUpon>Form_Invoice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Search_ShippingNo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Search_ShippingNo.Designer.cs">
+      <DependentUpon>Form_Search_ShippingNo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Shipping_Instruction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Shipping_Instruction.Designer.cs">
+      <DependentUpon>Form_Shipping_Instruction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Log.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Log.Designer.cs">
+      <DependentUpon>Form_Log.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Main.Designer.cs">
+      <DependentUpon>Form_Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Login.Designer.cs">
+      <DependentUpon>Form_Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_PO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_PO.Designer.cs">
+      <DependentUpon>Form_PO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Search_PO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Search_PO.Designer.cs">
+      <DependentUpon>Form_Search_PO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Search.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Search.Designer.cs">
+      <DependentUpon>Form_Search.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Select_DB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Select_DB.Designer.cs">
+      <DependentUpon>Form_Select_DB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Select_Company.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Select_Company.Designer.cs">
+      <DependentUpon>Form_Select_Company.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="XtraForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="XtraForm1.Designer.cs">
+      <DependentUpon>XtraForm1.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Form_Flash.resx">
+      <DependentUpon>Form_Flash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Export_Data.resx">
+      <DependentUpon>Form_Export_Data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Import_PO.resx">
+      <DependentUpon>Form_Import_PO.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Invoice.resx">
+      <DependentUpon>Form_Invoice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Search_ShippingNo.resx">
+      <DependentUpon>Form_Search_ShippingNo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Shipping_Instruction.resx">
+      <DependentUpon>Form_Shipping_Instruction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Log.resx">
+      <DependentUpon>Form_Log.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Main.resx">
+      <DependentUpon>Form_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Login.resx">
+      <DependentUpon>Form_Login.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_PO.resx">
+      <DependentUpon>Form_PO.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Search_PO.resx">
+      <DependentUpon>Form_Search_PO.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Search.resx">
+      <DependentUpon>Form_Search.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Select_DB.resx">
+      <DependentUpon>Form_Select_DB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Select_Company.resx">
+      <DependentUpon>Form_Select_Company.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="logo_takako_pts.ico" />
+    <None Include="Resources\icons8-trash-18.png" />
+    <None Include="Resources\icons8-trash-20.png" />
+    <None Include="Resources\icons8-cancel-201.png" />
+    <None Include="Resources\icons8-cancel-21.png" />
+    <None Include="Resources\icons8-cancel-22.png" />
+    <None Include="Resources\icons8-cancel-20.png" />
+    <None Include="Resources\icons8-cancel-18.png" />
+    <None Include="Resources\icons8-cancel-16.png" />
+    <None Include="Resources\delete2.png" />
+    <None Include="Resources\delete1.png" />
+    <None Include="Resources\delete.png" />
+    <None Include="Resources\icon_LogOut.png" />
+    <None Include="Resources\Shipping.png" />
+    <None Include="Resources\eye_gray_plus.png" />
+    <None Include="Resources\eye_gray.png" />
+    <None Include="Resources\icon_eye_gray1.png" />
+    <None Include="Resources\icon_eye_gray.png" />
+    <None Include="Resources\icon_eye.png" />
+    <None Include="Resources\img_system.png" />
+    <None Include="Resources\img_customer.png" />
+    <None Include="Resources\img_user.png" />
+    <None Include="Resources\img_454673.png" />
+    <None Include="Resources\Zoom-full1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataSet\Tables\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
