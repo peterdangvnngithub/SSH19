@@ -6,9 +6,6 @@ using System.Linq;
 using System.Windows.Forms;
 using TAKAKO_ERP_3LAYER.DAL;
 using TAKAKO_ERP_3LAYER.DAO;
-using System.IO;
-using OfficeOpenXml;
-using System.Globalization;
 using System.ComponentModel;
 using static TAKAKO_ERP_3LAYER.Common;
 
@@ -1592,7 +1589,7 @@ namespace TAKAKO_ERP_3LAYER
                             }
                         }
                     }
-                    Form_Search_PO _formSearch = new Form_Search_PO(_systemDAL,"btnSearch_ItemCode", txtIssuedTo_CompanyCode.Text, _unitCurrency, _dateCreateInvoice);
+                    Form_Search_PO_New _formSearch = new Form_Search_PO_New(_systemDAL, txtIssuedTo_CompanyCode.Text, _unitCurrency, _dateCreateInvoice);
                     _formSearch.StartPosition = FormStartPosition.CenterParent;
                     _formSearch.ShowDialog();
 
@@ -2644,9 +2641,21 @@ namespace TAKAKO_ERP_3LAYER
             //        MessageBox.Show("Error: Can't read file. Original error: " + ex.Message);
             //    }
             //}
-            Form_Shipping_Output_PackingList form_Shipping_Output_PackingList = new Form_Shipping_Output_PackingList(txtShippingNo.Text.Trim());
+            string shippingNo = txtShippingNo.Text.Trim();
+
+            Form_Shipping_Output_PackingList form_Shipping_Output_PackingList = new Form_Shipping_Output_PackingList(_systemDAL, shippingNo);
             form_Shipping_Output_PackingList.StartPosition = FormStartPosition.CenterParent;
             form_Shipping_Output_PackingList.ShowDialog();
+
+            ClearData();
+
+            txtShippingNo.Text = shippingNo;
+
+            //Load Invoice
+            btn_SearchShipping_Click(sender, e);
+
+            //Setting enable item
+            SettingInitGridView();
         }
 
         private void btnLockData_Click(object sender, EventArgs e)
@@ -3571,13 +3580,6 @@ namespace TAKAKO_ERP_3LAYER
         private void GridView_PackingList_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
             btnSumPL_Click(sender, e);
-        }
-
-        private void btn_Import_Data_Excel_Click(object sender, EventArgs e)
-        {
-            Form_Import_PO_To_Shipping_Excel _formImportPOExcel = new Form_Import_PO_To_Shipping_Excel();
-            _formImportPOExcel.StartPosition = FormStartPosition.CenterParent;
-            _formImportPOExcel.ShowDialog();
         }
     }
 }

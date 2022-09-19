@@ -451,6 +451,16 @@ namespace TAKAKO_ERP_3LAYER.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
+        public static DevExpress.Utils.Svg.SvgImage removesheet {
+            get {
+                object obj = ResourceManager.GetObject("removesheet", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap Shipping {

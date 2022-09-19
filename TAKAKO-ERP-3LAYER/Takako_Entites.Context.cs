@@ -27,16 +27,12 @@ namespace TAKAKO_ERP_3LAYER
     
         public DbSet<TVC_COMPANY_MS> TVC_COMPANY_MS { get; set; }
         public DbSet<TVC_CUSTOMER_MS> TVC_CUSTOMER_MS { get; set; }
-        public DbSet<TVC_ERROR_LOG> TVC_ERROR_LOG { get; set; }
-        public DbSet<TVC_HANDLE_LOG> TVC_HANDLE_LOG { get; set; }
-        public DbSet<TVC_INV_DETAIL> TVC_INV_DETAIL { get; set; }
-        public DbSet<TVC_INV_MS> TVC_INV_MS { get; set; }
-        public DbSet<TVC_LOG_SCREEN> TVC_LOG_SCREEN { get; set; }
         public DbSet<TVC_PO_MS> TVC_PO_MS { get; set; }
-        public DbSet<TVC_PO_MS_BK> TVC_PO_MS_BK { get; set; }
         public DbSet<TVC_SHIPPING_INV_DETAIL> TVC_SHIPPING_INV_DETAIL { get; set; }
         public DbSet<TVC_SHIPPING_MS> TVC_SHIPPING_MS { get; set; }
         public DbSet<TVC_SHIPPING_PL_DETAIL> TVC_SHIPPING_PL_DETAIL { get; set; }
         public DbSet<TVC_PL_DETAIL> TVC_PL_DETAIL { get; set; }
+        public DbSet<PRODUCTMF> PRODUCTMFs { get; set; }
+        public DbSet<SPRICE_GLOBALMF> SPRICE_GLOBALMF { get; set; }
     }
 }

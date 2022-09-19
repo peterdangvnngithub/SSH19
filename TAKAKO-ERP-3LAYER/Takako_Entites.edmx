@@ -4,7 +4,111 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Takako_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Takako_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="PRODUCTMF">
+          <Key>
+            <PropertyRef Name="ITEM_CODE" />
+          </Key>
+          <Property Name="ITEM_CODE" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="ITEM_NAME" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ITEM_NAME_E" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ITEM_NAME_V" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="ITEM_CLASSIFY" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="UNIT_ITEM" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="GROUP_FLAG" Type="char" MaxLength="1" />
+          <Property Name="PRO_CLASS" Type="char" MaxLength="3" />
+          <Property Name="SPREAD_FLAG" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="OBJECT_CODE" Type="varchar" MaxLength="20" />
+          <Property Name="INTERNAL_CODE" Type="varchar" MaxLength="30" />
+          <Property Name="MODEL" Type="varchar" MaxLength="20" />
+          <Property Name="PRODUCTMODEL" Type="varchar" MaxLength="20" />
+          <Property Name="SHELF_CODE" Type="varchar" MaxLength="20" />
+          <Property Name="CUSTOMER" Type="varchar" MaxLength="10" />
+          <Property Name="SUPPLIER" Type="varchar" MaxLength="10" />
+          <Property Name="ROUTE" Type="varchar" MaxLength="5" />
+          <Property Name="MATERIAL_PRICE" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="M_PRICE_UNIT" Type="varchar" MaxLength="3" />
+          <Property Name="SEMI_F_PRICE" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="SF_PRICE_UNIT" Type="varchar" MaxLength="3" />
+          <Property Name="SALE_PRICE" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="S_PRICE_UNIT" Type="varchar" MaxLength="3" />
+          <Property Name="LEAD_TIME" Type="smallint" />
+          <Property Name="LOT_SIZE" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="PRODUCT_DAY" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="SAFETY_STOCK" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="LOSS" Type="decimal" Precision="5" Scale="2" />
+          <Property Name="WEIGHT" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="WEIGHT_UNIT" Type="varchar" MaxLength="3" />
+          <Property Name="STOCK_OUT_FLAG" Type="char" MaxLength="1" />
+          <Property Name="BOX_TYPE" Type="varchar" MaxLength="30" />
+          <Property Name="BOX_QUANTITY" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="BOX_SIZE" Type="varchar" MaxLength="30" />
+          <Property Name="BOX_WEIGHT" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="QA_CHECK" Type="bit" />
+          <Property Name="MEMO" Type="varchar" MaxLength="30" />
+          <Property Name="FIRST_ORDER" Type="datetime" />
+          <Property Name="LAST_ORDER" Type="datetime" />
+          <Property Name="LAST_PRODUCT" Type="datetime" />
+          <Property Name="LAST_SHIPPING" Type="datetime" />
+          <Property Name="LAST_PO" Type="datetime" />
+          <Property Name="LAST_STOCK_IN" Type="datetime" />
+          <Property Name="TOTAL_ORDER" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_SHIPPING" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_PRODUCT" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_DEFECT" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_LACKED" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_EXCESSIVE" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_PO" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_STOCK_IN" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TM_ORDER" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TM_DELIVERY" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TM_PRODUCT" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TM_DEFECT" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TM_LACKED" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TM_EXCESSIVE" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TM_PO" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="TM_STOCK_IN" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="LM_STOCK" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="L2M_STOCK" Type="decimal" Precision="18" Scale="6" />
+          <Property Name="INPUT_DATE" Type="datetime" />
+          <Property Name="INPUT_PERSON" Type="varchar" MaxLength="8" />
+          <Property Name="MODIFY_DATE" Type="datetime" />
+          <Property Name="MODIFY_PERSON" Type="varchar" MaxLength="8" />
+          <Property Name="DELTA_NO" Type="varchar" MaxLength="2" />
+          <Property Name="SHIP_TYPE" Type="varchar" MaxLength="15" />
+          <Property Name="PATH_BOX" Type="nvarchar" MaxLength="30" />
+          <Property Name="IVPART_NAME" Type="varchar" MaxLength="30" />
+          <Property Name="PROLINE_CODE" Type="varchar" MaxLength="30" />
+          <Property Name="PROCESS_CODE" Type="varchar" MaxLength="50" />
+          <Property Name="PALLET_WEIGHT" Type="numeric" Precision="18" Scale="6" />
+          <Property Name="BOXPERPALLET_QTY" Type="numeric" Precision="18" Scale="6" />
+          <Property Name="DEL_FLAG" Type="bit" Nullable="false" />
+          <Property Name="TOLERANCE" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="CUS_ITEM_NAME" Type="nvarchar" MaxLength="256" />
+          <Property Name="ACC_ITEM_CODE" Type="varchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="SPRICE_GLOBALMF">
+          <Key>
+            <PropertyRef Name="PRICE_CODE" />
+          </Key>
+          <Property Name="PRICE_CODE" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CUSTOMER_CODE" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="GLOBAL_CODE" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="GLOBAL_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="TESTMASS" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="APPLYDATE" Type="datetime" Nullable="false" />
+          <Property Name="PRICE" Type="numeric" Precision="18" Scale="6" Nullable="false" />
+          <Property Name="PRICE_UNIT" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="PAYMENT_TERM" Type="varchar" MaxLength="100" />
+          <Property Name="INCO_TERM" Type="varchar" MaxLength="100" />
+          <Property Name="REASON_CODE" Type="varchar" MaxLength="30" />
+          <Property Name="REFERENCE" Type="nvarchar" MaxLength="255" />
+          <Property Name="INV_DV" Type="char" MaxLength="1" />
+          <Property Name="INPUT_DATE" Type="datetime" />
+          <Property Name="INPUT_PERSON" Type="varchar" MaxLength="10" />
+          <Property Name="MODIFY_DATE" Type="datetime" />
+          <Property Name="MODIFY_PERSON" Type="varchar" MaxLength="10" />
+        </EntityType>
         <EntityType Name="TVC_COMPANY_MS">
           <Key>
             <PropertyRef Name="COMPANY_NUM" />
@@ -32,125 +136,6 @@
           <Property Name="EDIT_BY" Type="varchar" MaxLength="50" />
           <Property Name="EDIT_AT" Type="datetime" />
         </EntityType>
-        <EntityType Name="TVC_ERROR_LOG">
-          <Key>
-            <PropertyRef Name="ERROR_LOG_NUM" />
-          </Key>
-          <Property Name="ERROR_LOG_NUM" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="COMPANY_CODE" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="USER_NAME" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="DATE_CREATE" Type="datetime" Nullable="false" />
-          <Property Name="TYPE" Type="varchar" MaxLength="10" />
-          <Property Name="SCREEN_LOG" Type="varchar" MaxLength="50" />
-          <Property Name="CONTENT" Type="nvarchar" MaxLength="500" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'Takako_1.dbo.TVC_EXPORT_ACTUAL_PRODUCT' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
-        <EntityType Name="TVC_EXPORT_ACTUAL_PRODUCT">
-          <Property Name="GROUP_NAME" Type="nvarchar" MaxLength="50" />
-          <Property Name="PROCESS_CODE" Type="varchar" MaxLength="30" />
-          <Property Name="PLAN_QTY" Type="decimal" Precision="16" Scale="4" />
-          <Property Name="PRODUCT_QTY" Type="decimal" Precision="16" Scale="6" />
-          <Property Name="NG_QTY" Type="decimal" Precision="16" Scale="6" />
-          <Property Name="RATE" Type="nvarchar" MaxLength="50" />
-        </EntityType>-->
-        <EntityType Name="TVC_HANDLE_LOG">
-          <Key>
-            <PropertyRef Name="HANDLE_LOG_NUM" />
-          </Key>
-          <Property Name="HANDLE_LOG_NUM" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="COMPANY_CODE" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="USER_NAME" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="DATE_CREATE" Type="datetime" />
-          <Property Name="TYPE" Type="varchar" MaxLength="50" />
-          <Property Name="CONTENT_LOG" Type="nvarchar" MaxLength="500" />
-        </EntityType>
-        <EntityType Name="TVC_INV_DETAIL">
-          <Key>
-            <PropertyRef Name="COMPANY_CODE" />
-            <PropertyRef Name="SHIPPING_NO" />
-            <PropertyRef Name="INVOICE_NO" />
-            <PropertyRef Name="TVC_ITEM_CODE" />
-            <PropertyRef Name="CUSTOMER_PO" />
-            <PropertyRef Name="DUE_DATE_PO" />
-          </Key>
-          <Property Name="INV_DETAIL_NUM" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="COMPANY_CODE" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="CUSTOMER_CODE" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="SHIPPING_NO" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="INVOICE_NO" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="REVISE_NO" Type="varchar" MaxLength="30" />
-          <Property Name="REVISE_DATE" Type="date" />
-          <Property Name="REVISE_VERSION" Type="int" Nullable="false" />
-          <Property Name="PART_DESCRIPTION" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CUS_ITEM_CODE" Type="nvarchar" MaxLength="50" />
-          <Property Name="TVC_ITEM_CODE" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="CUSTOMER_PO" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="THIRD_PARTY_ITEM_CODE" Type="nvarchar" MaxLength="50" />
-          <Property Name="THIRD_PARTY_PO" Type="nvarchar" MaxLength="50" />
-          <Property Name="ORDER_DATE" Type="date" />
-          <Property Name="DUE_DATE_PO" Type="date" Nullable="false" />
-          <Property Name="QUANTITY" Type="decimal" Precision="9" Scale="2" Nullable="false" />
-          <Property Name="QUANTITY_REVISE" Type="decimal" Precision="9" Scale="2" Nullable="false" />
-          <Property Name="BALANCE" Type="decimal" Precision="9" Scale="2" />
-          <Property Name="UNIT_CURRENCY" Type="varchar" MaxLength="3" Nullable="false" />
-          <Property Name="USD_RATE" Type="decimal" Precision="9" Scale="2" />
-          <Property Name="ORDER_PRICE" Type="decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="ORDER_PRICE_REVISE" Type="decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="GLOBAL_PRICE" Type="decimal" Precision="19" Scale="4" />
-          <Property Name="AMOUNT" Type="decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="NOTE" Type="nvarchar" MaxLength="500" />
-          <Property Name="CREATE_BY" Type="nvarchar" MaxLength="50" />
-          <Property Name="CREATE_AT" Type="datetime" />
-          <Property Name="EDIT_BY" Type="varchar" MaxLength="50" />
-          <Property Name="EDIT_AT" Type="datetime" />
-        </EntityType>
-        <EntityType Name="TVC_INV_MS">
-          <Key>
-            <PropertyRef Name="INVOICE_NO" />
-          </Key>
-          <Property Name="INV_NUM" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="LOCK_STATUS" Type="int" Nullable="false" />
-          <Property Name="COMPANY_CODE" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="SHIPPING_NO" Type="varchar" MaxLength="250" Nullable="false" />
-          <Property Name="INVOICE_NO" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="DATE_CREATE" Type="date" Nullable="false" />
-          <Property Name="ISSUEDTO_CUSTOMER_CODE" Type="varchar" MaxLength="50" />
-          <Property Name="ISSUEDTO_CUSTOMER_NAME" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="ISSUEDTO_CUSTOMER_ADDRESS" Type="varchar" MaxLength="500" Nullable="false" />
-          <Property Name="ISSUEDTO_CUSTOMER_TEL_NO" Type="varchar" MaxLength="50" />
-          <Property Name="ISSUEDTO_CUSTOMER_FAX_NO" Type="varchar" MaxLength="50" />
-          <Property Name="SHIPTO_CUSTOMER_CODE" Type="varchar" MaxLength="50" />
-          <Property Name="SHIPTO_CUSTOMER_NAME" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="SHIPTO_CUSTOMER_ADDRESS" Type="nvarchar" MaxLength="255" Nullable="false" />
-          <Property Name="SHIPTO_CUSTOMER_TEL_NO" Type="varchar" MaxLength="50" />
-          <Property Name="SHIPTO_CUSTOMER_FAX_NO" Type="varchar" MaxLength="50" />
-          <Property Name="REVENUE" Type="varchar" MaxLength="10" />
-          <Property Name="SHIP_VIA" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="FREIGHT" Type="int" Nullable="false" />
-          <Property Name="VESSEL" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="PORT_OF_LOADING" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="PORT_OF_DESTINATION" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="ETD" Type="date" Nullable="false" />
-          <Property Name="ETA" Type="date" Nullable="false" />
-          <Property Name="TRADE_CONDITION" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="PAYMENT_TERM" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="CREATE_BY" Type="varchar" MaxLength="50" />
-          <Property Name="CREATE_AT" Type="datetime" />
-          <Property Name="EDIT_BY" Type="varchar" MaxLength="50" />
-          <Property Name="EDIT_AT" Type="datetime" />
-        </EntityType>
-        <EntityType Name="TVC_LOG_SCREEN">
-          <Key>
-            <PropertyRef Name="LOG_SCREEN_NUM" />
-          </Key>
-          <Property Name="LOG_SCREEN_NUM" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="USER_NAME" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="SCREEN_NAME" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="KEY_LOCK" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="CREATE_BY" Type="varchar" MaxLength="50" />
-          <Property Name="CREATE_AT" Type="datetime" />
-        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'Takako_1.dbo.TVC_PL_DETAIL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="TVC_PL_DETAIL">
@@ -174,7 +159,7 @@ warning 6002: The table/view 'Takako_1.dbo.TVC_PL_DETAIL' does not have a primar
           <Property Name="PL_DETAIL_NUM" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="COMPANY_CODE" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="CUSTOMER_CODE" Type="nvarchar" MaxLength="50" />
-          <Property Name="SHIPPING_NO" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="SHIPPING_NO" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="INVOICE_NO" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="REVISE_NO" Type="nvarchar" MaxLength="50" />
           <Property Name="REVISE_DATE" Type="date" />
@@ -227,38 +212,6 @@ warning 6002: The table/view 'Takako_1.dbo.TVC_PL_DETAIL' does not have a primar
           <Property Name="CREATE_AT" Type="datetime" />
           <Property Name="EDIT_BY" Type="varchar" MaxLength="50" />
           <Property Name="EDIT_AT" Type="datetime" />
-        </EntityType>
-        <EntityType Name="TVC_PO_MS_BK">
-          <Key>
-            <PropertyRef Name="AUTONUMBER" />
-          </Key>
-          <Property Name="AUTONUMBER" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PO_NUM" Type="bigint" Nullable="false" />
-          <Property Name="COMPANY_CODE" Type="varchar" MaxLength="5" Nullable="false" />
-          <Property Name="CUSTOMER_CODE" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="RECEIVE_NO" Type="varchar" MaxLength="18" Nullable="false" />
-          <Property Name="INVOICE_NO" Type="varchar" MaxLength="30" />
-          <Property Name="SHIPPING_NO" Type="varchar" MaxLength="30" />
-          <Property Name="TVC_ITEM_CODE" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="CUSTOMER_ITEM_CODE" Type="varchar" MaxLength="30" />
-          <Property Name="PARTS_NAME" Type="varchar" MaxLength="255" />
-          <Property Name="ITEM_NAME" Type="varchar" MaxLength="255" />
-          <Property Name="QUANTITY" Type="int" Nullable="false" />
-          <Property Name="QUANTITY_ORDER" Type="int" />
-          <Property Name="UNIT_CURRENCY" Type="varchar" MaxLength="3" />
-          <Property Name="PRICE_JPY" Type="decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="PRICE_USD" Type="decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="CUSTOMER_PO" Type="varchar" MaxLength="30" Nullable="false" />
-          <Property Name="ORDER_DATE" Type="date" />
-          <Property Name="DUE_DATE" Type="date" Nullable="false" />
-          <Property Name="THIRD_PARTY_ITEM_CODE" Type="varchar" MaxLength="30" />
-          <Property Name="THIRD_PARTY_PO" Type="varchar" MaxLength="30" />
-          <Property Name="NOTE" Type="varchar" MaxLength="1000" />
-          <Property Name="CREATE_BY" Type="varchar" MaxLength="50" />
-          <Property Name="CREATE_AT" Type="datetime" />
-          <Property Name="EDIT_BY" Type="varchar" MaxLength="50" />
-          <Property Name="EDIT_AT" Type="datetime" />
-          <Property Name="CREAT_DATE" Type="datetime" />
         </EntityType>
         <EntityType Name="TVC_SHIPPING_INV_DETAIL">
           <Key>
@@ -370,15 +323,11 @@ warning 6002: The table/view 'Takako_1.dbo.TVC_PL_DETAIL' does not have a primar
           <Property Name="EDIT_AT" Type="datetime" />
         </EntityType>
         <EntityContainer Name="Takako_ModelStoreContainer">
+          <EntitySet Name="PRODUCTMF" EntityType="Self.PRODUCTMF" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SPRICE_GLOBALMF" EntityType="Self.SPRICE_GLOBALMF" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TVC_COMPANY_MS" EntityType="Self.TVC_COMPANY_MS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TVC_CUSTOMER_MS" EntityType="Self.TVC_CUSTOMER_MS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TVC_ERROR_LOG" EntityType="Self.TVC_ERROR_LOG" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TVC_HANDLE_LOG" EntityType="Self.TVC_HANDLE_LOG" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TVC_INV_DETAIL" EntityType="Self.TVC_INV_DETAIL" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TVC_INV_MS" EntityType="Self.TVC_INV_MS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TVC_LOG_SCREEN" EntityType="Self.TVC_LOG_SCREEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TVC_PO_MS" EntityType="Self.TVC_PO_MS" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="TVC_PO_MS_BK" EntityType="Self.TVC_PO_MS_BK" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TVC_SHIPPING_INV_DETAIL" EntityType="Self.TVC_SHIPPING_INV_DETAIL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TVC_SHIPPING_MS" EntityType="Self.TVC_SHIPPING_MS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TVC_SHIPPING_PL_DETAIL" EntityType="Self.TVC_SHIPPING_PL_DETAIL" Schema="dbo" store:Type="Tables" />
@@ -410,8 +359,7 @@ warning 6002: The table/view 'Takako_1.dbo.TVC_PL_DETAIL' does not have a primar
 FROM [dbo].[TVC_PL_DETAIL] AS [TVC_PL_DETAIL]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Takako_Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -441,115 +389,6 @@ FROM [dbo].[TVC_PL_DETAIL] AS [TVC_PL_DETAIL]</DefiningQuery>
           <Property Name="CREATE_AT" Type="DateTime" Precision="3" />
           <Property Name="EDIT_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EDIT_AT" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="TVC_ERROR_LOG">
-          <Key>
-            <PropertyRef Name="ERROR_LOG_NUM" />
-          </Key>
-          <Property Name="ERROR_LOG_NUM" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="COMPANY_CODE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="TYPE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="SCREEN_LOG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CONTENT" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
-        </EntityType>
-        <EntityType Name="TVC_HANDLE_LOG">
-          <Key>
-            <PropertyRef Name="HANDLE_LOG_NUM" />
-          </Key>
-          <Property Name="HANDLE_LOG_NUM" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="COMPANY_CODE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DATE_CREATE" Type="DateTime" Precision="3" />
-          <Property Name="TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CONTENT_LOG" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="TVC_INV_DETAIL">
-          <Key>
-            <PropertyRef Name="COMPANY_CODE" />
-            <PropertyRef Name="SHIPPING_NO" />
-            <PropertyRef Name="INVOICE_NO" />
-            <PropertyRef Name="TVC_ITEM_CODE" />
-            <PropertyRef Name="CUSTOMER_PO" />
-            <PropertyRef Name="DUE_DATE_PO" />
-          </Key>
-          <Property Name="INV_DETAIL_NUM" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="COMPANY_CODE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CUSTOMER_CODE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SHIPPING_NO" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="INVOICE_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="REVISE_NO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="REVISE_DATE" Type="DateTime" Precision="0" />
-          <Property Name="REVISE_VERSION" Type="Int32" Nullable="false" />
-          <Property Name="PART_DESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CUS_ITEM_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TVC_ITEM_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CUSTOMER_PO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="THIRD_PARTY_ITEM_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="THIRD_PARTY_PO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ORDER_DATE" Type="DateTime" Precision="0" />
-          <Property Name="DUE_DATE_PO" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="QUANTITY" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
-          <Property Name="QUANTITY_REVISE" Type="Decimal" Precision="9" Scale="2" Nullable="false" />
-          <Property Name="BALANCE" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="UNIT_CURRENCY" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="USD_RATE" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="ORDER_PRICE" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="ORDER_PRICE_REVISE" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="GLOBAL_PRICE" Type="Decimal" Precision="19" Scale="4" />
-          <Property Name="AMOUNT" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="NOTE" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="CREATE_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CREATE_AT" Type="DateTime" Precision="3" />
-          <Property Name="EDIT_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EDIT_AT" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="TVC_INV_MS">
-          <Key>
-            <PropertyRef Name="INVOICE_NO" />
-          </Key>
-          <Property Name="INV_NUM" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LOCK_STATUS" Type="Int32" Nullable="false" />
-          <Property Name="COMPANY_CODE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SHIPPING_NO" Type="String" MaxLength="250" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="INVOICE_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="DATE_CREATE" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ISSUEDTO_CUSTOMER_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ISSUEDTO_CUSTOMER_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ISSUEDTO_CUSTOMER_ADDRESS" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ISSUEDTO_CUSTOMER_TEL_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ISSUEDTO_CUSTOMER_FAX_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SHIPTO_CUSTOMER_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SHIPTO_CUSTOMER_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="SHIPTO_CUSTOMER_ADDRESS" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="SHIPTO_CUSTOMER_TEL_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="SHIPTO_CUSTOMER_FAX_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="REVENUE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="SHIP_VIA" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="FREIGHT" Type="Int32" Nullable="false" />
-          <Property Name="VESSEL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PORT_OF_LOADING" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PORT_OF_DESTINATION" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ETD" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="ETA" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="TRADE_CONDITION" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PAYMENT_TERM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CREATE_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CREATE_AT" Type="DateTime" Precision="3" />
-          <Property Name="EDIT_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EDIT_AT" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="TVC_LOG_SCREEN">
-          <Key>
-            <PropertyRef Name="LOG_SCREEN_NUM" />
-          </Key>
-          <Property Name="LOG_SCREEN_NUM" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SCREEN_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="KEY_LOCK" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CREATE_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CREATE_AT" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="TVC_PO_MS">
           <Key>
@@ -583,38 +422,6 @@ FROM [dbo].[TVC_PL_DETAIL] AS [TVC_PL_DETAIL]</DefiningQuery>
           <Property Name="CREATE_AT" Type="DateTime" Precision="3" />
           <Property Name="EDIT_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="EDIT_AT" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="TVC_PO_MS_BK">
-          <Key>
-            <PropertyRef Name="AUTONUMBER" />
-          </Key>
-          <Property Name="AUTONUMBER" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PO_NUM" Type="Int64" Nullable="false" />
-          <Property Name="COMPANY_CODE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CUSTOMER_CODE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="RECEIVE_NO" Type="String" MaxLength="18" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="INVOICE_NO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="SHIPPING_NO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="TVC_ITEM_CODE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CUSTOMER_ITEM_CODE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="PARTS_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ITEM_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="QUANTITY" Type="Int32" Nullable="false" />
-          <Property Name="QUANTITY_ORDER" Type="Int32" />
-          <Property Name="UNIT_CURRENCY" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="PRICE_JPY" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="PRICE_USD" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="CUSTOMER_PO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ORDER_DATE" Type="DateTime" Precision="0" />
-          <Property Name="DUE_DATE" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="THIRD_PARTY_ITEM_CODE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="THIRD_PARTY_PO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="NOTE" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
-          <Property Name="CREATE_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="CREATE_AT" Type="DateTime" Precision="3" />
-          <Property Name="EDIT_BY" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EDIT_AT" Type="DateTime" Precision="3" />
-          <Property Name="CREAT_DATE" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="TVC_SHIPPING_INV_DETAIL">
           <Key>
@@ -746,7 +553,7 @@ FROM [dbo].[TVC_PL_DETAIL] AS [TVC_PL_DETAIL]</DefiningQuery>
           <Property Name="PL_DETAIL_NUM" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="COMPANY_CODE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CUSTOMER_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SHIPPING_NO" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SHIPPING_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="INVOICE_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="REVISE_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="REVISE_DATE" Type="DateTime" Precision="0" />
@@ -770,18 +577,118 @@ FROM [dbo].[TVC_PL_DETAIL] AS [TVC_PL_DETAIL]</DefiningQuery>
         <EntityContainer Name="Takako_Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TVC_COMPANY_MS" EntityType="Self.TVC_COMPANY_MS" />
           <EntitySet Name="TVC_CUSTOMER_MS" EntityType="Self.TVC_CUSTOMER_MS" />
-          <EntitySet Name="TVC_ERROR_LOG" EntityType="Self.TVC_ERROR_LOG" />
-          <EntitySet Name="TVC_HANDLE_LOG" EntityType="Self.TVC_HANDLE_LOG" />
-          <EntitySet Name="TVC_INV_DETAIL" EntityType="Self.TVC_INV_DETAIL" />
-          <EntitySet Name="TVC_INV_MS" EntityType="Self.TVC_INV_MS" />
-          <EntitySet Name="TVC_LOG_SCREEN" EntityType="Self.TVC_LOG_SCREEN" />
           <EntitySet Name="TVC_PO_MS" EntityType="Self.TVC_PO_MS" />
-          <EntitySet Name="TVC_PO_MS_BK" EntityType="Self.TVC_PO_MS_BK" />
           <EntitySet Name="TVC_SHIPPING_INV_DETAIL" EntityType="Self.TVC_SHIPPING_INV_DETAIL" />
           <EntitySet Name="TVC_SHIPPING_MS" EntityType="Self.TVC_SHIPPING_MS" />
           <EntitySet Name="TVC_SHIPPING_PL_DETAIL" EntityType="Self.TVC_SHIPPING_PL_DETAIL" />
           <EntitySet Name="TVC_PL_DETAIL" EntityType="Self.TVC_PL_DETAIL" />
+          <EntitySet Name="PRODUCTMFs" EntityType="Takako_Model.PRODUCTMF" />
+          <EntitySet Name="SPRICE_GLOBALMF" EntityType="Takako_Model.SPRICE_GLOBALMF" />
         </EntityContainer>
+        <EntityType Name="PRODUCTMF">
+          <Key>
+            <PropertyRef Name="ITEM_CODE" />
+          </Key>
+          <Property Name="ITEM_CODE" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ITEM_NAME" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ITEM_NAME_E" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ITEM_NAME_V" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ITEM_CLASSIFY" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="UNIT_ITEM" Type="String" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Name="GROUP_FLAG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="PRO_CLASS" Type="String" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="SPREAD_FLAG" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="OBJECT_CODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="INTERNAL_CODE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="MODEL" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PRODUCTMODEL" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="SHELF_CODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SUPPLIER" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ROUTE" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="MATERIAL_PRICE" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="M_PRICE_UNIT" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="SEMI_F_PRICE" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="SF_PRICE_UNIT" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="SALE_PRICE" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="S_PRICE_UNIT" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="LEAD_TIME" Type="Int16" />
+          <Property Name="LOT_SIZE" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="PRODUCT_DAY" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="SAFETY_STOCK" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="LOSS" Type="Decimal" Precision="5" Scale="2" />
+          <Property Name="WEIGHT" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="WEIGHT_UNIT" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="STOCK_OUT_FLAG" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="BOX_TYPE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="BOX_QUANTITY" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="BOX_SIZE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="BOX_WEIGHT" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="QA_CHECK" Type="Boolean" />
+          <Property Name="MEMO" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="FIRST_ORDER" Type="DateTime" Precision="3" />
+          <Property Name="LAST_ORDER" Type="DateTime" Precision="3" />
+          <Property Name="LAST_PRODUCT" Type="DateTime" Precision="3" />
+          <Property Name="LAST_SHIPPING" Type="DateTime" Precision="3" />
+          <Property Name="LAST_PO" Type="DateTime" Precision="3" />
+          <Property Name="LAST_STOCK_IN" Type="DateTime" Precision="3" />
+          <Property Name="TOTAL_ORDER" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_SHIPPING" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_PRODUCT" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_DEFECT" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_LACKED" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_EXCESSIVE" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_PO" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TOTAL_STOCK_IN" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TM_ORDER" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TM_DELIVERY" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TM_PRODUCT" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TM_DEFECT" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TM_LACKED" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TM_EXCESSIVE" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TM_PO" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="TM_STOCK_IN" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="LM_STOCK" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="L2M_STOCK" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="INPUT_DATE" Type="DateTime" Precision="3" />
+          <Property Name="INPUT_PERSON" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="MODIFY_DATE" Type="DateTime" Precision="3" />
+          <Property Name="MODIFY_PERSON" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="DELTA_NO" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="SHIP_TYPE" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="PATH_BOX" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="IVPART_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PROLINE_CODE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="PROCESS_CODE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PALLET_WEIGHT" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="BOXPERPALLET_QTY" Type="Decimal" Precision="18" Scale="6" />
+          <Property Name="DEL_FLAG" Type="Boolean" Nullable="false" />
+          <Property Name="TOLERANCE" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="CUS_ITEM_NAME" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="ACC_ITEM_CODE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="SPRICE_GLOBALMF">
+          <Key>
+            <PropertyRef Name="PRICE_CODE" />
+          </Key>
+          <Property Name="PRICE_CODE" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_CODE" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GLOBAL_CODE" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="GLOBAL_NAME" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="TESTMASS" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="APPLYDATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PRICE" Type="Decimal" Nullable="false" Precision="18" Scale="6" />
+          <Property Name="PRICE_UNIT" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="PAYMENT_TERM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="INCO_TERM" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="REASON_CODE" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="REFERENCE" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="INV_DV" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="INPUT_DATE" Type="DateTime" Precision="3" />
+          <Property Name="INPUT_PERSON" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MODIFY_DATE" Type="DateTime" Precision="3" />
+          <Property Name="MODIFY_PERSON" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -817,115 +724,6 @@ FROM [dbo].[TVC_PL_DETAIL] AS [TVC_PL_DETAIL]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TVC_ERROR_LOG">
-            <EntityTypeMapping TypeName="Takako_Model.TVC_ERROR_LOG">
-              <MappingFragment StoreEntitySet="TVC_ERROR_LOG">
-                <ScalarProperty Name="ERROR_LOG_NUM" ColumnName="ERROR_LOG_NUM" />
-                <ScalarProperty Name="COMPANY_CODE" ColumnName="COMPANY_CODE" />
-                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
-                <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
-                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
-                <ScalarProperty Name="SCREEN_LOG" ColumnName="SCREEN_LOG" />
-                <ScalarProperty Name="CONTENT" ColumnName="CONTENT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TVC_HANDLE_LOG">
-            <EntityTypeMapping TypeName="Takako_Model.TVC_HANDLE_LOG">
-              <MappingFragment StoreEntitySet="TVC_HANDLE_LOG">
-                <ScalarProperty Name="HANDLE_LOG_NUM" ColumnName="HANDLE_LOG_NUM" />
-                <ScalarProperty Name="COMPANY_CODE" ColumnName="COMPANY_CODE" />
-                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
-                <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
-                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
-                <ScalarProperty Name="CONTENT_LOG" ColumnName="CONTENT_LOG" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TVC_INV_DETAIL">
-            <EntityTypeMapping TypeName="Takako_Model.TVC_INV_DETAIL">
-              <MappingFragment StoreEntitySet="TVC_INV_DETAIL">
-                <ScalarProperty Name="INV_DETAIL_NUM" ColumnName="INV_DETAIL_NUM" />
-                <ScalarProperty Name="COMPANY_CODE" ColumnName="COMPANY_CODE" />
-                <ScalarProperty Name="CUSTOMER_CODE" ColumnName="CUSTOMER_CODE" />
-                <ScalarProperty Name="SHIPPING_NO" ColumnName="SHIPPING_NO" />
-                <ScalarProperty Name="INVOICE_NO" ColumnName="INVOICE_NO" />
-                <ScalarProperty Name="REVISE_NO" ColumnName="REVISE_NO" />
-                <ScalarProperty Name="REVISE_DATE" ColumnName="REVISE_DATE" />
-                <ScalarProperty Name="REVISE_VERSION" ColumnName="REVISE_VERSION" />
-                <ScalarProperty Name="PART_DESCRIPTION" ColumnName="PART_DESCRIPTION" />
-                <ScalarProperty Name="CUS_ITEM_CODE" ColumnName="CUS_ITEM_CODE" />
-                <ScalarProperty Name="TVC_ITEM_CODE" ColumnName="TVC_ITEM_CODE" />
-                <ScalarProperty Name="CUSTOMER_PO" ColumnName="CUSTOMER_PO" />
-                <ScalarProperty Name="THIRD_PARTY_ITEM_CODE" ColumnName="THIRD_PARTY_ITEM_CODE" />
-                <ScalarProperty Name="THIRD_PARTY_PO" ColumnName="THIRD_PARTY_PO" />
-                <ScalarProperty Name="ORDER_DATE" ColumnName="ORDER_DATE" />
-                <ScalarProperty Name="DUE_DATE_PO" ColumnName="DUE_DATE_PO" />
-                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
-                <ScalarProperty Name="QUANTITY_REVISE" ColumnName="QUANTITY_REVISE" />
-                <ScalarProperty Name="BALANCE" ColumnName="BALANCE" />
-                <ScalarProperty Name="UNIT_CURRENCY" ColumnName="UNIT_CURRENCY" />
-                <ScalarProperty Name="USD_RATE" ColumnName="USD_RATE" />
-                <ScalarProperty Name="ORDER_PRICE" ColumnName="ORDER_PRICE" />
-                <ScalarProperty Name="ORDER_PRICE_REVISE" ColumnName="ORDER_PRICE_REVISE" />
-                <ScalarProperty Name="GLOBAL_PRICE" ColumnName="GLOBAL_PRICE" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="NOTE" ColumnName="NOTE" />
-                <ScalarProperty Name="CREATE_BY" ColumnName="CREATE_BY" />
-                <ScalarProperty Name="CREATE_AT" ColumnName="CREATE_AT" />
-                <ScalarProperty Name="EDIT_BY" ColumnName="EDIT_BY" />
-                <ScalarProperty Name="EDIT_AT" ColumnName="EDIT_AT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TVC_INV_MS">
-            <EntityTypeMapping TypeName="Takako_Model.TVC_INV_MS">
-              <MappingFragment StoreEntitySet="TVC_INV_MS">
-                <ScalarProperty Name="INV_NUM" ColumnName="INV_NUM" />
-                <ScalarProperty Name="LOCK_STATUS" ColumnName="LOCK_STATUS" />
-                <ScalarProperty Name="COMPANY_CODE" ColumnName="COMPANY_CODE" />
-                <ScalarProperty Name="SHIPPING_NO" ColumnName="SHIPPING_NO" />
-                <ScalarProperty Name="INVOICE_NO" ColumnName="INVOICE_NO" />
-                <ScalarProperty Name="DATE_CREATE" ColumnName="DATE_CREATE" />
-                <ScalarProperty Name="ISSUEDTO_CUSTOMER_CODE" ColumnName="ISSUEDTO_CUSTOMER_CODE" />
-                <ScalarProperty Name="ISSUEDTO_CUSTOMER_NAME" ColumnName="ISSUEDTO_CUSTOMER_NAME" />
-                <ScalarProperty Name="ISSUEDTO_CUSTOMER_ADDRESS" ColumnName="ISSUEDTO_CUSTOMER_ADDRESS" />
-                <ScalarProperty Name="ISSUEDTO_CUSTOMER_TEL_NO" ColumnName="ISSUEDTO_CUSTOMER_TEL_NO" />
-                <ScalarProperty Name="ISSUEDTO_CUSTOMER_FAX_NO" ColumnName="ISSUEDTO_CUSTOMER_FAX_NO" />
-                <ScalarProperty Name="SHIPTO_CUSTOMER_CODE" ColumnName="SHIPTO_CUSTOMER_CODE" />
-                <ScalarProperty Name="SHIPTO_CUSTOMER_NAME" ColumnName="SHIPTO_CUSTOMER_NAME" />
-                <ScalarProperty Name="SHIPTO_CUSTOMER_ADDRESS" ColumnName="SHIPTO_CUSTOMER_ADDRESS" />
-                <ScalarProperty Name="SHIPTO_CUSTOMER_TEL_NO" ColumnName="SHIPTO_CUSTOMER_TEL_NO" />
-                <ScalarProperty Name="SHIPTO_CUSTOMER_FAX_NO" ColumnName="SHIPTO_CUSTOMER_FAX_NO" />
-                <ScalarProperty Name="REVENUE" ColumnName="REVENUE" />
-                <ScalarProperty Name="SHIP_VIA" ColumnName="SHIP_VIA" />
-                <ScalarProperty Name="FREIGHT" ColumnName="FREIGHT" />
-                <ScalarProperty Name="VESSEL" ColumnName="VESSEL" />
-                <ScalarProperty Name="PORT_OF_LOADING" ColumnName="PORT_OF_LOADING" />
-                <ScalarProperty Name="PORT_OF_DESTINATION" ColumnName="PORT_OF_DESTINATION" />
-                <ScalarProperty Name="ETD" ColumnName="ETD" />
-                <ScalarProperty Name="ETA" ColumnName="ETA" />
-                <ScalarProperty Name="TRADE_CONDITION" ColumnName="TRADE_CONDITION" />
-                <ScalarProperty Name="PAYMENT_TERM" ColumnName="PAYMENT_TERM" />
-                <ScalarProperty Name="CREATE_BY" ColumnName="CREATE_BY" />
-                <ScalarProperty Name="CREATE_AT" ColumnName="CREATE_AT" />
-                <ScalarProperty Name="EDIT_BY" ColumnName="EDIT_BY" />
-                <ScalarProperty Name="EDIT_AT" ColumnName="EDIT_AT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TVC_LOG_SCREEN">
-            <EntityTypeMapping TypeName="Takako_Model.TVC_LOG_SCREEN">
-              <MappingFragment StoreEntitySet="TVC_LOG_SCREEN">
-                <ScalarProperty Name="LOG_SCREEN_NUM" ColumnName="LOG_SCREEN_NUM" />
-                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
-                <ScalarProperty Name="SCREEN_NAME" ColumnName="SCREEN_NAME" />
-                <ScalarProperty Name="KEY_LOCK" ColumnName="KEY_LOCK" />
-                <ScalarProperty Name="CREATE_BY" ColumnName="CREATE_BY" />
-                <ScalarProperty Name="CREATE_AT" ColumnName="CREATE_AT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="TVC_PO_MS">
             <EntityTypeMapping TypeName="Takako_Model.TVC_PO_MS">
               <MappingFragment StoreEntitySet="TVC_PO_MS">
@@ -954,39 +752,6 @@ FROM [dbo].[TVC_PL_DETAIL] AS [TVC_PL_DETAIL]</DefiningQuery>
                 <ScalarProperty Name="CREATE_AT" ColumnName="CREATE_AT" />
                 <ScalarProperty Name="EDIT_BY" ColumnName="EDIT_BY" />
                 <ScalarProperty Name="EDIT_AT" ColumnName="EDIT_AT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TVC_PO_MS_BK">
-            <EntityTypeMapping TypeName="Takako_Model.TVC_PO_MS_BK">
-              <MappingFragment StoreEntitySet="TVC_PO_MS_BK">
-                <ScalarProperty Name="AUTONUMBER" ColumnName="AUTONUMBER" />
-                <ScalarProperty Name="PO_NUM" ColumnName="PO_NUM" />
-                <ScalarProperty Name="COMPANY_CODE" ColumnName="COMPANY_CODE" />
-                <ScalarProperty Name="CUSTOMER_CODE" ColumnName="CUSTOMER_CODE" />
-                <ScalarProperty Name="RECEIVE_NO" ColumnName="RECEIVE_NO" />
-                <ScalarProperty Name="INVOICE_NO" ColumnName="INVOICE_NO" />
-                <ScalarProperty Name="SHIPPING_NO" ColumnName="SHIPPING_NO" />
-                <ScalarProperty Name="TVC_ITEM_CODE" ColumnName="TVC_ITEM_CODE" />
-                <ScalarProperty Name="CUSTOMER_ITEM_CODE" ColumnName="CUSTOMER_ITEM_CODE" />
-                <ScalarProperty Name="PARTS_NAME" ColumnName="PARTS_NAME" />
-                <ScalarProperty Name="ITEM_NAME" ColumnName="ITEM_NAME" />
-                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
-                <ScalarProperty Name="QUANTITY_ORDER" ColumnName="QUANTITY_ORDER" />
-                <ScalarProperty Name="UNIT_CURRENCY" ColumnName="UNIT_CURRENCY" />
-                <ScalarProperty Name="PRICE_JPY" ColumnName="PRICE_JPY" />
-                <ScalarProperty Name="PRICE_USD" ColumnName="PRICE_USD" />
-                <ScalarProperty Name="CUSTOMER_PO" ColumnName="CUSTOMER_PO" />
-                <ScalarProperty Name="ORDER_DATE" ColumnName="ORDER_DATE" />
-                <ScalarProperty Name="DUE_DATE" ColumnName="DUE_DATE" />
-                <ScalarProperty Name="THIRD_PARTY_ITEM_CODE" ColumnName="THIRD_PARTY_ITEM_CODE" />
-                <ScalarProperty Name="THIRD_PARTY_PO" ColumnName="THIRD_PARTY_PO" />
-                <ScalarProperty Name="NOTE" ColumnName="NOTE" />
-                <ScalarProperty Name="CREATE_BY" ColumnName="CREATE_BY" />
-                <ScalarProperty Name="CREATE_AT" ColumnName="CREATE_AT" />
-                <ScalarProperty Name="EDIT_BY" ColumnName="EDIT_BY" />
-                <ScalarProperty Name="EDIT_AT" ColumnName="EDIT_AT" />
-                <ScalarProperty Name="CREAT_DATE" ColumnName="CREAT_DATE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1118,6 +883,112 @@ FROM [dbo].[TVC_PL_DETAIL] AS [TVC_PL_DETAIL]</DefiningQuery>
                 <ScalarProperty Name="CREATE_AT" ColumnName="CREATE_AT" />
                 <ScalarProperty Name="EDIT_BY" ColumnName="EDIT_BY" />
                 <ScalarProperty Name="EDIT_AT" ColumnName="EDIT_AT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTMFs">
+            <EntityTypeMapping TypeName="Takako_Model.PRODUCTMF">
+              <MappingFragment StoreEntitySet="PRODUCTMF">
+                <ScalarProperty Name="ACC_ITEM_CODE" ColumnName="ACC_ITEM_CODE" />
+                <ScalarProperty Name="CUS_ITEM_NAME" ColumnName="CUS_ITEM_NAME" />
+                <ScalarProperty Name="TOLERANCE" ColumnName="TOLERANCE" />
+                <ScalarProperty Name="DEL_FLAG" ColumnName="DEL_FLAG" />
+                <ScalarProperty Name="BOXPERPALLET_QTY" ColumnName="BOXPERPALLET_QTY" />
+                <ScalarProperty Name="PALLET_WEIGHT" ColumnName="PALLET_WEIGHT" />
+                <ScalarProperty Name="PROCESS_CODE" ColumnName="PROCESS_CODE" />
+                <ScalarProperty Name="PROLINE_CODE" ColumnName="PROLINE_CODE" />
+                <ScalarProperty Name="IVPART_NAME" ColumnName="IVPART_NAME" />
+                <ScalarProperty Name="PATH_BOX" ColumnName="PATH_BOX" />
+                <ScalarProperty Name="SHIP_TYPE" ColumnName="SHIP_TYPE" />
+                <ScalarProperty Name="DELTA_NO" ColumnName="DELTA_NO" />
+                <ScalarProperty Name="MODIFY_PERSON" ColumnName="MODIFY_PERSON" />
+                <ScalarProperty Name="MODIFY_DATE" ColumnName="MODIFY_DATE" />
+                <ScalarProperty Name="INPUT_PERSON" ColumnName="INPUT_PERSON" />
+                <ScalarProperty Name="INPUT_DATE" ColumnName="INPUT_DATE" />
+                <ScalarProperty Name="L2M_STOCK" ColumnName="L2M_STOCK" />
+                <ScalarProperty Name="LM_STOCK" ColumnName="LM_STOCK" />
+                <ScalarProperty Name="TM_STOCK_IN" ColumnName="TM_STOCK_IN" />
+                <ScalarProperty Name="TM_PO" ColumnName="TM_PO" />
+                <ScalarProperty Name="TM_EXCESSIVE" ColumnName="TM_EXCESSIVE" />
+                <ScalarProperty Name="TM_LACKED" ColumnName="TM_LACKED" />
+                <ScalarProperty Name="TM_DEFECT" ColumnName="TM_DEFECT" />
+                <ScalarProperty Name="TM_PRODUCT" ColumnName="TM_PRODUCT" />
+                <ScalarProperty Name="TM_DELIVERY" ColumnName="TM_DELIVERY" />
+                <ScalarProperty Name="TM_ORDER" ColumnName="TM_ORDER" />
+                <ScalarProperty Name="TOTAL_STOCK_IN" ColumnName="TOTAL_STOCK_IN" />
+                <ScalarProperty Name="TOTAL_PO" ColumnName="TOTAL_PO" />
+                <ScalarProperty Name="TOTAL_EXCESSIVE" ColumnName="TOTAL_EXCESSIVE" />
+                <ScalarProperty Name="TOTAL_LACKED" ColumnName="TOTAL_LACKED" />
+                <ScalarProperty Name="TOTAL_DEFECT" ColumnName="TOTAL_DEFECT" />
+                <ScalarProperty Name="TOTAL_PRODUCT" ColumnName="TOTAL_PRODUCT" />
+                <ScalarProperty Name="TOTAL_SHIPPING" ColumnName="TOTAL_SHIPPING" />
+                <ScalarProperty Name="TOTAL_ORDER" ColumnName="TOTAL_ORDER" />
+                <ScalarProperty Name="LAST_STOCK_IN" ColumnName="LAST_STOCK_IN" />
+                <ScalarProperty Name="LAST_PO" ColumnName="LAST_PO" />
+                <ScalarProperty Name="LAST_SHIPPING" ColumnName="LAST_SHIPPING" />
+                <ScalarProperty Name="LAST_PRODUCT" ColumnName="LAST_PRODUCT" />
+                <ScalarProperty Name="LAST_ORDER" ColumnName="LAST_ORDER" />
+                <ScalarProperty Name="FIRST_ORDER" ColumnName="FIRST_ORDER" />
+                <ScalarProperty Name="MEMO" ColumnName="MEMO" />
+                <ScalarProperty Name="QA_CHECK" ColumnName="QA_CHECK" />
+                <ScalarProperty Name="BOX_WEIGHT" ColumnName="BOX_WEIGHT" />
+                <ScalarProperty Name="BOX_SIZE" ColumnName="BOX_SIZE" />
+                <ScalarProperty Name="BOX_QUANTITY" ColumnName="BOX_QUANTITY" />
+                <ScalarProperty Name="BOX_TYPE" ColumnName="BOX_TYPE" />
+                <ScalarProperty Name="STOCK_OUT_FLAG" ColumnName="STOCK_OUT_FLAG" />
+                <ScalarProperty Name="WEIGHT_UNIT" ColumnName="WEIGHT_UNIT" />
+                <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
+                <ScalarProperty Name="LOSS" ColumnName="LOSS" />
+                <ScalarProperty Name="SAFETY_STOCK" ColumnName="SAFETY_STOCK" />
+                <ScalarProperty Name="PRODUCT_DAY" ColumnName="PRODUCT_DAY" />
+                <ScalarProperty Name="LOT_SIZE" ColumnName="LOT_SIZE" />
+                <ScalarProperty Name="LEAD_TIME" ColumnName="LEAD_TIME" />
+                <ScalarProperty Name="S_PRICE_UNIT" ColumnName="S_PRICE_UNIT" />
+                <ScalarProperty Name="SALE_PRICE" ColumnName="SALE_PRICE" />
+                <ScalarProperty Name="SF_PRICE_UNIT" ColumnName="SF_PRICE_UNIT" />
+                <ScalarProperty Name="SEMI_F_PRICE" ColumnName="SEMI_F_PRICE" />
+                <ScalarProperty Name="M_PRICE_UNIT" ColumnName="M_PRICE_UNIT" />
+                <ScalarProperty Name="MATERIAL_PRICE" ColumnName="MATERIAL_PRICE" />
+                <ScalarProperty Name="ROUTE" ColumnName="ROUTE" />
+                <ScalarProperty Name="SUPPLIER" ColumnName="SUPPLIER" />
+                <ScalarProperty Name="CUSTOMER" ColumnName="CUSTOMER" />
+                <ScalarProperty Name="SHELF_CODE" ColumnName="SHELF_CODE" />
+                <ScalarProperty Name="PRODUCTMODEL" ColumnName="PRODUCTMODEL" />
+                <ScalarProperty Name="MODEL" ColumnName="MODEL" />
+                <ScalarProperty Name="INTERNAL_CODE" ColumnName="INTERNAL_CODE" />
+                <ScalarProperty Name="OBJECT_CODE" ColumnName="OBJECT_CODE" />
+                <ScalarProperty Name="SPREAD_FLAG" ColumnName="SPREAD_FLAG" />
+                <ScalarProperty Name="PRO_CLASS" ColumnName="PRO_CLASS" />
+                <ScalarProperty Name="GROUP_FLAG" ColumnName="GROUP_FLAG" />
+                <ScalarProperty Name="UNIT_ITEM" ColumnName="UNIT_ITEM" />
+                <ScalarProperty Name="ITEM_CLASSIFY" ColumnName="ITEM_CLASSIFY" />
+                <ScalarProperty Name="ITEM_NAME_V" ColumnName="ITEM_NAME_V" />
+                <ScalarProperty Name="ITEM_NAME_E" ColumnName="ITEM_NAME_E" />
+                <ScalarProperty Name="ITEM_NAME" ColumnName="ITEM_NAME" />
+                <ScalarProperty Name="ITEM_CODE" ColumnName="ITEM_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SPRICE_GLOBALMF">
+            <EntityTypeMapping TypeName="Takako_Model.SPRICE_GLOBALMF">
+              <MappingFragment StoreEntitySet="SPRICE_GLOBALMF">
+                <ScalarProperty Name="MODIFY_PERSON" ColumnName="MODIFY_PERSON" />
+                <ScalarProperty Name="MODIFY_DATE" ColumnName="MODIFY_DATE" />
+                <ScalarProperty Name="INPUT_PERSON" ColumnName="INPUT_PERSON" />
+                <ScalarProperty Name="INPUT_DATE" ColumnName="INPUT_DATE" />
+                <ScalarProperty Name="INV_DV" ColumnName="INV_DV" />
+                <ScalarProperty Name="REFERENCE" ColumnName="REFERENCE" />
+                <ScalarProperty Name="REASON_CODE" ColumnName="REASON_CODE" />
+                <ScalarProperty Name="INCO_TERM" ColumnName="INCO_TERM" />
+                <ScalarProperty Name="PAYMENT_TERM" ColumnName="PAYMENT_TERM" />
+                <ScalarProperty Name="PRICE_UNIT" ColumnName="PRICE_UNIT" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="APPLYDATE" ColumnName="APPLYDATE" />
+                <ScalarProperty Name="TESTMASS" ColumnName="TESTMASS" />
+                <ScalarProperty Name="GLOBAL_NAME" ColumnName="GLOBAL_NAME" />
+                <ScalarProperty Name="GLOBAL_CODE" ColumnName="GLOBAL_CODE" />
+                <ScalarProperty Name="CUSTOMER_CODE" ColumnName="CUSTOMER_CODE" />
+                <ScalarProperty Name="PRICE_CODE" ColumnName="PRICE_CODE" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

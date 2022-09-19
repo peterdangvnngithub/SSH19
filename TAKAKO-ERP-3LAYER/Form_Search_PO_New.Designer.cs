@@ -1,6 +1,6 @@
 ﻿namespace TAKAKO_ERP_3LAYER
 {
-    partial class Form_Import_PO_To_Shipping_Excel
+    partial class Form_Search_PO_New
     {
         /// <summary>
         /// Required designer variable.
@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Import_PO_To_Shipping_Excel));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Search_PO_New));
             this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.barBtn_ImportData = new DevExpress.XtraBars.BarButtonItem();
             this.barBtn_SaveData = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            this.gridControl_PackingList = new DevExpress.XtraGrid.GridControl();
-            this.View_Import_PackingList = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridControl_Search_PO = new DevExpress.XtraGrid.GridControl();
+            this.View_PO_List = new DevExpress.XtraGrid.Views.Grid.GridView();
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl_PackingList)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.View_Import_PackingList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl_Search_PO)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.View_PO_List)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbon
@@ -65,6 +65,7 @@
             this.barBtn_ImportData.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barBtn_ImportData.ImageOptions.Image")));
             this.barBtn_ImportData.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barBtn_ImportData.ImageOptions.LargeImage")));
             this.barBtn_ImportData.Name = "barBtn_ImportData";
+            this.barBtn_ImportData.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barBtn_ImportData_ItemClick);
             // 
             // barBtn_SaveData
             // 
@@ -80,7 +81,6 @@
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
             this.ribbonPage1.Name = "ribbonPage1";
-            this.ribbonPage1.Text = "ribbonPage1";
             // 
             // ribbonPageGroup1
             // 
@@ -95,39 +95,39 @@
             this.ribbonStatusBar.Ribbon = this.ribbon;
             this.ribbonStatusBar.Size = new System.Drawing.Size(957, 24);
             // 
-            // gridControl_PackingList
+            // gridControl_Search_PO
             // 
-            this.gridControl_PackingList.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl_PackingList.Location = new System.Drawing.Point(0, 158);
-            this.gridControl_PackingList.MainView = this.View_Import_PackingList;
-            this.gridControl_PackingList.MenuManager = this.ribbon;
-            this.gridControl_PackingList.Name = "gridControl_PackingList";
-            this.gridControl_PackingList.Size = new System.Drawing.Size(957, 447);
-            this.gridControl_PackingList.TabIndex = 2;
-            this.gridControl_PackingList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.View_Import_PackingList});
+            this.gridControl_Search_PO.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControl_Search_PO.Location = new System.Drawing.Point(0, 158);
+            this.gridControl_Search_PO.MainView = this.View_PO_List;
+            this.gridControl_Search_PO.MenuManager = this.ribbon;
+            this.gridControl_Search_PO.Name = "gridControl_Search_PO";
+            this.gridControl_Search_PO.Size = new System.Drawing.Size(957, 447);
+            this.gridControl_Search_PO.TabIndex = 2;
+            this.gridControl_Search_PO.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.View_PO_List});
             // 
-            // View_Import_PackingList
+            // View_PO_List
             // 
-            this.View_Import_PackingList.GridControl = this.gridControl_PackingList;
-            this.View_Import_PackingList.Name = "View_Import_PackingList";
+            this.View_PO_List.GridControl = this.gridControl_Search_PO;
+            this.View_PO_List.Name = "View_PO_List";
             // 
-            // Form_Import_PO_To_Shipping_Excel
+            // Form_Search_PO_New
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(957, 629);
-            this.Controls.Add(this.gridControl_PackingList);
+            this.Controls.Add(this.gridControl_Search_PO);
             this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.ribbon);
-            this.Name = "Form_Import_PO_To_Shipping_Excel";
+            this.Name = "Form_Search_PO_New";
             this.Ribbon = this.ribbon;
             this.StatusBar = this.ribbonStatusBar;
-            this.Text = "Form_Import_PO_Excel";
+            this.Text = "SEARCH PO";
             this.Load += new System.EventHandler(this.Form_Import_PO_To_Shipping_Excel_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl_PackingList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.View_Import_PackingList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControl_Search_PO)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.View_PO_List)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,7 +141,7 @@
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
         private DevExpress.XtraBars.BarButtonItem barBtn_ImportData;
         private DevExpress.XtraBars.BarButtonItem barBtn_SaveData;
-        private DevExpress.XtraGrid.GridControl gridControl_PackingList;
-        private DevExpress.XtraGrid.Views.Grid.GridView View_Import_PackingList;
+        private DevExpress.XtraGrid.GridControl gridControl_Search_PO;
+        private DevExpress.XtraGrid.Views.Grid.GridView View_PO_List;
     }
 }

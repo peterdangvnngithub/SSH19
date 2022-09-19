@@ -31,6 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Shipping_Instruction));
             this.panel_Top = new System.Windows.Forms.Panel();
             this.panel29 = new System.Windows.Forms.Panel();
+            this.picBox_BackToMain = new System.Windows.Forms.PictureBox();
+            this.picBox_Min = new System.Windows.Forms.PictureBox();
+            this.picBox_Max = new System.Windows.Forms.PictureBox();
+            this.picBox_Close = new System.Windows.Forms.PictureBox();
             this.panel_Main = new System.Windows.Forms.Panel();
             this.panel_DetailInvoice = new System.Windows.Forms.Panel();
             this.panel_TabControl = new System.Windows.Forms.Panel();
@@ -81,9 +85,11 @@
             this.btn_SearchShipping = new System.Windows.Forms.Button();
             this.panel_HeaderRight = new System.Windows.Forms.Panel();
             this.panel21 = new System.Windows.Forms.Panel();
+            this.btnSearch_PaymentTerm = new System.Windows.Forms.Button();
             this.txtPaymentTerm = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.panel17 = new System.Windows.Forms.Panel();
+            this.btnSearch_TradeCondition = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.txtPriceCondition = new System.Windows.Forms.TextBox();
             this.panel16 = new System.Windows.Forms.Panel();
@@ -93,9 +99,11 @@
             this.dtpETD = new System.Windows.Forms.DateTimePicker();
             this.label15 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.btnSearch_PortDestination = new System.Windows.Forms.Button();
             this.txtPortDestination = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.btnSearch_PortLoading = new System.Windows.Forms.Button();
             this.txtPortLoading = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
@@ -123,6 +131,7 @@
             this.txtShipTo_CompanyAddress = new System.Windows.Forms.TextBox();
             this.panel6 = new System.Windows.Forms.Panel();
             this.txtShipTo_CompanyCode = new System.Windows.Forms.TextBox();
+            this.btnSearch_ShipTo = new System.Windows.Forms.Button();
             this.txtShipTo_CompanyName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -134,6 +143,7 @@
             this.txtIssuedTo_CompanyAddress = new System.Windows.Forms.TextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.txtIssuedTo_CompanyCode = new System.Windows.Forms.TextBox();
+            this.btnSearch_IssuedTo = new System.Windows.Forms.Button();
             this.txtIssuedTo_CompanyName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -143,6 +153,7 @@
             this.dtpDateCreateShipping = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.panel_ShippingNo = new System.Windows.Forms.Panel();
+            this.btnSearch_ShippingNo = new System.Windows.Forms.Button();
             this.txtShippingNo = new System.Windows.Forms.TextBox();
             this.lblShippingNo = new System.Windows.Forms.Label();
             this.panel35 = new System.Windows.Forms.Panel();
@@ -156,20 +167,12 @@
             this.panelTop = new System.Windows.Forms.Panel();
             this.panel30 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.btn_Import_Data_Excel = new System.Windows.Forms.Button();
-            this.btnSearch_PaymentTerm = new System.Windows.Forms.Button();
-            this.btnSearch_TradeCondition = new System.Windows.Forms.Button();
-            this.btnSearch_PortDestination = new System.Windows.Forms.Button();
-            this.btnSearch_PortLoading = new System.Windows.Forms.Button();
-            this.btnSearch_ShipTo = new System.Windows.Forms.Button();
-            this.btnSearch_IssuedTo = new System.Windows.Forms.Button();
-            this.btnSearch_ShippingNo = new System.Windows.Forms.Button();
-            this.picBox_BackToMain = new System.Windows.Forms.PictureBox();
-            this.picBox_Min = new System.Windows.Forms.PictureBox();
-            this.picBox_Max = new System.Windows.Forms.PictureBox();
-            this.picBox_Close = new System.Windows.Forms.PictureBox();
             this.panel_Top.SuspendLayout();
             this.panel29.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picBox_BackToMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBox_Min)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBox_Max)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBox_Close)).BeginInit();
             this.panel_Main.SuspendLayout();
             this.panel_DetailInvoice.SuspendLayout();
             this.panel_TabControl.SuspendLayout();
@@ -213,10 +216,6 @@
             this.panel35.SuspendLayout();
             this.panel31.SuspendLayout();
             this.panelTop.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picBox_BackToMain)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picBox_Min)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picBox_Max)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picBox_Close)).BeginInit();
             this.SuspendLayout();
             // 
             // panel_Top
@@ -243,6 +242,59 @@
             this.panel29.Name = "panel29";
             this.panel29.Size = new System.Drawing.Size(143, 30);
             this.panel29.TabIndex = 3;
+            // 
+            // picBox_BackToMain
+            // 
+            this.picBox_BackToMain.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Arrow_pointing;
+            this.picBox_BackToMain.Location = new System.Drawing.Point(6, 5);
+            this.picBox_BackToMain.Name = "picBox_BackToMain";
+            this.picBox_BackToMain.Size = new System.Drawing.Size(25, 25);
+            this.picBox_BackToMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picBox_BackToMain.TabIndex = 9;
+            this.picBox_BackToMain.TabStop = false;
+            this.picBox_BackToMain.Click += new System.EventHandler(this.picBox_BackToMain_Click);
+            this.picBox_BackToMain.MouseEnter += new System.EventHandler(this.picBox_BackToMain_MouseEnter);
+            this.picBox_BackToMain.MouseLeave += new System.EventHandler(this.picBox_BackToMain_MouseLeave);
+            this.picBox_BackToMain.MouseHover += new System.EventHandler(this.picBox_BackToMain_MouseHover);
+            // 
+            // picBox_Min
+            // 
+            this.picBox_Min.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Minimize_window;
+            this.picBox_Min.Location = new System.Drawing.Point(40, 5);
+            this.picBox_Min.Name = "picBox_Min";
+            this.picBox_Min.Size = new System.Drawing.Size(25, 25);
+            this.picBox_Min.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picBox_Min.TabIndex = 8;
+            this.picBox_Min.TabStop = false;
+            this.picBox_Min.Click += new System.EventHandler(this.picBox_Min_Click);
+            this.picBox_Min.MouseEnter += new System.EventHandler(this.picBox_Min_MouseEnter);
+            this.picBox_Min.MouseLeave += new System.EventHandler(this.picBox_Min_MouseLeave);
+            // 
+            // picBox_Max
+            // 
+            this.picBox_Max.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Maximize_window;
+            this.picBox_Max.Location = new System.Drawing.Point(74, 5);
+            this.picBox_Max.Name = "picBox_Max";
+            this.picBox_Max.Size = new System.Drawing.Size(25, 25);
+            this.picBox_Max.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picBox_Max.TabIndex = 7;
+            this.picBox_Max.TabStop = false;
+            this.picBox_Max.Click += new System.EventHandler(this.picBox_Max_Click);
+            this.picBox_Max.MouseEnter += new System.EventHandler(this.picBox_Max_MouseEnter);
+            this.picBox_Max.MouseLeave += new System.EventHandler(this.picBox_Max_MouseLeave);
+            // 
+            // picBox_Close
+            // 
+            this.picBox_Close.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Close_window;
+            this.picBox_Close.Location = new System.Drawing.Point(108, 5);
+            this.picBox_Close.Name = "picBox_Close";
+            this.picBox_Close.Size = new System.Drawing.Size(25, 25);
+            this.picBox_Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picBox_Close.TabIndex = 6;
+            this.picBox_Close.TabStop = false;
+            this.picBox_Close.Click += new System.EventHandler(this.picBox_Close_Click);
+            this.picBox_Close.MouseEnter += new System.EventHandler(this.picBox_Close_MouseEnter);
+            this.picBox_Close.MouseLeave += new System.EventHandler(this.picBox_Close_MouseLeave);
             // 
             // panel_Main
             // 
@@ -659,7 +711,6 @@
             // 
             this.panel23.Controls.Add(this.btnRevise);
             this.panel23.Controls.Add(this.btnExport_Instruction);
-            this.panel23.Controls.Add(this.btn_Import_Data_Excel);
             this.panel23.Controls.Add(this.btnLockData);
             this.panel23.Controls.Add(this.btnUnlockData);
             this.panel23.Controls.Add(this.btn_ClearData);
@@ -687,7 +738,7 @@
             this.btnExport_Instruction.Name = "btnExport_Instruction";
             this.btnExport_Instruction.Size = new System.Drawing.Size(119, 23);
             this.btnExport_Instruction.TabIndex = 23;
-            this.btnExport_Instruction.Text = "Export &Instruction";
+            this.btnExport_Instruction.Text = "&Import / Export PL";
             this.btnExport_Instruction.UseVisualStyleBackColor = true;
             this.btnExport_Instruction.Click += new System.EventHandler(this.btnExport_Instruction_Click);
             // 
@@ -793,6 +844,17 @@
             this.panel21.Size = new System.Drawing.Size(520, 25);
             this.panel21.TabIndex = 14;
             // 
+            // btnSearch_PaymentTerm
+            // 
+            this.btnSearch_PaymentTerm.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
+            this.btnSearch_PaymentTerm.Location = new System.Drawing.Point(479, 0);
+            this.btnSearch_PaymentTerm.Name = "btnSearch_PaymentTerm";
+            this.btnSearch_PaymentTerm.Size = new System.Drawing.Size(24, 24);
+            this.btnSearch_PaymentTerm.TabIndex = 11;
+            this.btnSearch_PaymentTerm.TabStop = false;
+            this.btnSearch_PaymentTerm.UseVisualStyleBackColor = true;
+            this.btnSearch_PaymentTerm.Click += new System.EventHandler(this.btnSearch_PaymentTerm_Click);
+            // 
             // txtPaymentTerm
             // 
             this.txtPaymentTerm.Location = new System.Drawing.Point(144, 1);
@@ -822,6 +884,17 @@
             this.panel17.Name = "panel17";
             this.panel17.Size = new System.Drawing.Size(520, 25);
             this.panel17.TabIndex = 13;
+            // 
+            // btnSearch_TradeCondition
+            // 
+            this.btnSearch_TradeCondition.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
+            this.btnSearch_TradeCondition.Location = new System.Drawing.Point(479, 0);
+            this.btnSearch_TradeCondition.Name = "btnSearch_TradeCondition";
+            this.btnSearch_TradeCondition.Size = new System.Drawing.Size(24, 24);
+            this.btnSearch_TradeCondition.TabIndex = 10;
+            this.btnSearch_TradeCondition.TabStop = false;
+            this.btnSearch_TradeCondition.UseVisualStyleBackColor = true;
+            this.btnSearch_TradeCondition.Click += new System.EventHandler(this.btnSearch_PriceCondition_Click);
             // 
             // label18
             // 
@@ -913,6 +986,17 @@
             this.panel7.Size = new System.Drawing.Size(520, 25);
             this.panel7.TabIndex = 10;
             // 
+            // btnSearch_PortDestination
+            // 
+            this.btnSearch_PortDestination.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
+            this.btnSearch_PortDestination.Location = new System.Drawing.Point(479, 0);
+            this.btnSearch_PortDestination.Name = "btnSearch_PortDestination";
+            this.btnSearch_PortDestination.Size = new System.Drawing.Size(24, 24);
+            this.btnSearch_PortDestination.TabIndex = 9;
+            this.btnSearch_PortDestination.TabStop = false;
+            this.btnSearch_PortDestination.UseVisualStyleBackColor = true;
+            this.btnSearch_PortDestination.Click += new System.EventHandler(this.btnSearch_PortDestination_Click);
+            // 
             // txtPortDestination
             // 
             this.txtPortDestination.Location = new System.Drawing.Point(144, 1);
@@ -942,6 +1026,17 @@
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(520, 25);
             this.panel8.TabIndex = 9;
+            // 
+            // btnSearch_PortLoading
+            // 
+            this.btnSearch_PortLoading.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
+            this.btnSearch_PortLoading.Location = new System.Drawing.Point(479, 0);
+            this.btnSearch_PortLoading.Name = "btnSearch_PortLoading";
+            this.btnSearch_PortLoading.Size = new System.Drawing.Size(24, 24);
+            this.btnSearch_PortLoading.TabIndex = 8;
+            this.btnSearch_PortLoading.TabStop = false;
+            this.btnSearch_PortLoading.UseVisualStyleBackColor = true;
+            this.btnSearch_PortLoading.Click += new System.EventHandler(this.btnSearch_PortLoading_Click);
             // 
             // txtPortLoading
             // 
@@ -1209,6 +1304,17 @@
             this.txtShipTo_CompanyCode.TextChanged += new System.EventHandler(this.TxtShipTo_CompanyCode_TextChanged);
             this.txtShipTo_CompanyCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtShipTo_CompanyCode_KeyDown);
             // 
+            // btnSearch_ShipTo
+            // 
+            this.btnSearch_ShipTo.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
+            this.btnSearch_ShipTo.Location = new System.Drawing.Point(477, 1);
+            this.btnSearch_ShipTo.Name = "btnSearch_ShipTo";
+            this.btnSearch_ShipTo.Size = new System.Drawing.Size(24, 24);
+            this.btnSearch_ShipTo.TabIndex = 4;
+            this.btnSearch_ShipTo.TabStop = false;
+            this.btnSearch_ShipTo.UseVisualStyleBackColor = true;
+            this.btnSearch_ShipTo.Click += new System.EventHandler(this.btnSearch_ShipTo_Click);
+            // 
             // txtShipTo_CompanyName
             // 
             this.txtShipTo_CompanyName.Location = new System.Drawing.Point(207, 2);
@@ -1316,6 +1422,17 @@
             this.txtIssuedTo_CompanyCode.TabIndex = 2;
             this.txtIssuedTo_CompanyCode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtIssuedTo_CompanyCode_KeyDown);
             // 
+            // btnSearch_IssuedTo
+            // 
+            this.btnSearch_IssuedTo.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
+            this.btnSearch_IssuedTo.Location = new System.Drawing.Point(477, 1);
+            this.btnSearch_IssuedTo.Name = "btnSearch_IssuedTo";
+            this.btnSearch_IssuedTo.Size = new System.Drawing.Size(24, 24);
+            this.btnSearch_IssuedTo.TabIndex = 3;
+            this.btnSearch_IssuedTo.TabStop = false;
+            this.btnSearch_IssuedTo.UseVisualStyleBackColor = true;
+            this.btnSearch_IssuedTo.Click += new System.EventHandler(this.btnSearch_IssuedTo_Click);
+            // 
             // txtIssuedTo_CompanyName
             // 
             this.txtIssuedTo_CompanyName.Location = new System.Drawing.Point(207, 2);
@@ -1404,6 +1521,17 @@
             this.panel_ShippingNo.Name = "panel_ShippingNo";
             this.panel_ShippingNo.Size = new System.Drawing.Size(542, 25);
             this.panel_ShippingNo.TabIndex = 0;
+            // 
+            // btnSearch_ShippingNo
+            // 
+            this.btnSearch_ShippingNo.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
+            this.btnSearch_ShippingNo.Location = new System.Drawing.Point(477, 1);
+            this.btnSearch_ShippingNo.Name = "btnSearch_ShippingNo";
+            this.btnSearch_ShippingNo.Size = new System.Drawing.Size(24, 24);
+            this.btnSearch_ShippingNo.TabIndex = 4;
+            this.btnSearch_ShippingNo.TabStop = false;
+            this.btnSearch_ShippingNo.UseVisualStyleBackColor = true;
+            this.btnSearch_ShippingNo.Click += new System.EventHandler(this.btnSearch_ShippingNo_Click);
             // 
             // txtShippingNo
             // 
@@ -1551,146 +1679,6 @@
             this.label1.Text = "SHIPPING INSTRUCTION";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // btn_Import_Data_Excel
-            // 
-            this.btn_Import_Data_Excel.Location = new System.Drawing.Point(26, 6);
-            this.btn_Import_Data_Excel.Name = "btn_Import_Data_Excel";
-            this.btn_Import_Data_Excel.Size = new System.Drawing.Size(117, 23);
-            this.btn_Import_Data_Excel.TabIndex = 0;
-            this.btn_Import_Data_Excel.Text = "&Import Data Excel";
-            this.btn_Import_Data_Excel.UseVisualStyleBackColor = true;
-            this.btn_Import_Data_Excel.Click += new System.EventHandler(this.btn_Import_Data_Excel_Click);
-            // 
-            // btnSearch_PaymentTerm
-            // 
-            this.btnSearch_PaymentTerm.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
-            this.btnSearch_PaymentTerm.Location = new System.Drawing.Point(479, 0);
-            this.btnSearch_PaymentTerm.Name = "btnSearch_PaymentTerm";
-            this.btnSearch_PaymentTerm.Size = new System.Drawing.Size(24, 24);
-            this.btnSearch_PaymentTerm.TabIndex = 11;
-            this.btnSearch_PaymentTerm.TabStop = false;
-            this.btnSearch_PaymentTerm.UseVisualStyleBackColor = true;
-            this.btnSearch_PaymentTerm.Click += new System.EventHandler(this.btnSearch_PaymentTerm_Click);
-            // 
-            // btnSearch_TradeCondition
-            // 
-            this.btnSearch_TradeCondition.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
-            this.btnSearch_TradeCondition.Location = new System.Drawing.Point(479, 0);
-            this.btnSearch_TradeCondition.Name = "btnSearch_TradeCondition";
-            this.btnSearch_TradeCondition.Size = new System.Drawing.Size(24, 24);
-            this.btnSearch_TradeCondition.TabIndex = 10;
-            this.btnSearch_TradeCondition.TabStop = false;
-            this.btnSearch_TradeCondition.UseVisualStyleBackColor = true;
-            this.btnSearch_TradeCondition.Click += new System.EventHandler(this.btnSearch_PriceCondition_Click);
-            // 
-            // btnSearch_PortDestination
-            // 
-            this.btnSearch_PortDestination.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
-            this.btnSearch_PortDestination.Location = new System.Drawing.Point(479, 0);
-            this.btnSearch_PortDestination.Name = "btnSearch_PortDestination";
-            this.btnSearch_PortDestination.Size = new System.Drawing.Size(24, 24);
-            this.btnSearch_PortDestination.TabIndex = 9;
-            this.btnSearch_PortDestination.TabStop = false;
-            this.btnSearch_PortDestination.UseVisualStyleBackColor = true;
-            this.btnSearch_PortDestination.Click += new System.EventHandler(this.btnSearch_PortDestination_Click);
-            // 
-            // btnSearch_PortLoading
-            // 
-            this.btnSearch_PortLoading.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
-            this.btnSearch_PortLoading.Location = new System.Drawing.Point(479, 0);
-            this.btnSearch_PortLoading.Name = "btnSearch_PortLoading";
-            this.btnSearch_PortLoading.Size = new System.Drawing.Size(24, 24);
-            this.btnSearch_PortLoading.TabIndex = 8;
-            this.btnSearch_PortLoading.TabStop = false;
-            this.btnSearch_PortLoading.UseVisualStyleBackColor = true;
-            this.btnSearch_PortLoading.Click += new System.EventHandler(this.btnSearch_PortLoading_Click);
-            // 
-            // btnSearch_ShipTo
-            // 
-            this.btnSearch_ShipTo.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
-            this.btnSearch_ShipTo.Location = new System.Drawing.Point(477, 1);
-            this.btnSearch_ShipTo.Name = "btnSearch_ShipTo";
-            this.btnSearch_ShipTo.Size = new System.Drawing.Size(24, 24);
-            this.btnSearch_ShipTo.TabIndex = 4;
-            this.btnSearch_ShipTo.TabStop = false;
-            this.btnSearch_ShipTo.UseVisualStyleBackColor = true;
-            this.btnSearch_ShipTo.Click += new System.EventHandler(this.btnSearch_ShipTo_Click);
-            // 
-            // btnSearch_IssuedTo
-            // 
-            this.btnSearch_IssuedTo.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
-            this.btnSearch_IssuedTo.Location = new System.Drawing.Point(477, 1);
-            this.btnSearch_IssuedTo.Name = "btnSearch_IssuedTo";
-            this.btnSearch_IssuedTo.Size = new System.Drawing.Size(24, 24);
-            this.btnSearch_IssuedTo.TabIndex = 3;
-            this.btnSearch_IssuedTo.TabStop = false;
-            this.btnSearch_IssuedTo.UseVisualStyleBackColor = true;
-            this.btnSearch_IssuedTo.Click += new System.EventHandler(this.btnSearch_IssuedTo_Click);
-            // 
-            // btnSearch_ShippingNo
-            // 
-            this.btnSearch_ShippingNo.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Icon_search;
-            this.btnSearch_ShippingNo.Location = new System.Drawing.Point(477, 1);
-            this.btnSearch_ShippingNo.Name = "btnSearch_ShippingNo";
-            this.btnSearch_ShippingNo.Size = new System.Drawing.Size(24, 24);
-            this.btnSearch_ShippingNo.TabIndex = 4;
-            this.btnSearch_ShippingNo.TabStop = false;
-            this.btnSearch_ShippingNo.UseVisualStyleBackColor = true;
-            this.btnSearch_ShippingNo.Click += new System.EventHandler(this.btnSearch_ShippingNo_Click);
-            // 
-            // picBox_BackToMain
-            // 
-            this.picBox_BackToMain.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Arrow_pointing;
-            this.picBox_BackToMain.Location = new System.Drawing.Point(6, 5);
-            this.picBox_BackToMain.Name = "picBox_BackToMain";
-            this.picBox_BackToMain.Size = new System.Drawing.Size(25, 25);
-            this.picBox_BackToMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picBox_BackToMain.TabIndex = 9;
-            this.picBox_BackToMain.TabStop = false;
-            this.picBox_BackToMain.Click += new System.EventHandler(this.picBox_BackToMain_Click);
-            this.picBox_BackToMain.MouseEnter += new System.EventHandler(this.picBox_BackToMain_MouseEnter);
-            this.picBox_BackToMain.MouseLeave += new System.EventHandler(this.picBox_BackToMain_MouseLeave);
-            this.picBox_BackToMain.MouseHover += new System.EventHandler(this.picBox_BackToMain_MouseHover);
-            // 
-            // picBox_Min
-            // 
-            this.picBox_Min.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Minimize_window;
-            this.picBox_Min.Location = new System.Drawing.Point(40, 5);
-            this.picBox_Min.Name = "picBox_Min";
-            this.picBox_Min.Size = new System.Drawing.Size(25, 25);
-            this.picBox_Min.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picBox_Min.TabIndex = 8;
-            this.picBox_Min.TabStop = false;
-            this.picBox_Min.Click += new System.EventHandler(this.picBox_Min_Click);
-            this.picBox_Min.MouseEnter += new System.EventHandler(this.picBox_Min_MouseEnter);
-            this.picBox_Min.MouseLeave += new System.EventHandler(this.picBox_Min_MouseLeave);
-            // 
-            // picBox_Max
-            // 
-            this.picBox_Max.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Maximize_window;
-            this.picBox_Max.Location = new System.Drawing.Point(74, 5);
-            this.picBox_Max.Name = "picBox_Max";
-            this.picBox_Max.Size = new System.Drawing.Size(25, 25);
-            this.picBox_Max.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picBox_Max.TabIndex = 7;
-            this.picBox_Max.TabStop = false;
-            this.picBox_Max.Click += new System.EventHandler(this.picBox_Max_Click);
-            this.picBox_Max.MouseEnter += new System.EventHandler(this.picBox_Max_MouseEnter);
-            this.picBox_Max.MouseLeave += new System.EventHandler(this.picBox_Max_MouseLeave);
-            // 
-            // picBox_Close
-            // 
-            this.picBox_Close.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.Close_window;
-            this.picBox_Close.Location = new System.Drawing.Point(108, 5);
-            this.picBox_Close.Name = "picBox_Close";
-            this.picBox_Close.Size = new System.Drawing.Size(25, 25);
-            this.picBox_Close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picBox_Close.TabIndex = 6;
-            this.picBox_Close.TabStop = false;
-            this.picBox_Close.Click += new System.EventHandler(this.picBox_Close_Click);
-            this.picBox_Close.MouseEnter += new System.EventHandler(this.picBox_Close_MouseEnter);
-            this.picBox_Close.MouseLeave += new System.EventHandler(this.picBox_Close_MouseLeave);
-            // 
             // Form_Shipping_Instruction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1706,6 +1694,10 @@
             this.Load += new System.EventHandler(this.Form_Shipping_Instruction_Load);
             this.panel_Top.ResumeLayout(false);
             this.panel29.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picBox_BackToMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBox_Min)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBox_Max)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBox_Close)).EndInit();
             this.panel_Main.ResumeLayout(false);
             this.panel_DetailInvoice.ResumeLayout(false);
             this.panel_TabControl.ResumeLayout(false);
@@ -1768,10 +1760,6 @@
             this.panel31.ResumeLayout(false);
             this.panel31.PerformLayout();
             this.panelTop.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picBox_BackToMain)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picBox_Min)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picBox_Max)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.picBox_Close)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1916,6 +1904,5 @@
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.DateTimePicker dtpRevenue;
         private System.Windows.Forms.Button btnSort;
-        private System.Windows.Forms.Button btn_Import_Data_Excel;
     }
 }

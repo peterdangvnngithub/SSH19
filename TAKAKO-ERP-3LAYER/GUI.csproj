@@ -143,11 +143,11 @@
     <Compile Include="Form_Import_PO.Designer.cs">
       <DependentUpon>Form_Import_PO.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form_Import_PO_To_Shipping_Excel.cs">
+    <Compile Include="Form_Search_PO_New.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form_Import_PO_To_Shipping_Excel.Designer.cs">
-      <DependentUpon>Form_Import_PO_To_Shipping_Excel.cs</DependentUpon>
+    <Compile Include="Form_Search_PO_New.Designer.cs">
+      <DependentUpon>Form_Search_PO_New.cs</DependentUpon>
     </Compile>
     <Compile Include="Form_Invoice.cs">
       <SubType>Form</SubType>
@@ -221,8 +221,14 @@
     <Compile Include="Form_Shipping_Output_PackingList.Designer.cs">
       <DependentUpon>Form_Shipping_Output_PackingList.cs</DependentUpon>
     </Compile>
+    <Compile Include="PRODUCTMF.cs">
+      <DependentUpon>Takako_Entites.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SPRICE_GLOBALMF.cs">
+      <DependentUpon>Takako_Entites.tt</DependentUpon>
+    </Compile>
     <Compile Include="Takako_Entites.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -244,28 +250,10 @@
     <Compile Include="TVC_CUSTOMER_MS.cs">
       <DependentUpon>Takako_Entites.tt</DependentUpon>
     </Compile>
-    <Compile Include="TVC_ERROR_LOG.cs">
-      <DependentUpon>Takako_Entites.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TVC_HANDLE_LOG.cs">
-      <DependentUpon>Takako_Entites.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TVC_INV_DETAIL.cs">
-      <DependentUpon>Takako_Entites.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TVC_INV_MS.cs">
-      <DependentUpon>Takako_Entites.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TVC_LOG_SCREEN.cs">
-      <DependentUpon>Takako_Entites.tt</DependentUpon>
-    </Compile>
     <Compile Include="TVC_PL_DETAIL.cs">
       <DependentUpon>Takako_Entites.tt</DependentUpon>
     </Compile>
     <Compile Include="TVC_PO_MS.cs">
-      <DependentUpon>Takako_Entites.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TVC_PO_MS_BK.cs">
       <DependentUpon>Takako_Entites.tt</DependentUpon>
     </Compile>
     <Compile Include="TVC_SHIPPING_INV_DETAIL.cs">
@@ -286,8 +274,8 @@
     <EmbeddedResource Include="Form_Import_PO.resx">
       <DependentUpon>Form_Import_PO.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form_Import_PO_To_Shipping_Excel.resx">
-      <DependentUpon>Form_Import_PO_To_Shipping_Excel.cs</DependentUpon>
+    <EmbeddedResource Include="Form_Search_PO_New.resx">
+      <DependentUpon>Form_Search_PO_New.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Invoice.resx">
       <DependentUpon>Form_Invoice.cs</DependentUpon>
@@ -377,6 +365,7 @@
     <None Include="Resources\outbox_16x16.png" />
     <None Include="Resources\exporttoxlsx_32x32.png" />
     <None Include="Resources\exporttoxlsx_16x16.png" />
+    <None Include="Resources\removesheet.svg" />
     <Content Include="Takako_Entites.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Takako_Entites.edmx</DependentUpon>

@@ -32,6 +32,7 @@ namespace TAKAKO_ERP_3LAYER
             this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.barButton_Output_Data_PackingList = new DevExpress.XtraBars.BarButtonItem();
             this.barButton_Import_Data_PackingList = new DevExpress.XtraBars.BarButtonItem();
+            this.barButton_ClearData = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -49,9 +50,10 @@ namespace TAKAKO_ERP_3LAYER
             this.ribbon.ExpandCollapseItem,
             this.ribbon.SearchEditItem,
             this.barButton_Output_Data_PackingList,
-            this.barButton_Import_Data_PackingList});
+            this.barButton_Import_Data_PackingList,
+            this.barButton_ClearData});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
-            this.ribbon.MaxItemId = 3;
+            this.ribbon.MaxItemId = 4;
             this.ribbon.Name = "ribbon";
             this.ribbon.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -76,17 +78,25 @@ namespace TAKAKO_ERP_3LAYER
             this.barButton_Import_Data_PackingList.Name = "barButton_Import_Data_PackingList";
             this.barButton_Import_Data_PackingList.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButton_Import_Data_PackingList_ItemClick);
             // 
+            // barButton_ClearData
+            // 
+            this.barButton_ClearData.Caption = "Clear Data";
+            this.barButton_ClearData.Id = 3;
+            this.barButton_ClearData.ImageOptions.SvgImage = global::TAKAKO_ERP_3LAYER.Properties.Resources.removesheet;
+            this.barButton_ClearData.Name = "barButton_ClearData";
+            this.barButton_ClearData.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButton_ClearData_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1});
             this.ribbonPage1.Name = "ribbonPage1";
-            this.ribbonPage1.Text = "ribbonPage1";
             // 
             // ribbonPageGroup1
             // 
             this.ribbonPageGroup1.ItemLinks.Add(this.barButton_Import_Data_PackingList);
             this.ribbonPageGroup1.ItemLinks.Add(this.barButton_Output_Data_PackingList);
+            this.ribbonPageGroup1.ItemLinks.Add(this.barButton_ClearData);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             // 
             // ribbonStatusBar
@@ -124,7 +134,7 @@ namespace TAKAKO_ERP_3LAYER
             this.Name = "Form_Shipping_Output_PackingList";
             this.Ribbon = this.ribbon;
             this.StatusBar = this.ribbonStatusBar;
-            this.Text = "Form_Shipping_Output_PackingList";
+            this.Text = "Import & Export Packing List";
             this.Load += new System.EventHandler(this.Form_Shipping_Output_PackingList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl_Output_PackingList)).EndInit();
@@ -144,5 +154,6 @@ namespace TAKAKO_ERP_3LAYER
         private DevExpress.XtraGrid.Views.Grid.GridView View_Output_PackingList;
         private DevExpress.XtraBars.BarButtonItem barButton_Output_Data_PackingList;
         private DevExpress.XtraBars.BarButtonItem barButton_Import_Data_PackingList;
+        private DevExpress.XtraBars.BarButtonItem barButton_ClearData;
     }
 }
