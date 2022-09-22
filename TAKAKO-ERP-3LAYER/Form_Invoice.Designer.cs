@@ -808,7 +808,6 @@
             this.btnSearch_PaymentTerm.TabIndex = 11;
             this.btnSearch_PaymentTerm.TabStop = false;
             this.btnSearch_PaymentTerm.UseVisualStyleBackColor = true;
-            this.btnSearch_PaymentTerm.Click += new System.EventHandler(this.btnSearch_PaymentTerm_Click);
             // 
             // txtPaymentTerm
             // 
@@ -816,7 +815,6 @@
             this.txtPaymentTerm.Name = "txtPaymentTerm";
             this.txtPaymentTerm.Size = new System.Drawing.Size(335, 22);
             this.txtPaymentTerm.TabIndex = 12;
-            this.txtPaymentTerm.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPaymentTerm_KeyDown);
             // 
             // label25
             // 
@@ -849,7 +847,6 @@
             this.btnSearch_TradeCondition.TabIndex = 10;
             this.btnSearch_TradeCondition.TabStop = false;
             this.btnSearch_TradeCondition.UseVisualStyleBackColor = true;
-            this.btnSearch_TradeCondition.Click += new System.EventHandler(this.btnSearch_PriceCondition_Click);
             // 
             // label18
             // 
@@ -868,7 +865,6 @@
             this.txtPriceCondition.Name = "txtPriceCondition";
             this.txtPriceCondition.Size = new System.Drawing.Size(335, 22);
             this.txtPriceCondition.TabIndex = 11;
-            this.txtPriceCondition.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPriceCondition_KeyDown);
             // 
             // panel16
             // 
@@ -950,7 +946,6 @@
             this.btnSearch_PortDestination.TabIndex = 9;
             this.btnSearch_PortDestination.TabStop = false;
             this.btnSearch_PortDestination.UseVisualStyleBackColor = true;
-            this.btnSearch_PortDestination.Click += new System.EventHandler(this.btnSearch_PortDestination_Click);
             // 
             // txtPortDestination
             // 
@@ -958,7 +953,6 @@
             this.txtPortDestination.Name = "txtPortDestination";
             this.txtPortDestination.Size = new System.Drawing.Size(335, 22);
             this.txtPortDestination.TabIndex = 8;
-            this.txtPortDestination.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPortDestination_KeyDown);
             // 
             // label14
             // 
@@ -991,7 +985,6 @@
             this.btnSearch_PortLoading.TabIndex = 8;
             this.btnSearch_PortLoading.TabStop = false;
             this.btnSearch_PortLoading.UseVisualStyleBackColor = true;
-            this.btnSearch_PortLoading.Click += new System.EventHandler(this.btnSearch_PortLoading_Click);
             // 
             // txtPortLoading
             // 
@@ -999,7 +992,6 @@
             this.txtPortLoading.Name = "txtPortLoading";
             this.txtPortLoading.Size = new System.Drawing.Size(335, 22);
             this.txtPortLoading.TabIndex = 7;
-            this.txtPortLoading.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPortLoading_KeyDown);
             // 
             // label13
             // 

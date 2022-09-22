@@ -570,25 +570,6 @@ namespace TAKAKO_ERP_3LAYER
             }
         }
 
-        private void btnSearch_InvoiceNo_Click(object sender, EventArgs e)
-        {
-            Form_Search _formSearch = new Form_Search("btnSearch_ShippingNo", this.Name);
-            _formSearch.StartPosition = FormStartPosition.CenterParent;
-            _formSearch.ShowDialog();
-
-            if (_formSearch._shippingInfo.ShippingNo != null)
-            {
-                txtShippingNo.Text = _formSearch._shippingInfo.ShippingNo;
-                //dtp_DueDateFrom.Value = _formSearch._shippingInfo.DateCreate;
-                //dtp_DueDateTo.Value = _formSearch._shippingInfo.DateCreate;
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else
-            {
-                txtShippingNo.Focus();
-            }
-        }
-
         //Draw number order
         private void GridView_PO_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
@@ -951,14 +932,6 @@ namespace TAKAKO_ERP_3LAYER
             if (e.KeyCode == Keys.F5)
             {
                 btnSearch_POCustomer_Click(sender, e);
-            }
-        }
-
-        private void txtInvoiceNo_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                btnSearch_InvoiceNo_Click(sender, e);
             }
         }
 

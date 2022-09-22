@@ -467,72 +467,6 @@ namespace TAKAKO_ERP_3LAYER
                 txtShipTo_CompanyCode.Focus();
             }
         }
-
-        private void btnSearch_PortLoading_Click(object sender, EventArgs e)
-        {
-            Form_Search _formSearch = new Form_Search("btnSearch_PortLoading", this.Name);
-            _formSearch.StartPosition = FormStartPosition.CenterParent;
-            _formSearch.ShowDialog();
-
-            if (!String.IsNullOrEmpty(_formSearch._destinationInfo.DestinationID))
-            {
-                txtPortLoading.Text = _formSearch._destinationInfo.DestinationID;
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else
-            {
-                txtPortLoading.Focus();
-            }
-        }
-
-        private void btnSearch_PortDestination_Click(object sender, EventArgs e)
-        {
-            Form_Search _formSearch = new Form_Search("btnSearch_PortDestination", this.Name);
-            _formSearch.StartPosition = FormStartPosition.CenterParent;
-            _formSearch.ShowDialog();
-
-            if (!String.IsNullOrEmpty(_formSearch._destinationInfo.DestinationID))
-            {
-                txtPortDestination.Text = _formSearch._destinationInfo.DestinationID;
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else
-            {
-                txtPortDestination.Focus();
-            }
-        }
-
-        private void btnSearch_PriceCondition_Click(object sender, EventArgs e)
-        {
-            Form_Search _formSearch = new Form_Search("btnSearch_TradeCondition", this.Name);
-            _formSearch.StartPosition = FormStartPosition.CenterParent;
-            _formSearch.ShowDialog();
-            if (!String.IsNullOrEmpty(_formSearch._priceCondition.PriceCondition))
-            {
-                txtPriceCondition.Text = _formSearch._priceCondition.PriceCondition;
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else
-            {
-                txtPriceCondition.Focus();
-            }
-        }
-
-        private void btnSearch_PaymentTerm_Click(object sender, EventArgs e)
-        {
-            Form_Search _formSearch = new Form_Search("btnSearch_PaymentTerm", this.Name);
-            _formSearch.StartPosition = FormStartPosition.CenterParent;
-            _formSearch.ShowDialog();
-            if (!String.IsNullOrEmpty(_formSearch._paymentTerm.PaymentID))
-            {
-                txtPaymentTerm.Text = _formSearch._paymentTerm.PaymentID;
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else
-            {
-                txtPaymentTerm.Focus();
-            }
-        }
         #endregion
 
         #region Moveable
@@ -1685,38 +1619,6 @@ namespace TAKAKO_ERP_3LAYER
             if (e.KeyCode == Keys.F5)
             {
                 btnSearch_ShipTo_Click(sender, e);
-            }
-        }
-
-        private void txtPortLoading_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                btnSearch_PortLoading_Click(sender, e);
-            }
-        }
-
-        private void txtPortDestination_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                btnSearch_PortDestination_Click(sender, e);
-            }
-        }
-
-        private void txtPriceCondition_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                btnSearch_PriceCondition_Click(sender, e);
-            }
-        }
-
-        private void txtPaymentTerm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                btnSearch_PaymentTerm_Click(sender, e);
             }
         }
         #endregion

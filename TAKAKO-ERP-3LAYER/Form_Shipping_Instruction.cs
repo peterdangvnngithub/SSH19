@@ -7,7 +7,16 @@ using System.Windows.Forms;
 using TAKAKO_ERP_3LAYER.DAL;
 using TAKAKO_ERP_3LAYER.DAO;
 using System.ComponentModel;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Grid;
 using static TAKAKO_ERP_3LAYER.Common;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.Utils;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Repository;
+using System.Data.SqlClient;
+using static TAKAKO_ERP_3LAYER.Model;
+using DevExpress.Data;
 
 namespace TAKAKO_ERP_3LAYER
 {
@@ -22,7 +31,7 @@ namespace TAKAKO_ERP_3LAYER
 
         public LOG_DAO _logDAO;
 
-        DataGridViewRow lastSelected;
+        //DataGridViewRow lastSelected;
 
         DataTable Header_Data = new DataTable();
 
@@ -70,8 +79,8 @@ namespace TAKAKO_ERP_3LAYER
             cb_Freight.SelectedValue = 99;
 
             //Define column Gridview
-            AddColumnGridView(GridView_Invoice);
-            AddColumnGridView(GridView_PackingList);
+            DefineGridView(gridView_Invoice);
+            DefineGridView(gridView_PackingList);
 
             //Setting enable item
             SettingInitGridView();
@@ -80,7 +89,7 @@ namespace TAKAKO_ERP_3LAYER
             dtpRevenue.Value = DateTime.Now;
 
             //Define combobox Company
-            SetInit_CbCompanyCode();
+            SetInit_CbCompanyCode();           
 
             if (_systemDAL.CompanyCode == "00001")
             {
@@ -97,9 +106,499 @@ namespace TAKAKO_ERP_3LAYER
 
             //
             AddColumnDataSet();
+
+            Define_SearchLookUp_View(sLookUp_ShippingNo);
+            Define_SearchLookUp_View(sLookUp_IssuedTo_CompanyCode);
+            Define_SearchLookUp_View(sLookUp_ShipTo_CompanyCode);
+            Define_SearchLookUp_View(sLookUp_PortLoading);
+            Define_SearchLookUp_View(sLookUp_PortDestination);
+            Define_SearchLookUp_View(sLookUp_PriceCondition);
+            Define_SearchLookUp_View(sLookUp_PaymentTerm);
+
+            // Setting init value sLookUpEdit
+            GetInfo_Shipping();
+            GetInfo_Customer(sLookUp_IssuedTo_CompanyCode);
+            GetInfo_Customer(sLookUp_ShipTo_CompanyCode);
+            GetInfoDestination(sLookUp_PortLoading);
+            GetInfoDestination(sLookUp_PortDestination);
+            GetInfoPriceCondition(sLookUp_PriceCondition);
+            GetInfoPaymentTerm(sLookUp_PaymentTerm);
         }
 
         #region Setting Init
+        public void Define_SearchLookUp_View(SearchLookUpEdit _sLookUpItem)
+        {
+            if (_sLookUpItem.Name.Equals(sLookUp_ShippingNo.Name))
+            {
+                GridColumn gridCol_CustomerCode = new GridColumn();
+                GridColumn gridCol_ShipTo = new GridColumn();
+                GridColumn gridCol_UnitCurrency = new GridColumn();
+                GridColumn gridCol_Amount = new GridColumn();
+                GridColumn gridCol_DateCreate = new GridColumn();
+                GridColumn gridCol_DateETD = new GridColumn();
+                GridColumn gridCol_ShippingNo = new GridColumn();
+                GridColumn gridCol_InvoiceNo = new GridColumn();
+                GridColumn gridCol_LockStatus = new GridColumn();
+
+                // CUSTOMER CODE
+                // HEADER
+                gridCol_CustomerCode.Name = "gridCol_CustomerCode";
+                gridCol_CustomerCode.Caption = "ISSUEDTO CUSTOMER CODE";
+                gridCol_CustomerCode.FieldName = "ISSUEDTO_CUSTOMER_CODE";
+                gridCol_CustomerCode.VisibleIndex = 0;
+                gridCol_CustomerCode.Width = 100;
+                // CELL
+                gridCol_CustomerCode.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_CustomerCode.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // SHIP TO
+                // HEADER
+                gridCol_ShipTo.Name = "gridCol_ShipTo";
+                gridCol_ShipTo.Caption = "SHIP TO";
+                gridCol_ShipTo.FieldName = "SHIPTO_CUSTOMER_CODE";
+                gridCol_ShipTo.VisibleIndex = 0;
+                gridCol_ShipTo.Width = 100;
+                // CELL
+                gridCol_ShipTo.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_ShipTo.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // SHIPPING NO
+                // HEADER
+                gridCol_ShippingNo.Name = "gridCol_ShippingNo";
+                gridCol_ShippingNo.Caption = "SHIPPING NO";
+                gridCol_ShippingNo.FieldName = "SHIPPING_NO";
+                gridCol_ShippingNo.VisibleIndex = 0;
+                gridCol_ShippingNo.Width = 160;
+                // CELL
+                gridCol_ShippingNo.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_ShippingNo.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                //INVOICE NO
+                // HEADER
+                gridCol_InvoiceNo.Name = "gridCol_InvoiceNo";
+                gridCol_InvoiceNo.Caption = "INVOICE NO";
+                gridCol_InvoiceNo.FieldName = "INVOICE_NO";
+                gridCol_InvoiceNo.VisibleIndex = 0;
+                gridCol_InvoiceNo.Width = 140;
+                // CELL
+                gridCol_InvoiceNo.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_InvoiceNo.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                //LOCK STATUS
+                // HEADER
+                gridCol_LockStatus.Name = "gridCol_LockStatus";
+                gridCol_LockStatus.Caption = "LOCK STATUS";
+                gridCol_LockStatus.FieldName = "LOCK_STATUS";
+                gridCol_LockStatus.VisibleIndex = 0;
+                gridCol_LockStatus.Width = 100;
+                // CELL
+                gridCol_LockStatus.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_LockStatus.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                //UNIT CURRENCY
+                // HEADER
+                gridCol_UnitCurrency.Name = "gridCol_UnitCurrency";
+                gridCol_UnitCurrency.Caption = "UNIT CURRENCY";
+                gridCol_UnitCurrency.FieldName = "UNIT_CURRENCY";
+                gridCol_UnitCurrency.VisibleIndex = 0;
+                gridCol_UnitCurrency.Width = 90;
+                // CELL
+                gridCol_UnitCurrency.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_UnitCurrency.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // ETD
+                // HEADER
+                gridCol_DateETD.Name = "gridCol_DateETD";
+                gridCol_DateETD.Caption = "ETD";
+                gridCol_DateETD.FieldName = "ETD";
+                gridCol_DateETD.VisibleIndex = 0;
+                gridCol_DateETD.Width = 100;
+                gridCol_DateETD.DisplayFormat.FormatString = "dd/MM/yyyy";
+                gridCol_DateETD.DisplayFormat.FormatType = FormatType.DateTime;
+                // CELL
+                gridCol_DateETD.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                //DATE CREATE
+                // HEADER
+                gridCol_DateCreate.Name = "gridCol_DateCreate";
+                gridCol_DateCreate.Caption = "DATE CREATE";
+                gridCol_DateCreate.FieldName = "DATE_CREATE";
+                gridCol_DateCreate.VisibleIndex = 0;
+                gridCol_DateCreate.Width = 100;
+                gridCol_DateCreate.DisplayFormat.FormatString = "dd/MM/yyyy";
+                gridCol_DateCreate.DisplayFormat.FormatType = FormatType.DateTime;
+                // CELL
+                gridCol_DateCreate.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                //-----AMOUNT-----//
+                // HEADER
+                gridCol_Amount.Name = "gridCol_Amount";
+                gridCol_Amount.Caption = "AMOUNT";
+                gridCol_Amount.FieldName = "AMOUNT";
+                gridCol_Amount.VisibleIndex = 0;
+                gridCol_Amount.Width = 100;
+                gridCol_Amount.DisplayFormat.FormatString = "#,##0.00##";
+                gridCol_Amount.DisplayFormat.FormatType = FormatType.Numeric;
+                // CELL
+                gridCol_Amount.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
+
+                sLookUp_ShippingNo_View.Columns.Add(gridCol_CustomerCode);
+                sLookUp_ShippingNo_View.Columns.Add(gridCol_ShipTo);
+                sLookUp_ShippingNo_View.Columns.Add(gridCol_ShippingNo);
+                sLookUp_ShippingNo_View.Columns.Add(gridCol_InvoiceNo);
+                sLookUp_ShippingNo_View.Columns.Add(gridCol_LockStatus);
+                sLookUp_ShippingNo_View.Columns.Add(gridCol_UnitCurrency);
+                sLookUp_ShippingNo_View.Columns.Add(gridCol_DateETD);
+                sLookUp_ShippingNo_View.Columns.Add(gridCol_DateCreate);
+                sLookUp_ShippingNo_View.Columns.Add(gridCol_Amount);
+
+                sLookUp_ShippingNo.Properties.PopupFormSize = new Size(998, 0);
+
+                sLookUp_ShippingNo_View.OptionsView.ColumnAutoWidth = false;
+
+                // SET COMMON ATTRIBUTE
+                foreach (GridColumn c in sLookUp_ShippingNo_View.Columns)
+                {
+                    c.AppearanceHeader.Options.UseFont = true;
+                    c.AppearanceHeader.Options.UseForeColor = true;
+                    c.AppearanceHeader.Options.UseTextOptions = true;
+                    c.AppearanceHeader.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+                    c.AppearanceHeader.ForeColor = Color.Black;
+                    c.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
+                    c.AppearanceHeader.TextOptions.WordWrap = WordWrap.Wrap;
+                    c.AppearanceCell.Options.UseTextOptions = true;
+                    c.AppearanceCell.Options.UseBackColor = true;
+                }
+            } else if (_sLookUpItem.Name.Equals(sLookUp_IssuedTo_CompanyCode.Name))
+            {
+                GridColumn gridCol_CustomerCode = new GridColumn();
+                GridColumn gridCol_CustomerName1 = new GridColumn();
+                GridColumn gridCol_Address = new GridColumn();
+                GridColumn gridCol_TelNo = new GridColumn();
+                GridColumn gridCol_FaxNo = new GridColumn();
+                GridColumn gridCol_InvoiceFormat = new GridColumn();
+
+                // CUSTOMER CODE
+                // HEADER
+                gridCol_CustomerCode.Name = "gridCol_CustomerCode";
+                gridCol_CustomerCode.Caption = "ISSUED TO";
+                gridCol_CustomerCode.FieldName = "CUSTOMER_CODE";
+                gridCol_CustomerCode.VisibleIndex = 0;
+                gridCol_CustomerCode.Width = 100;
+                // CELL
+                gridCol_CustomerCode.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_CustomerCode.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // CUSTOMER_NAME1
+                // HEADER
+                gridCol_CustomerName1.Name = "gridCol_CustomerName1";
+                gridCol_CustomerName1.Caption = "CUSTOMER NAME";
+                gridCol_CustomerName1.FieldName = "CUSTOMER_NAME1";
+                gridCol_CustomerName1.VisibleIndex = 0;
+                gridCol_CustomerName1.Width = 120;
+                // CELL
+                gridCol_CustomerName1.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_CustomerName1.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // ADDRESS
+                // HEADER
+                gridCol_Address.Name = "gridCol_Address";
+                gridCol_Address.Caption = "ADDRESS";
+                gridCol_Address.FieldName = "ADDRESS";
+                gridCol_Address.VisibleIndex = 0;
+                gridCol_Address.Width = 150;
+                // CELL
+                gridCol_Address.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_Address.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // TEL NUMBER
+                // HEADER
+                gridCol_TelNo.Name = "gridCol_TelNo";
+                gridCol_TelNo.Caption = "TEL NO";
+                gridCol_TelNo.FieldName = "TEL_NO";
+                gridCol_TelNo.VisibleIndex = 0;
+                gridCol_TelNo.Width = 100;
+                // CELL
+                gridCol_TelNo.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_TelNo.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // FAX NUMBER
+                // HEADER
+                gridCol_FaxNo.Name = "gridCol_FaxNo";
+                gridCol_FaxNo.Caption = "FAX NO";
+                gridCol_FaxNo.FieldName = "FAX_NO";
+                gridCol_FaxNo.VisibleIndex = 0;
+                gridCol_FaxNo.Width = 90;
+                // CELL
+                gridCol_FaxNo.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_FaxNo.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // INVOICE FORMAT
+                // HEADER
+                gridCol_InvoiceFormat.Name = "gridCol_InvoiceFormat";
+                gridCol_InvoiceFormat.Caption = "INVOICE FORMAT";
+                gridCol_InvoiceFormat.FieldName = "INVOICE_FORMAT";
+                gridCol_InvoiceFormat.VisibleIndex = 0;
+                gridCol_InvoiceFormat.Width = 100;
+                // CELL
+                gridCol_FaxNo.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_InvoiceFormat.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                sLookUp_IssuedTo_CompanyCode_View.Columns.Add(gridCol_CustomerCode);
+                sLookUp_IssuedTo_CompanyCode_View.Columns.Add(gridCol_CustomerName1);
+                sLookUp_IssuedTo_CompanyCode_View.Columns.Add(gridCol_Address);
+                sLookUp_IssuedTo_CompanyCode_View.Columns.Add(gridCol_TelNo);
+                sLookUp_IssuedTo_CompanyCode_View.Columns.Add(gridCol_FaxNo);
+                sLookUp_IssuedTo_CompanyCode_View.Columns.Add(gridCol_InvoiceFormat);
+
+                sLookUp_IssuedTo_CompanyCode.Properties.PopupFormSize = new Size(720, 0);
+
+                sLookUp_IssuedTo_CompanyCode_View.OptionsView.ColumnAutoWidth = false;
+
+                // SET COMMON ATTRIBUTE
+                foreach (GridColumn c in sLookUp_IssuedTo_CompanyCode_View.Columns)
+                {
+                    c.AppearanceHeader.Options.UseFont = true;
+                    c.AppearanceHeader.Options.UseForeColor = true;
+                    c.AppearanceHeader.Options.UseTextOptions = true;
+                    c.AppearanceHeader.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+                    c.AppearanceHeader.ForeColor = Color.Black;
+                    c.AppearanceHeader.TextOptions.WordWrap = WordWrap.Wrap;
+                    c.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
+                    c.AppearanceCell.Options.UseTextOptions = true;
+                    c.AppearanceCell.Options.UseBackColor = true;
+                }
+            }
+            else if (_sLookUpItem.Name.Equals(sLookUp_ShipTo_CompanyCode.Name))
+            {
+                sLookUp_ShipTo_CompanyCode.Properties.PopupFormSize = new Size(720, 0);
+
+                GridColumn gridCol_CustomerCode = new GridColumn();
+                GridColumn gridCol_CustomerName1 = new GridColumn();
+                GridColumn gridCol_Address = new GridColumn();
+                GridColumn gridCol_TelNo = new GridColumn();
+                GridColumn gridCol_FaxNo = new GridColumn();
+
+                // CUSTOMER CODE
+                // HEADER
+                gridCol_CustomerCode.Name = "gridCol_CustomerCode";
+                gridCol_CustomerCode.Caption = "SHIP TO";
+                gridCol_CustomerCode.FieldName = "CUSTOMER_CODE";
+                gridCol_CustomerCode.VisibleIndex = 0;
+                gridCol_CustomerCode.Width = 100;
+                // CELL
+                gridCol_CustomerCode.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_CustomerCode.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // CUSTOMER_NAME1
+                // HEADER
+                gridCol_CustomerName1.Name = "gridCol_CustomerName1";
+                gridCol_CustomerName1.Caption = "CUSTOMER NAME";
+                gridCol_CustomerName1.FieldName = "CUSTOMER_NAME1";
+                gridCol_CustomerName1.VisibleIndex = 0;
+                gridCol_CustomerName1.Width = 120;
+                // CELL
+                gridCol_CustomerName1.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_CustomerName1.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // ADDRESS
+                // HEADER
+                gridCol_Address.Name = "gridCol_Address";
+                gridCol_Address.Caption = "ADDRESS";
+                gridCol_Address.FieldName = "ADDRESS";
+                gridCol_Address.VisibleIndex = 0;
+                gridCol_Address.Width = 150;
+                // CELL
+                gridCol_Address.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_Address.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // TEL NUMBER
+                // HEADER
+                gridCol_TelNo.Name = "gridCol_TelNo";
+                gridCol_TelNo.Caption = "TEL NO";
+                gridCol_TelNo.FieldName = "TEL_NO";
+                gridCol_TelNo.VisibleIndex = 0;
+                gridCol_TelNo.Width = 100;
+                // CELL
+                gridCol_TelNo.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_TelNo.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // FAX NUMBER
+                // HEADER
+                gridCol_FaxNo.Name = "gridCol_FaxNo";
+                gridCol_FaxNo.Caption = "FAX NO";
+                gridCol_FaxNo.FieldName = "FAX_NO";
+                gridCol_FaxNo.VisibleIndex = 0;
+                gridCol_FaxNo.Width = 90;
+                // CELL
+                gridCol_FaxNo.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+                gridCol_FaxNo.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+                
+                // Add column
+                sLookUp_ShipTo_CompanyCode_View.Columns.Add(gridCol_CustomerCode);
+                sLookUp_ShipTo_CompanyCode_View.Columns.Add(gridCol_CustomerName1);
+                sLookUp_ShipTo_CompanyCode_View.Columns.Add(gridCol_Address);
+                sLookUp_ShipTo_CompanyCode_View.Columns.Add(gridCol_TelNo);
+                sLookUp_ShipTo_CompanyCode_View.Columns.Add(gridCol_FaxNo);
+
+                sLookUp_ShipTo_CompanyCode_View.OptionsView.ColumnAutoWidth = false;
+
+                // SET COMMON ATTRIBUTE
+                foreach (GridColumn c in sLookUp_ShipTo_CompanyCode_View.Columns)
+                {
+                    c.AppearanceHeader.Options.UseFont = true;
+                    c.AppearanceHeader.Options.UseForeColor = true;
+                    c.AppearanceHeader.Options.UseTextOptions = true;
+                    c.AppearanceHeader.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+                    c.AppearanceHeader.ForeColor = Color.Black;
+                    c.AppearanceHeader.TextOptions.WordWrap = WordWrap.Wrap;
+                    c.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
+                    c.AppearanceCell.Options.UseTextOptions = true;
+                    c.AppearanceCell.Options.UseBackColor = true;
+                }
+            }
+            else if (_sLookUpItem.Name.Equals(sLookUp_PortLoading.Name))
+            {
+                sLookUp_PortLoading.Properties.PopupFormSize = new Size(360, 0);
+
+                GridColumn gridCol_Destination = new GridColumn();
+
+                // DESTINATION ID
+                // HEADER
+                gridCol_Destination.Name = "gridCol_Destination";
+                gridCol_Destination.Caption = "PORT OF LOADING";
+                gridCol_Destination.FieldName = "DESTINATION_ID";
+                gridCol_Destination.VisibleIndex = 0;
+                gridCol_Destination.Width = 250;
+                // CELL
+                gridCol_Destination.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+
+                // Add column
+                sLookUp_PortLoading_View.Columns.Add(gridCol_Destination);
+
+                sLookUp_PortLoading_View.OptionsView.ColumnAutoWidth = false;
+
+                // SET COMMON ATTRIBUTE
+                foreach (GridColumn c in sLookUp_PortLoading_View.Columns)
+                {
+                    c.AppearanceHeader.Options.UseFont = true;
+                    c.AppearanceHeader.Options.UseForeColor = true;
+                    c.AppearanceHeader.Options.UseTextOptions = true;
+                    c.AppearanceHeader.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+                    c.AppearanceHeader.ForeColor = Color.Black;
+                    c.AppearanceHeader.TextOptions.WordWrap = WordWrap.Wrap;
+                    c.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
+                    c.AppearanceCell.Options.UseTextOptions = true;
+                    c.AppearanceCell.Options.UseBackColor = true;
+                }
+            }
+            else if (_sLookUpItem.Name.Equals(sLookUp_PortDestination.Name))
+            {
+                sLookUp_PortDestination.Properties.PopupFormSize = new Size(360, 0);
+
+                GridColumn gridCol_Destination = new GridColumn();
+
+                // DESTINATION ID
+                // HEADER
+                gridCol_Destination.Name = "gridCol_Destination";
+                gridCol_Destination.Caption = "PORT OF DESTINATION";
+                gridCol_Destination.FieldName = "DESTINATION_ID";
+                gridCol_Destination.VisibleIndex = 0;
+                gridCol_Destination.Width = 250;
+                // CELL
+                gridCol_Destination.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+
+                // Add column
+                sLookUp_PortDestination_View.Columns.Add(gridCol_Destination);
+
+                sLookUp_PortDestination_View.OptionsView.ColumnAutoWidth = false;
+
+                // SET COMMON ATTRIBUTE
+                foreach (GridColumn c in sLookUp_PortDestination_View.Columns)
+                {
+                    c.AppearanceHeader.Options.UseFont = true;
+                    c.AppearanceHeader.Options.UseForeColor = true;
+                    c.AppearanceHeader.Options.UseTextOptions = true;
+                    c.AppearanceHeader.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+                    c.AppearanceHeader.ForeColor = Color.Black;
+                    c.AppearanceHeader.TextOptions.WordWrap = WordWrap.Wrap;
+                    c.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
+
+                    c.AppearanceCell.Options.UseBackColor = true;
+                    c.AppearanceCell.Options.UseTextOptions = true;
+                }
+            }
+            else if (_sLookUpItem.Name.Equals(sLookUp_PriceCondition.Name))
+            {
+                sLookUp_PriceCondition.Properties.PopupFormSize = new Size(360, 0);
+
+                GridColumn gridCol_Price_Condition = new GridColumn();
+
+                // PRICE CONDITION
+                // HEADER
+                gridCol_Price_Condition.Name = "gridCol_Price_Condition";
+                gridCol_Price_Condition.Caption = "PRICE CONDITION";
+                gridCol_Price_Condition.FieldName = "PRICE_COND";
+                gridCol_Price_Condition.VisibleIndex = 0;
+                gridCol_Price_Condition.Width = 200;
+                // CELL
+                gridCol_Price_Condition.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+
+                // Add column
+                sLookUp_PriceCondition_View.Columns.Add(gridCol_Price_Condition);
+
+                sLookUp_PriceCondition_View.OptionsView.ColumnAutoWidth = false;
+
+                // SET COMMON ATTRIBUTE
+                foreach (GridColumn c in sLookUp_PriceCondition_View.Columns)
+                {
+                    c.AppearanceHeader.Options.UseFont = true;
+                    c.AppearanceHeader.Options.UseForeColor = true;
+                    c.AppearanceHeader.Options.UseTextOptions = true;
+                    c.AppearanceHeader.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+                    c.AppearanceHeader.ForeColor = Color.Black;
+                    c.AppearanceHeader.TextOptions.WordWrap = WordWrap.Wrap;
+                    c.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
+                    c.AppearanceCell.Options.UseTextOptions = true;
+                    c.AppearanceCell.Options.UseBackColor = true;
+                }
+            }
+            else if (_sLookUpItem.Name.Equals(sLookUp_PaymentTerm.Name))
+            {
+                sLookUp_PaymentTerm.Properties.PopupFormSize = new Size(450, 0);
+
+                GridColumn gridCol_Payment_Term = new GridColumn();
+
+                // PRICE CONDITION
+                // HEADER
+                gridCol_Payment_Term.Name = "gridCol_Payment_Term";
+                gridCol_Payment_Term.Caption = "PAYMENT TERM";
+                gridCol_Payment_Term.FieldName = "PAYMENT_ID";
+                gridCol_Payment_Term.VisibleIndex = 0;
+                gridCol_Payment_Term.Width = 450;
+                // CELL
+                gridCol_Payment_Term.AppearanceCell.TextOptions.WordWrap = WordWrap.Wrap;
+
+                // Add column
+                sLookUp_PaymentTerm_View.Columns.Add(gridCol_Payment_Term);
+
+                sLookUp_PaymentTerm_View.OptionsView.ColumnAutoWidth = false;
+
+                // SET COMMON ATTRIBUTE
+                foreach (GridColumn c in sLookUp_PaymentTerm_View.Columns)
+                {
+                    c.AppearanceHeader.Options.UseFont = true;
+                    c.AppearanceHeader.Options.UseForeColor = true;
+                    c.AppearanceHeader.Options.UseTextOptions = true;
+                    c.AppearanceHeader.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+                    c.AppearanceHeader.ForeColor = Color.Black;
+                    c.AppearanceHeader.TextOptions.WordWrap = WordWrap.Wrap;
+                    c.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
+                    c.AppearanceCell.Options.UseTextOptions = true;
+                    c.AppearanceCell.Options.UseBackColor = true;
+                }
+            }
+        }
         /// <summary>
         /// Set Init combobox Freight
         /// </summary>
@@ -159,98 +658,98 @@ namespace TAKAKO_ERP_3LAYER
 
         public void GetSelectedItem(List<ItemCodeInfo> _listValue)
         {
-            decimal quantity = 0;
-            decimal price = 0;
+            //decimal quantity = 0;
+            //decimal price = 0;
             if (_listValue != null)
             {
                 foreach (ItemCodeInfo item in _listValue)
                 {
-                    //Binding for Invoice
-                    int n = GridView_Invoice.Rows.Add();
-                    GridView_Invoice.Rows[n].Cells["Customer_Code"].Value = item.CustomerCode;
-                    GridView_Invoice.Rows[n].Cells["Cus_ItemCode"].Value = item.Customer_ItemCode;
-                    GridView_Invoice.Rows[n].Cells["Tvc_ItemCode"].Value = item.TVC_ItemCode;
-                    GridView_Invoice.Rows[n].Cells["Part_Description"].Value = item.Item_Name;
-                    GridView_Invoice.Rows[n].Cells["Customer_PO"].Value = item.CustomerPO;
-                    GridView_Invoice.Rows[n].Cells["ThirdParty_PO"].Value = item.ThirdPartyPO;
-                    GridView_Invoice.Rows[n].Cells["Order_Date"].Value = item.Order_Date.ToString("dd/MM/yyyy");
-                    GridView_Invoice.Rows[n].Cells["DueDate_PO"].Value = item.DueDate_PO.ToString("dd/MM/yyyy");
-                    GridView_Invoice.Rows[n].Cells["Quantity"].Value = item.Balance;
-                    GridView_Invoice.Rows[n].Cells["Quantity_Revise"].Value = item.Balance;
-                    GridView_Invoice.Rows[n].Cells["Balance"].Value = item.Balance;
-                    GridView_Invoice.Rows[n].Cells["Unit_Currency"].Value = item.OrderUnitCurrency;
-                    GridView_Invoice.Rows[n].Cells["USD_Rate"].Value = 0;
-                    GridView_Invoice.Rows[n].Cells["Order_Price"].Value = item.OrderPrice;
-                    GridView_Invoice.Rows[n].Cells["Order_Price_Revise"].Value = item.OrderPrice;
-                    GridView_Invoice.Rows[n].Cells["Global_Price"].Value = item.CustomerPrice;
-                    GridView_Invoice.Rows[n].Cells["Amount_JPY"].Value = 0;
-                    ////
-                    //if (item.OrderUnitCurrency == "USD")
+                    ////Binding for Invoice
+                    //int n = GridView_Invoice.Rows.Add();
+                    //GridView_Invoice.Rows[n].Cells["Customer_Code"].Value = item.CustomerCode;
+                    //GridView_Invoice.Rows[n].Cells["Cus_ItemCode"].Value = item.Customer_ItemCode;
+                    //GridView_Invoice.Rows[n].Cells["Tvc_ItemCode"].Value = item.TVC_ItemCode;
+                    //GridView_Invoice.Rows[n].Cells["Part_Description"].Value = item.Item_Name;
+                    //GridView_Invoice.Rows[n].Cells["Customer_PO"].Value = item.CustomerPO;
+                    //GridView_Invoice.Rows[n].Cells["ThirdParty_PO"].Value = item.ThirdPartyPO;
+                    //GridView_Invoice.Rows[n].Cells["Order_Date"].Value = item.Order_Date.ToString("dd/MM/yyyy");
+                    //GridView_Invoice.Rows[n].Cells["DueDate_PO"].Value = item.DueDate_PO.ToString("dd/MM/yyyy");
+                    //GridView_Invoice.Rows[n].Cells["Quantity"].Value = item.Balance;
+                    //GridView_Invoice.Rows[n].Cells["Quantity_Revise"].Value = item.Balance;
+                    //GridView_Invoice.Rows[n].Cells["Balance"].Value = item.Balance;
+                    //GridView_Invoice.Rows[n].Cells["Unit_Currency"].Value = item.OrderUnitCurrency;
+                    //GridView_Invoice.Rows[n].Cells["USD_Rate"].Value = 0;
+                    //GridView_Invoice.Rows[n].Cells["Order_Price"].Value = item.OrderPrice;
+                    //GridView_Invoice.Rows[n].Cells["Order_Price_Revise"].Value = item.OrderPrice;
+                    //GridView_Invoice.Rows[n].Cells["Global_Price"].Value = item.CustomerPrice;
+                    //GridView_Invoice.Rows[n].Cells["Amount_JPY"].Value = 0;
+                    //////
+                    ////if (item.OrderUnitCurrency == "USD")
+                    ////{
+                    ////    GridView_Invoice.Rows[n].Cells["USD_Rate"].ReadOnly = false;
+                    ////}
+
+                    //if (!item.OrderPrice.Equals(null) && !item.CustomerPrice.Equals(null))
                     //{
-                    //    GridView_Invoice.Rows[n].Cells["USD_Rate"].ReadOnly = false;
+                    //    if (Convert.ToDecimal(item.OrderPrice) != Convert.ToDecimal(item.CustomerPrice))
+                    //    {
+                    //        GridView_Invoice.Rows[n].Cells["Order_Price"].Style.BackColor = Color.Red;
+                    //        GridView_Invoice.Rows[n].Cells["Global_Price"].Style.BackColor = Color.Red;
+                    //    }
+                    //}
+                    //else if (item.OrderPrice.Equals(null))
+                    //{
+                    //    GridView_Invoice.Rows[n].Cells["Order_Price"].Style.BackColor = Color.Red;
+                    //}
+                    //else
+                    //{
+                    //    GridView_Invoice.Rows[n].Cells[6].Style.BackColor = Color.Red;
                     //}
 
-                    if (!item.OrderPrice.Equals(null) && !item.CustomerPrice.Equals(null))
-                    {
-                        if (Convert.ToDecimal(item.OrderPrice) != Convert.ToDecimal(item.CustomerPrice))
-                        {
-                            GridView_Invoice.Rows[n].Cells["Order_Price"].Style.BackColor = Color.Red;
-                            GridView_Invoice.Rows[n].Cells["Global_Price"].Style.BackColor = Color.Red;
-                        }
-                    }
-                    else if (item.OrderPrice.Equals(null))
-                    {
-                        GridView_Invoice.Rows[n].Cells["Order_Price"].Style.BackColor = Color.Red;
-                    }
-                    else
-                    {
-                        GridView_Invoice.Rows[n].Cells[6].Style.BackColor = Color.Red;
-                    }
+                    //if (GridView_Invoice.Rows[n].Cells["Quantity"].Value != null
+                    //    || GridView_Invoice.Rows[n].Cells["Order_Price"].Value != null)
+                    //{
+                    //    if (decimal.TryParse(GridView_Invoice.Rows[n].Cells["Quantity"].Value.ToString(), out quantity)
+                    //     && decimal.TryParse(GridView_Invoice.Rows[n].Cells["Order_Price"].Value.ToString(), out price))
+                    //    {
+                    //        decimal amount = quantity * price;
+                    //        if (item.OrderUnitCurrency.ToUpper() == "JPY")
+                    //        {
+                    //            GridView_Invoice.Rows[n].Cells["Amount_Jpy"].Value = Math.Round(amount, 0, MidpointRounding.AwayFromZero);
+                    //        }
+                    //        else if (item.OrderUnitCurrency.ToUpper() == "USD")
+                    //        {
+                    //            GridView_Invoice.Rows[n].Cells["Amount_Jpy"].Value = Math.Round(amount, 2, MidpointRounding.AwayFromZero);
+                    //        }
+                    //    }
+                    //}
 
-                    if (GridView_Invoice.Rows[n].Cells["Quantity"].Value != null
-                        || GridView_Invoice.Rows[n].Cells["Order_Price"].Value != null)
-                    {
-                        if (decimal.TryParse(GridView_Invoice.Rows[n].Cells["Quantity"].Value.ToString(), out quantity)
-                         && decimal.TryParse(GridView_Invoice.Rows[n].Cells["Order_Price"].Value.ToString(), out price))
-                        {
-                            decimal amount = quantity * price;
-                            if (item.OrderUnitCurrency.ToUpper() == "JPY")
-                            {
-                                GridView_Invoice.Rows[n].Cells["Amount_Jpy"].Value = Math.Round(amount, 0, MidpointRounding.AwayFromZero);
-                            }
-                            else if (item.OrderUnitCurrency.ToUpper() == "USD")
-                            {
-                                GridView_Invoice.Rows[n].Cells["Amount_Jpy"].Value = Math.Round(amount, 2, MidpointRounding.AwayFromZero);
-                            }
-                        }
-                    }
+                    //if (Convert.ToDecimal(GridView_Invoice.Rows[n].Cells["Quantity"].Value) == 0)
+                    //{
+                    //    GridView_Invoice.Rows[n].Cells["Quantity"].Style.BackColor = Color.Tomato;
+                    //}
 
-                    if (Convert.ToDecimal(GridView_Invoice.Rows[n].Cells["Quantity"].Value) == 0)
-                    {
-                        GridView_Invoice.Rows[n].Cells["Quantity"].Style.BackColor = Color.Tomato;
-                    }
-
-                    //Binding for Packing List
-                    int m = GridView_PackingList.Rows.Add();
-                    GridView_PackingList.Rows[m].Cells["Customer_Code"].Value = item.CustomerCode;
-                    GridView_PackingList.Rows[m].Cells["Packages_No"].Value = "1";
-                    if (!String.IsNullOrEmpty(item.ThirdPartyItemCode))
-                    { 
-                        GridView_PackingList.Rows[m].Cells["Customer_ItemCode"].Value = item.ThirdPartyItemCode + "\n" + "(" + item.Customer_ItemCode + ")";
-                    } else
-                    {
-                        GridView_PackingList.Rows[m].Cells["Customer_ItemCode"].Value = item.Customer_ItemCode;
-                    }
-                    GridView_PackingList.Rows[m].Cells["TVC_ItemCode"].Value = item.TVC_ItemCode;
-                    GridView_PackingList.Rows[m].Cells["Customer_PO"].Value = item.CustomerPO;
-                    GridView_PackingList.Rows[m].Cells["Qty_Carton"].Value = 0;
-                    GridView_PackingList.Rows[m].Cells["Qty_Per_Carton"].Value = 0;
-                    GridView_PackingList.Rows[m].Cells["Qty_Total"].Value = item.Balance;
-                    GridView_PackingList.Rows[m].Cells["Qty_Total_Revise"].Value = item.Balance;
-                    GridView_PackingList.Rows[m].Cells["Net_Weight"].Value = item.Weight;
-                    GridView_PackingList.Rows[m].Cells["Net_Weight_Total"].Value = item.Weight * item.Balance;
-                    GridView_PackingList.Rows[m].Cells["Gross_Weight"].Value = 0;
-                    GridView_PackingList.Rows[m].Cells["Lot_No"].Value = "NONE-LOT-NO.";
+                    ////Binding for Packing List
+                    //int m = GridView_PackingList.Rows.Add();
+                    //GridView_PackingList.Rows[m].Cells["Customer_Code"].Value = item.CustomerCode;
+                    //GridView_PackingList.Rows[m].Cells["Packages_No"].Value = "1";
+                    //if (!String.IsNullOrEmpty(item.ThirdPartyItemCode))
+                    //{ 
+                    //    GridView_PackingList.Rows[m].Cells["Customer_ItemCode"].Value = item.ThirdPartyItemCode + "\n" + "(" + item.Customer_ItemCode + ")";
+                    //} else
+                    //{
+                    //    GridView_PackingList.Rows[m].Cells["Customer_ItemCode"].Value = item.Customer_ItemCode;
+                    //}
+                    //GridView_PackingList.Rows[m].Cells["TVC_ItemCode"].Value = item.TVC_ItemCode;
+                    //GridView_PackingList.Rows[m].Cells["Customer_PO"].Value = item.CustomerPO;
+                    //GridView_PackingList.Rows[m].Cells["Qty_Carton"].Value = 0;
+                    //GridView_PackingList.Rows[m].Cells["Qty_Per_Carton"].Value = 0;
+                    //GridView_PackingList.Rows[m].Cells["Qty_Total"].Value = item.Balance;
+                    //GridView_PackingList.Rows[m].Cells["Qty_Total_Revise"].Value = item.Balance;
+                    //GridView_PackingList.Rows[m].Cells["Net_Weight"].Value = item.Weight;
+                    //GridView_PackingList.Rows[m].Cells["Net_Weight_Total"].Value = item.Weight * item.Balance;
+                    //GridView_PackingList.Rows[m].Cells["Gross_Weight"].Value = 0;
+                    //GridView_PackingList.Rows[m].Cells["Lot_No"].Value = "NONE-LOT-NO.";
                 }
             }
         }
@@ -279,21 +778,19 @@ namespace TAKAKO_ERP_3LAYER
 
             func(Controls);
 
-            txtTotalQuantity.Text = "0";
-            txtTotalAmount.Text = "0";
             txtTotal_QtyCarton.Text = "0";
             txtTotal_Qty.Text = "0";
             txtTotal_NetWeight.Text = "0";
             txtTotal_GrossWeight.Text = "0";
 
             //
-            txtShippingNo.Enabled = true;
+            sLookUp_ShippingNo.Enabled = true;
 
-            //Clear Gridview Invoice
-            GridView_Invoice.Rows.Clear();
+            ////Clear Gridview Invoice
+            //GridView_Invoice.Rows.Clear();
 
-            //Clear Gridview PL
-            GridView_PackingList.Rows.Clear();
+            ////Clear Gridview PL
+            //GridView_PackingList.Rows.Clear();
 
             //
             tabControl.SelectedIndex = 0;
@@ -306,13 +803,12 @@ namespace TAKAKO_ERP_3LAYER
 
             //
             btnUnlockData.Enabled = false;
-            btnRevise.Enabled = false;
 
             //
             cb_Freight.SelectedValue = 99;
 
             //
-            txtShippingNo.Focus();
+            sLookUp_ShippingNo.Focus();
         }
 
         private string Sum_Total(DataGridView _datagridviewSum, string _cellName)
@@ -327,191 +823,87 @@ namespace TAKAKO_ERP_3LAYER
             return Sum;
         }
 
-        private void btnSumInvoice_Click(object sender, EventArgs e)
-        {
-            if (radNormal.Checked == true || radLock.Checked == true)
-            { 
-                //Sum quantity
-                txtTotalQuantity.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_Invoice, "Quantity")));
-            } else if (radRevise.Checked == true)
-            {
-                //Sum quantity
-                txtTotalQuantity.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_Invoice, "Quantity_Revise")));
-            }
+        //private void btnSumInvoice_Click(object sender, EventArgs e)
+        //{
+        //    if (radNormal.Checked == true || radLock.Checked == true)
+        //    { 
+        //        //Sum quantity
+        //        txtTotalQuantity.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_Invoice, "Quantity")));
+        //    } else if (radRevise.Checked == true)
+        //    {
+        //        //Sum quantity
+        //        txtTotalQuantity.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_Invoice, "Quantity_Revise")));
+        //    }
 
-            //Sum amount
-            txtTotalAmount.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_Invoice, "Amount_Jpy")));
-        }
+        //    //Sum amount
+        //    txtTotalAmount.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_Invoice, "Amount_Jpy")));
+        //}
 
         public string FormatCommas(decimal tempValue)
         {
             return string.Format("{0:#,##0.##}", tempValue);
         }
 
-        private void btnSumPL_Click(object sender, EventArgs e)
-        {
-            //Sum total carton
-            txtTotal_QtyCarton.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Qty_Carton")));
+        //private void btnSumPL_Click(object sender, EventArgs e)
+        //{
+        //    //Sum total carton
+        //    txtTotal_QtyCarton.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Qty_Carton")));
 
-            if (radNormal.Checked == true || radLock.Checked == true)
-            {
-                //Sum total quantity
-                txtTotal_Qty.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Qty_Total")));
-            } else if(radRevise.Checked == true || radLock.Checked == true)
-            {
-                //Sum total quantity revise
-                txtTotal_Qty.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Qty_Total_Revise")));
-            }
+        //    if (radNormal.Checked == true || radLock.Checked == true)
+        //    {
+        //        //Sum total quantity
+        //        txtTotal_Qty.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Qty_Total")));
+        //    } else if(radRevise.Checked == true || radLock.Checked == true)
+        //    {
+        //        //Sum total quantity revise
+        //        txtTotal_Qty.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Qty_Total_Revise")));
+        //    }
 
-            //Sum total Net Weight
-            txtTotal_NetWeight.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Net_Weight_Total")));
+        //    //Sum total Net Weight
+        //    txtTotal_NetWeight.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Net_Weight_Total")));
 
-            //Sum total Grosss Weight
-            txtTotal_GrossWeight.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Gross_Weight")));
-        }
+        //    //Sum total Grosss Weight
+        //    txtTotal_GrossWeight.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Gross_Weight")));
+        //}
 
         #region Search
         private void btnSearch_ShippingNo_Click(object sender, EventArgs e)
         {
-            Form_Search _formSearchShippingNo = new Form_Search("btnSearch_ShippingNo",this.Name);
-            _formSearchShippingNo.StartPosition = FormStartPosition.CenterParent;
-            _formSearchShippingNo.ShowDialog();
+            //Form_Search _formSearchShippingNo = new Form_Search("btnSearch_ShippingNo",this.Name);
+            //_formSearchShippingNo.StartPosition = FormStartPosition.CenterParent;
+            //_formSearchShippingNo.ShowDialog();
 
-            if (!String.IsNullOrEmpty(_formSearchShippingNo._shippingInfo.ShippingNo))
-            {
-                ClearData();
-                string Lock_Status = "";
+            //if (!String.IsNullOrEmpty(_formSearchShippingNo._shippingInfo.ShippingNo))
+            //{
+            //    ClearData();
+            //    string Lock_Status = "";
 
-                txtShippingNo.Text = _formSearchShippingNo._shippingInfo.ShippingNo;
-                Lock_Status = _formSearchShippingNo._shippingInfo.Lock_Status;
+            //    //txtShippingNo.Text = _formSearchShippingNo._shippingInfo.ShippingNo;
+            //    Lock_Status = _formSearchShippingNo._shippingInfo.Lock_Status;
 
-                if (Lock_Status.ToLower() == "normal")
-                {
-                    radNormal.Checked = true;
-                }
-                else if (Lock_Status.ToLower() == "lock")
-                {
-                    radLock.Checked = true;
-                }
-                else if (Lock_Status.ToLower() == "revise")
-                {
-                    radRevise.Checked = true;
-                }
+            //    if (Lock_Status.ToLower() == "normal")
+            //    {
+            //        radNormal.Checked = true;
+            //    }
+            //    else if (Lock_Status.ToLower() == "lock")
+            //    {
+            //        radLock.Checked = true;
+            //    }
+            //    else if (Lock_Status.ToLower() == "revise")
+            //    {
+            //        radRevise.Checked = true;
+            //    }
 
-                //Load Invoice
-                btn_SearchShipping_Click(sender, e);
+            //    //Load Invoice
+            //    btn_SearchShipping_Click(sender, e);
 
-                //Setting enable item
-                SettingInitGridView();
-            }
-            else
-            {
-                txtShippingNo.Focus();
-            }
-        }
-
-        private void btnSearch_IssuedTo_Click(object sender, EventArgs e)
-        {
-            Form_Search _formSearch = new Form_Search("btnSearch_IssuedTo", this.Name);
-            _formSearch.StartPosition = FormStartPosition.CenterParent;
-            _formSearch.ShowDialog();
-
-            if (!String.IsNullOrEmpty(_formSearch._companyInfo.CompanyCode))
-            { 
-                txtIssuedTo_CompanyCode.Text = _formSearch._companyInfo.CompanyCode;
-                txtIssuedTo_CompanyName.Text = _formSearch._companyInfo.CompanyName;
-                txtIssuedTo_CompanyAddress.Text = _formSearch._companyInfo.CompanyAddress;
-                txtIssuedTo_TelNo.Text = _formSearch._companyInfo.CompanyTelNo;
-                txtIssuedTo_FaxNo.Text = _formSearch._companyInfo.CompanyFaxNo;
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-        }
-
-        private void btnSearch_ShipTo_Click(object sender, EventArgs e)
-        {
-            Form_Search _formSearch = new Form_Search("btnSearch_ShipTo", this.Name);
-            _formSearch.StartPosition = FormStartPosition.CenterParent;
-            _formSearch.ShowDialog();
-
-            if (!String.IsNullOrEmpty(_formSearch._companyInfo.CompanyCode))
-            {
-                txtShipTo_CompanyCode.Text = _formSearch._companyInfo.CompanyCode;
-                txtShipTo_CompanyName.Text = _formSearch._companyInfo.CompanyName;
-                txtShipTo_CompanyAddress.Text = _formSearch._companyInfo.CompanyAddress;
-                txtShipTo_TelNo.Text = _formSearch._companyInfo.CompanyTelNo;
-                txtShipTo_FaxNo.Text = _formSearch._companyInfo.CompanyFaxNo;
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else
-            {
-                txtShipTo_CompanyCode.Focus();
-            }
-        }
-
-        private void btnSearch_PortLoading_Click(object sender, EventArgs e)
-        {
-            Form_Search _formSearch = new Form_Search("btnSearch_PortLoading", this.Name);
-            _formSearch.StartPosition = FormStartPosition.CenterParent;
-            _formSearch.ShowDialog();
-
-            if (!String.IsNullOrEmpty(_formSearch._destinationInfo.DestinationID))
-            {
-                txtPortLoading.Text = _formSearch._destinationInfo.DestinationID;
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else
-            {
-                txtPortLoading.Focus();
-            }
-        }
-
-        private void btnSearch_PortDestination_Click(object sender, EventArgs e)
-        {
-            Form_Search _formSearch = new Form_Search("btnSearch_PortDestination", this.Name);
-            _formSearch.StartPosition = FormStartPosition.CenterParent;
-            _formSearch.ShowDialog();
-
-            if (!String.IsNullOrEmpty(_formSearch._destinationInfo.DestinationID))
-            {
-                txtPortDestination.Text = _formSearch._destinationInfo.DestinationID;
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else
-            {
-                txtPortDestination.Focus();
-            }
-        }
-
-        private void btnSearch_PriceCondition_Click(object sender, EventArgs e)
-        {
-            Form_Search _formSearch = new Form_Search("btnSearch_TradeCondition", this.Name);
-            _formSearch.StartPosition = FormStartPosition.CenterParent;
-            _formSearch.ShowDialog();
-            if (!String.IsNullOrEmpty(_formSearch._priceCondition.PriceCondition))
-            {
-                txtPriceCondition.Text = _formSearch._priceCondition.PriceCondition;
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else
-            {
-                txtPriceCondition.Focus();
-            }
-        }
-
-        private void btnSearch_PaymentTerm_Click(object sender, EventArgs e)
-        {
-            Form_Search _formSearch = new Form_Search("btnSearch_PaymentTerm", this.Name);
-            _formSearch.StartPosition = FormStartPosition.CenterParent;
-            _formSearch.ShowDialog();
-            if (!String.IsNullOrEmpty(_formSearch._paymentTerm.PaymentID))
-            {
-                txtPaymentTerm.Text = _formSearch._paymentTerm.PaymentID;
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else
-            {
-                txtPaymentTerm.Focus();
-            }
+            //    //Setting enable item
+            //    SettingInitGridView();
+            //}
+            //else
+            //{
+            //    sLookUp_ShippingNo.Focus();
+            //}
         }
         #endregion
 
@@ -679,396 +1071,458 @@ namespace TAKAKO_ERP_3LAYER
         #endregion
 
         #region GridView
-        public void AddColumnGridView(DataGridView _dataGridView)
+        public void DefineGridView(GridView _dataGridView)
         {
-            if (_dataGridView.Name == "GridView_Invoice")
+            if (_dataGridView.Name == "gridView_Invoice")
             {
-                System.Windows.Forms.DataGridViewTextBoxColumn InvCustomerCode_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvItem_Name_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvCus_ItemCode_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvTVC_ItemCode_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvCustomerPO_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvThirdPartyItemCode_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvThirdPartyPO_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn OrderDate_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn DueDatePO_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvQuantity_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvQuantityRevise_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvBalance_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvOrder_Price_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvOrder_Price_Revise_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvGlobal_Price_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvAmount_Price_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvEx_Rate_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn InvUnitCurrency_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewButtonColumn InvButtonSearch_col = new System.Windows.Forms.DataGridViewButtonColumn();
+                GridColumn gridCol_Customer_Code = new GridColumn();
+                GridColumn gridCol_Item_Name = new GridColumn();
+                GridColumn gridCol_Cus_Item_Code = new GridColumn();
+                GridColumn gridCol_TVC_Item_Code = new GridColumn();
+                GridColumn gridCol_Btn_Search_PO = new GridColumn();
+                GridColumn gridCol_Customer_PO = new GridColumn();
+                GridColumn gridCol_Third_Party_Item_Code = new GridColumn();
+                GridColumn gridCol_Third_Party_PO = new GridColumn();
+                GridColumn gridCol_OrderDate = new GridColumn();
+                GridColumn gridCol_Due_Date_PO = new GridColumn();
+                GridColumn gridCol_Qty = new GridColumn();
+                GridColumn gridCol_Qty_Revise = new GridColumn();
+                GridColumn gridCol_Balance = new GridColumn();
+                GridColumn gridCol_Unit_Currency = new GridColumn();
+                GridColumn gridCol_InvEx_Rate = new GridColumn();
+                GridColumn gridCol_Order_Price = new GridColumn();
+                GridColumn gridCol_Order_Price_Revise = new GridColumn();
+                GridColumn gridCol_Global_Price = new GridColumn();
+                GridColumn gridCol_Amount_Total = new GridColumn();
 
-                this.GridView_Invoice.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[]
-                    {
-                         InvCustomerCode_col
-                        ,InvItem_Name_col
-                        ,InvCus_ItemCode_col
-                        ,InvTVC_ItemCode_col
-                        ,InvButtonSearch_col
-                        ,InvCustomerPO_col
-                        ,InvThirdPartyItemCode_col
-                        ,InvThirdPartyPO_col
-                        ,OrderDate_col
-                        ,DueDatePO_col
-                        ,InvQuantity_col
-                        ,InvQuantityRevise_col
-                        ,InvBalance_col
-                        ,InvUnitCurrency_col
-                        ,InvEx_Rate_col
-                        ,InvOrder_Price_col
-                        ,InvOrder_Price_Revise_col
-                        ,InvGlobal_Price_col
-                        ,InvAmount_Price_col
-                    });
+                RepositoryItemButtonEdit repo_Btn_Search_PO = new RepositoryItemButtonEdit();
+
                 //CUSTOMER CODE
-                InvCustomerCode_col.HeaderText = "CUSTOMER CODE";
-                InvCustomerCode_col.DataPropertyName = "CUSTOMER_CODE";
-                InvCustomerCode_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvCustomerCode_col.Name = "Customer_Code";
-                InvCustomerCode_col.Width = 90;
+                gridCol_Customer_Code.Name = "gridCol_Customer_Code";
+                gridCol_Customer_Code.Caption = "CUSTOMER CODE";
+                gridCol_Customer_Code.FieldName = "CUSTOMER_CODE";
+                gridCol_Customer_Code.VisibleIndex = 0;
+                gridCol_Customer_Code.Width = 100;
 
-                //PART DESCRIPTION
-                InvItem_Name_col.HeaderText = "PART DESCRIPTION";
-                InvItem_Name_col.DataPropertyName = "ITEM_NAME";
-                InvItem_Name_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvItem_Name_col.Name = "Part_Description";
-                InvItem_Name_col.Width = 133;
+                gridCol_Customer_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
-                //CUSTOMER ITEM CODE
-                InvCus_ItemCode_col.HeaderText = "CUSTOMER ITEM CODE";
-                InvCus_ItemCode_col.DataPropertyName = "INV_CUS_ITEM_CODE";
-                InvCus_ItemCode_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvCus_ItemCode_col.Name = "Cus_ItemCode";
-                InvCus_ItemCode_col.Width = 110;
+                // ITEM NAME
+                gridCol_Item_Name.Name = "gridCol_Item_Name";
+                gridCol_Item_Name.Caption = "PART DESCRIPTION";
+                gridCol_Item_Name.FieldName = "PART_DESCRIPTION";
+                gridCol_Item_Name.VisibleIndex = 1;
+                gridCol_Item_Name.Width = 140;
 
-                //TVC ITEM CODE
-                InvTVC_ItemCode_col.HeaderText = "TVC ITEM CODE";
-                InvTVC_ItemCode_col.DataPropertyName = "TVC_ITEM_CODE";
-                InvTVC_ItemCode_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvTVC_ItemCode_col.Name = "Tvc_ItemCode";
-                InvTVC_ItemCode_col.Width = 130;
+                gridCol_Item_Name.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
-                //BUTTON SEARCH ITEM CODE
-                InvButtonSearch_col.HeaderText = "";
-                InvButtonSearch_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvButtonSearch_col.Name = "BtnSearch_ItemCode";
-                InvButtonSearch_col.Width = 30;
+                // CUSTOMER ITEM CODE
+                gridCol_Cus_Item_Code.Name = "gridCol_Cus_Item_Code";
+                gridCol_Cus_Item_Code.Caption = "CUSTOMER ITEM CODE";
+                gridCol_Cus_Item_Code.FieldName = "CUS_ITEM_CODE";
+                gridCol_Cus_Item_Code.VisibleIndex = 2;
+                gridCol_Cus_Item_Code.Width = 120;
 
-                //CUSTOMER PO
-                InvCustomerPO_col.HeaderText = "CUSTOMER PO";
-                InvCustomerPO_col.DataPropertyName = "CUSTOMER_PO";
-                InvCustomerPO_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvCustomerPO_col.Name = "Customer_PO";
-                InvCustomerPO_col.Width = 120;
+                gridCol_Cus_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // TVC ITEM CODE
+                gridCol_TVC_Item_Code.Name = "gridCol_TVC_Item_Code";
+                gridCol_TVC_Item_Code.Caption = "TVC ITEM CODE";
+                gridCol_TVC_Item_Code.FieldName = "TVC_ITEM_CODE";
+                gridCol_TVC_Item_Code.VisibleIndex = 3;
+                gridCol_TVC_Item_Code.Width = 120;
+
+                gridCol_TVC_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // BUTTON SEARCH
+                gridCol_Btn_Search_PO.Name = "gridCol_Btn_Search_PO";
+                gridCol_Btn_Search_PO.ColumnEdit = repo_Btn_Search_PO;
+                gridCol_Btn_Search_PO.VisibleIndex = 4;
+                gridCol_Btn_Search_PO.Width = 40;
+
+                // REPOSITORY BUTTON SEARCH PO
+                repo_Btn_Search_PO.AutoHeight = false;
+                repo_Btn_Search_PO.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {new DevExpress.XtraEditors.Controls.EditorButton()});
+                repo_Btn_Search_PO.Name = "repo_Btn_Search_PO";
+                repo_Btn_Search_PO.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
+
+                // CUSTOMER PO
+                gridCol_Customer_PO.Name = "gridCol_Customer_PO";
+                gridCol_Customer_PO.Caption = "CUSTOMER PO";
+                gridCol_Customer_PO.FieldName = "CUSTOMER_PO";
+                gridCol_Customer_PO.VisibleIndex = 5;
+                gridCol_Customer_PO.Width = 120;
+
+                gridCol_Customer_PO.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                ////BUTTON SEARCH ITEM CODE
+                //InvButtonSearch_col.HeaderText = "";
+                //InvButtonSearch_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                //InvButtonSearch_col.Name = "BtnSearch_ItemCode";
+                //InvButtonSearch_col.Width = 30;
 
                 //THIRD PARTY ITEM CODE
-                InvThirdPartyItemCode_col.HeaderText = "THIRD PARTY CODE";
-                InvThirdPartyItemCode_col.DataPropertyName = "THIRD_PARTY_ITEM_CODE";
-                InvThirdPartyItemCode_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvThirdPartyItemCode_col.Name = "ThirdParty_ItemCode";
-                InvThirdPartyItemCode_col.Width = 100;
+                gridCol_Third_Party_Item_Code.Name = "gridCol_Third_Party_Item_Code";
+                gridCol_Third_Party_Item_Code.Caption = "THIRD PARTY CODE";
+                gridCol_Third_Party_Item_Code.FieldName = "THIRD_PARTY_ITEM_CODE";
+                gridCol_Third_Party_Item_Code.VisibleIndex = 6;
+                gridCol_Third_Party_Item_Code.Width = 120;
+
+                gridCol_Third_Party_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
                 //THIRD PARTY PO
-                InvThirdPartyPO_col.HeaderText = "THIRD PARTY PO";
-                InvThirdPartyPO_col.DataPropertyName = "THIRD_PARTY_PO";
-                InvThirdPartyPO_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvThirdPartyPO_col.Name = "ThirdParty_PO";
-                InvThirdPartyPO_col.Width = 100;
+                gridCol_Third_Party_PO.Name = "gridCol_Third_Party_PO_col";
+                gridCol_Third_Party_PO.Caption = "THIRD PARTY PO";
+                gridCol_Third_Party_PO.FieldName = "THIRD_PARTY_PO";
+                gridCol_Third_Party_Item_Code.VisibleIndex = 7;
+                gridCol_Third_Party_PO.Width = 100;
 
-                //ORDER DATE
-                OrderDate_col.HeaderText = "ORDER DATE PO";
-                OrderDate_col.DataPropertyName = "ORDER_DATE";
-                OrderDate_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                OrderDate_col.Name = "Order_Date";
-                OrderDate_col.Width = 120;
+                gridCol_Third_Party_PO.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // ORDER DATE
+                gridCol_OrderDate.Name = "gridCol_OrderDate";
+                gridCol_OrderDate.Caption = "ORDER DATE PO";
+                gridCol_OrderDate.FieldName = "ORDER_DATE";
+                gridCol_OrderDate.VisibleIndex = 8;
+                gridCol_OrderDate.Width = 110;
+                gridCol_OrderDate.DisplayFormat.FormatString = "dd/MM/yyyy";
+                gridCol_OrderDate.DisplayFormat.FormatType = FormatType.DateTime;
+
+                gridCol_OrderDate.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
                 //DUE DATE PO
-                DueDatePO_col.HeaderText = "DUE DATE PO";
-                DueDatePO_col.DataPropertyName = "DUE_DATE_PO";
-                DueDatePO_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                DueDatePO_col.Name = "DueDate_PO";
-                DueDatePO_col.Width = 120;
+                gridCol_Due_Date_PO.Name = "gridCol_Due_Date_PO";
+                gridCol_Due_Date_PO.Caption = "DUE DATE PO";
+                gridCol_Due_Date_PO.FieldName = "DUE_DATE_PO";
+                gridCol_Due_Date_PO.VisibleIndex = 9;
+                gridCol_Due_Date_PO.Width = 120;
+                gridCol_Due_Date_PO.DisplayFormat.FormatString = "dd/MM/yyyy";
+                gridCol_Due_Date_PO.DisplayFormat.FormatType = FormatType.DateTime;
+
+                gridCol_Due_Date_PO.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
                 //QUANTITY
-                InvQuantity_col.HeaderText = "QUANTITY";
-                InvQuantity_col.DataPropertyName = "QUANTITY";
-                InvQuantity_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvQuantity_col.Name = "Quantity";
-                InvQuantity_col.Width = 90;
+                gridCol_Qty.Name = "gridCol_Qty";
+                gridCol_Qty.Caption = "QUANTITY";
+                gridCol_Qty.FieldName = "QUANTITY";
+                gridCol_Qty.VisibleIndex = 10;
+                gridCol_Qty.Width = 120;
+                gridCol_Qty.DisplayFormat.FormatString = "#,##0";
+                gridCol_Qty.DisplayFormat.FormatType = FormatType.Numeric;
+                gridCol_Qty.SummaryItem.SummaryType = SummaryItemType.Sum;
+                gridCol_Qty.SummaryItem.DisplayFormat = "{0:#,##0.####}";
+
+                gridCol_Qty.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
                 //QUANTITY REVISE
-                InvQuantityRevise_col.HeaderText = "QUANTITY REVISE";
-                InvQuantityRevise_col.DataPropertyName = "QUANTITY_REVISE";
-                InvQuantityRevise_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvQuantityRevise_col.Name = "Quantity_Revise";
-                InvQuantityRevise_col.Width = 90;
+                gridCol_Qty_Revise.Name = "gridCol_Qty_Revise";
+                gridCol_Qty_Revise.Caption = "QUANTITY REVISE";
+                gridCol_Qty_Revise.FieldName = "QUANTITY_REVISE";
+                gridCol_Qty_Revise.VisibleIndex = 11;
+                gridCol_Qty_Revise.Width = 120;
+                gridCol_Qty_Revise.DisplayFormat.FormatString = "#,##0";
+                gridCol_Qty_Revise.DisplayFormat.FormatType = FormatType.Numeric;
+                gridCol_Qty_Revise.Visible = false;
 
-                //Balance
-                InvBalance_col.HeaderText = "BALANCE";
-                InvBalance_col.DataPropertyName = "INV_BALANCE";
-                InvBalance_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvBalance_col.Name = "Balance";
-                InvBalance_col.Width = 90;
+                gridCol_Qty_Revise.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
-                //UNIT CURRENCY
-                InvUnitCurrency_col.HeaderText = "UNIT CURRENCY";
-                InvUnitCurrency_col.DataPropertyName = "UNIT_CURRENCY";
-                InvUnitCurrency_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvUnitCurrency_col.Name = "Unit_Currency";
-                InvUnitCurrency_col.Width = 80;
+                // BALANCE
+                gridCol_Balance.Name = "gridCol_Balance";
+                gridCol_Balance.Caption = "BALANCE";
+                gridCol_Balance.FieldName = "INV_BALANCE";
+                gridCol_Balance.VisibleIndex = 12;
+                gridCol_Balance.Width = 120;
+                gridCol_Balance.DisplayFormat.FormatString = "#,##0";
+                gridCol_Balance.DisplayFormat.FormatType = FormatType.Numeric;
+
+                gridCol_Balance.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
+
+                // UNIT CURRENCY
+                gridCol_Unit_Currency.Name = "gridCol_Unit_Currency";
+                gridCol_Unit_Currency.Caption = "UNIT CURRENTCY";
+                gridCol_Unit_Currency.FieldName = "UNIT_CURRENCY";
+                gridCol_Unit_Currency.VisibleIndex = 13;
+                gridCol_Unit_Currency.Width = 100;
+
+                gridCol_Unit_Currency.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
                 //EX RATE
-                InvEx_Rate_col.HeaderText = "Ex. RATE";
-                InvEx_Rate_col.DataPropertyName = "USD_RATE";
-                InvEx_Rate_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvEx_Rate_col.Name = "USD_Rate";
-                InvEx_Rate_col.Width = 90;
+                gridCol_InvEx_Rate.Name = "gridCol_InvEx_Rate";
+                gridCol_InvEx_Rate.Caption = "Ex. RATE";
+                gridCol_InvEx_Rate.FieldName = "USD_RATE";
+                gridCol_InvEx_Rate.VisibleIndex = 14;
+                gridCol_InvEx_Rate.Width = 100;
+                gridCol_InvEx_Rate.DisplayFormat.FormatString = "#,##0.####";
+                gridCol_InvEx_Rate.DisplayFormat.FormatType = FormatType.Numeric;
 
-                //ORDER PRICE
-                InvOrder_Price_col.HeaderText = "ORDER PRICE";
-                InvOrder_Price_col.DataPropertyName = "ORDER_PRICE";
-                InvOrder_Price_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvOrder_Price_col.Name = "Order_Price";
-                InvOrder_Price_col.Width = 115;
+                gridCol_InvEx_Rate.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
+
+                // ORDER PRICE
+                gridCol_Order_Price.Name = "gridCol_Order_Price";
+                gridCol_Order_Price.Caption = "ORDER PRICE";
+                gridCol_Order_Price.FieldName = "ORDER_PRICE";
+                gridCol_Order_Price.VisibleIndex = 15;
+                gridCol_Order_Price.Width = 120;
+                gridCol_Order_Price.DisplayFormat.FormatString = "#,##0.####";
+                gridCol_Order_Price.DisplayFormat.FormatType = FormatType.Numeric;
+
+                gridCol_Order_Price.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
                 //ORDER PRICE REVISE
-                InvOrder_Price_Revise_col.HeaderText = "ORDER PRICE REVISE";
-                InvOrder_Price_Revise_col.DataPropertyName = "ORDER_PRICE_REVISE";
-                InvOrder_Price_Revise_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvOrder_Price_Revise_col.Name = "Order_Price_Revise";
-                InvOrder_Price_Revise_col.Width = 130;
+                gridCol_Order_Price_Revise.Name = "gridCol_Order_Price_Revise";
+                gridCol_Order_Price_Revise.Caption = "ORDER PRICE REVISE";
+                gridCol_Order_Price_Revise.FieldName = "ORDER_PRICE_REVISE";
+                gridCol_Order_Price_Revise.VisibleIndex = 16;
+                gridCol_Order_Price_Revise.Width = 130;
+                gridCol_Order_Price_Revise.DisplayFormat.FormatString = "#,##0.####";
+                gridCol_Order_Price_Revise.DisplayFormat.FormatType = FormatType.Numeric;
+                gridCol_Order_Price_Revise.Visible = false;
 
-                //UNIT PRICE COMPARE
-                InvGlobal_Price_col.HeaderText = "GLOBAL PRICE";
-                InvGlobal_Price_col.DataPropertyName = "PRICE";
-                InvGlobal_Price_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvGlobal_Price_col.Name = "Global_Price";
-                InvGlobal_Price_col.Width = 115;
+                gridCol_Order_Price_Revise.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
-                //AMOUNT (JPY)
-                InvAmount_Price_col.HeaderText = "AMOUNT";
-                InvAmount_Price_col.DataPropertyName = "AMOUNT_JPY";
-                InvAmount_Price_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                InvAmount_Price_col.Name = "Amount_Jpy";
-                InvAmount_Price_col.Width = 120;
+                // GLOBAL PRICE
+                gridCol_Global_Price.Name = "gridCol_Global_Price";
+                gridCol_Global_Price.Caption = "GLOBAL PRICE";
+                gridCol_Global_Price.FieldName = "PRICE";
+                gridCol_Global_Price.VisibleIndex = 17;
+                gridCol_Global_Price.Width = 130;
+                gridCol_Global_Price.DisplayFormat.FormatString = "#,##0.####";
+                gridCol_Global_Price.DisplayFormat.FormatType = FormatType.Numeric;
 
-                //
-                this.GridView_Invoice.DefaultCellStyle.Font = new Font("Arial", 10.25F, GraphicsUnit.Pixel);
+                gridCol_Global_Price.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
-                //CUSTOMER CODE
-                this.GridView_Invoice.Columns["Customer_Code"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                // AMOUNT (JPY)
+                gridCol_Amount_Total.Name = "gridCol_Amount_Total";
+                gridCol_Amount_Total.Caption = "AMOUNT TOTAL";
+                gridCol_Amount_Total.FieldName = "AMOUNT_JPY";
+                gridCol_Amount_Total.VisibleIndex = 18;
+                gridCol_Amount_Total.Width = 120;
+                gridCol_Amount_Total.DisplayFormat.FormatString = "#,##0.####";
+                gridCol_Amount_Total.DisplayFormat.FormatType = FormatType.Numeric;
+                gridCol_Amount_Total.SummaryItem.SummaryType = SummaryItemType.Sum;
 
-                //DUE DATE PO
-                this.GridView_Invoice.Columns["Order_Date"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                gridCol_Amount_Total.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
-                //DUE DATE PO
-                this.GridView_Invoice.Columns["DueDate_PO"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                //this.GridView_Invoice.Columns["DueDate_PO"].Visible = false;
+                // Add column to gridview
+                gridView_Invoice.Columns.Add(gridCol_Customer_Code);
+                gridView_Invoice.Columns.Add(gridCol_Item_Name);
+                gridView_Invoice.Columns.Add(gridCol_Cus_Item_Code);
+                gridView_Invoice.Columns.Add(gridCol_TVC_Item_Code);
+                gridView_Invoice.Columns.Add(gridCol_Btn_Search_PO);
+                gridView_Invoice.Columns.Add(gridCol_Customer_PO);
+                gridView_Invoice.Columns.Add(gridCol_Third_Party_Item_Code);
+                gridView_Invoice.Columns.Add(gridCol_Third_Party_PO);
+                gridView_Invoice.Columns.Add(gridCol_OrderDate);
+                gridView_Invoice.Columns.Add(gridCol_Due_Date_PO);
+                gridView_Invoice.Columns.Add(gridCol_Qty);
+                gridView_Invoice.Columns.Add(gridCol_Qty_Revise);
+                gridView_Invoice.Columns.Add(gridCol_Balance);
+                gridView_Invoice.Columns.Add(gridCol_Unit_Currency);
+                gridView_Invoice.Columns.Add(gridCol_InvEx_Rate);
+                gridView_Invoice.Columns.Add(gridCol_Order_Price);
+                gridView_Invoice.Columns.Add(gridCol_Order_Price_Revise);
+                gridView_Invoice.Columns.Add(gridCol_Global_Price);
+                gridView_Invoice.Columns.Add(gridCol_Amount_Total);
 
-                //THIRD PARTY CODE
-                this.GridView_Invoice.Columns["ThirdParty_ItemCode"].Visible = false;
+                // Setting GridView
+                gridView_Invoice.OptionsNavigation.AutoFocusNewRow = true;
+                gridView_Invoice.OptionsView.ColumnAutoWidth = false;
+                gridView_Invoice.OptionsView.ShowFooter = true;
+                gridView_Invoice.OptionsView.ColumnHeaderAutoHeight = DefaultBoolean.True;
+                gridView_Invoice.FooterPanelHeight = 5;
+                gridView_Invoice.HorzScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
 
-                //ORDER DATE
-                this.GridView_Invoice.Columns["Order_Date"].Visible = true;
+                // Set common attribute
+                foreach (GridColumn c in gridView_Invoice.Columns)
+                {
+                    c.AppearanceHeader.Options.UseFont = true;
+                    c.AppearanceHeader.Options.UseForeColor = true;
+                    c.AppearanceHeader.Options.UseTextOptions = true;
+                    c.AppearanceHeader.ForeColor = Color.Black;
+                    c.AppearanceHeader.TextOptions.WordWrap = WordWrap.Wrap;
+                    c.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
+                    c.AppearanceHeader.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
 
-                //DUE DATE PO
-                //this.GridView_Invoice.Columns["DueDate_PO"].Visible = false;
-                this.GridView_Invoice.Columns["DueDate_PO"].Visible = true;
-
-                ////BALANCE
-                //this.GridView_Invoice.Columns["Balance"].Visible = false;
-                this.GridView_Invoice.Columns["Balance"].DefaultCellStyle.Format = "#,##0.##";
-                this.GridView_Invoice.Columns["Balance"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-
-                //QUANTITY
-                this.GridView_Invoice.Columns["Quantity"].DefaultCellStyle.Format = "#,##0.##";
-                this.GridView_Invoice.Columns["Quantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                this.GridView_Invoice.Columns["Quantity"].CellTemplate.ValueType = typeof(Int32);
-                
-                //QUANTITY REVISE
-                this.GridView_Invoice.Columns["Quantity_Revise"].DefaultCellStyle.Format = "#,##0.##";
-                this.GridView_Invoice.Columns["Quantity_Revise"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                this.GridView_Invoice.Columns["Quantity_Revise"].CellTemplate.ValueType = typeof(Int32);
-
-                //ORDER PRICE
-                this.GridView_Invoice.Columns["Order_Price"].DefaultCellStyle.Format = "#,##0.####";
-                this.GridView_Invoice.Columns["Order_Price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                //ORDER PRICE REVISE
-                this.GridView_Invoice.Columns["Order_Price_Revise"].DefaultCellStyle.Format = "#,##0.####";
-                this.GridView_Invoice.Columns["Order_Price_Revise"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                //UNIT CURRENCY
-                this.GridView_Invoice.Columns["Unit_Currency"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                //USD RATE
-                //this.GridView_Invoice.Columns["USD_Rate"].ReadOnly = true;
-                this.GridView_Invoice.Columns["USD_Rate"].DefaultCellStyle.Format = "#,##0.##";
-                this.GridView_Invoice.Columns["USD_Rate"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                //UNIT PRICE COMPARE
-                this.GridView_Invoice.Columns["Global_Price"].DefaultCellStyle.Format = "#,##0.####";
-                this.GridView_Invoice.Columns["Global_Price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                //AMOUNT JPY
-                this.GridView_Invoice.Columns["Amount_Jpy"].DefaultCellStyle.Format = "#,##0.00##";
-                this.GridView_Invoice.Columns["Amount_Jpy"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    c.AppearanceCell.Options.UseBackColor = true;
+                    c.AppearanceCell.Options.UseTextOptions = true;
+                }
             }
-            else
+            else if (_dataGridView.Name == "gridView_PackingList")
             {
-                System.Windows.Forms.DataGridViewTextBoxColumn PlCustomer_Code_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn PlPackagesNo_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn PlCusItemCode_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn PlTVCItemCode_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn PlCustomerPO_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn PlQtyCarton_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn PlQtyPerCarton_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn PlQtyTotal_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn PlQtyTotal_Revise_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn PlNetWeight_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn PlNetWeightTotal_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn PlGrossWeight_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-                System.Windows.Forms.DataGridViewTextBoxColumn PlLotNo_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+                // Setting GridView
+                gridView_PackingList.OptionsNavigation.AutoFocusNewRow = true;
+                gridView_PackingList.OptionsView.ColumnAutoWidth = false;
+                gridView_PackingList.OptionsView.ColumnHeaderAutoHeight = DefaultBoolean.True;
+                gridView_PackingList.HorzScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
 
-                this.GridView_PackingList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[]
-                    {
-                         PlCustomer_Code_col
-                        ,PlPackagesNo_col
-                        ,PlCusItemCode_col
-                        ,PlTVCItemCode_col
-                        ,PlCustomerPO_col
-                        ,PlQtyCarton_col
-                        ,PlQtyPerCarton_col
-                        ,PlQtyTotal_col
-                        ,PlQtyTotal_Revise_col
-                        ,PlNetWeight_col
-                        ,PlNetWeightTotal_col
-                        ,PlGrossWeight_col
-                        ,PlLotNo_col
-                    });
+                GridColumn gridCol_Customer_Code = new GridColumn();
+                GridColumn gridCol_Cus_Item_Code = new GridColumn();
+                GridColumn gridCol_TVC_Item_Code = new GridColumn();
+                GridColumn gridCol_Customer_PO = new GridColumn();
+                GridColumn gridCol_Packages_No= new GridColumn();
+                GridColumn gridCol_Qty_Carton= new GridColumn();
+                GridColumn gridCol_Qty_Per_Carton= new GridColumn();
+                GridColumn gridCol_Qty_Total= new GridColumn();
+                GridColumn gridCol_Qty_Total_Revise= new GridColumn();
+                GridColumn gridCol_Net_Weight= new GridColumn();
+                GridColumn gridCol_Net_Weight_Total= new GridColumn();
+                GridColumn gridCol_Gross_Weight = new GridColumn();
+                GridColumn gridCol_LotNo = new GridColumn();
 
                 //CUSTOMER CODE
-                PlCustomer_Code_col.HeaderText = "CUSTOMER CODE";
-                PlCustomer_Code_col.DataPropertyName = "CUSTOMER_CODE";
-                PlCustomer_Code_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlCustomer_Code_col.Name = "Customer_Code";
-                PlCustomer_Code_col.Width = 95;
+                gridCol_Customer_Code.Name = "gridCol_Customer_Code";
+                gridCol_Customer_Code.Caption = "CUSTOMER CODE";
+                gridCol_Customer_Code.FieldName = "CUSTOMER_CODE";
+                gridCol_Customer_Code.VisibleIndex = 0;
+                gridCol_Customer_Code.Width = 100;
 
+                gridCol_Customer_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // CUSTOMER ITEM CODE
+                gridCol_Cus_Item_Code.Name = "gridCol_Cus_Item_Code";
+                gridCol_Cus_Item_Code.Caption = "CUSTOMER ITEM CODE";
+                gridCol_Cus_Item_Code.FieldName = "CUSTOMER_ITEM_CODE";
+                gridCol_Cus_Item_Code.VisibleIndex = 0;
+                gridCol_Cus_Item_Code.Width = 120;
+
+                gridCol_Cus_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // TVC ITEM CODE
+                gridCol_TVC_Item_Code.Name = "gridCol_TVC_Item_Code";
+                gridCol_TVC_Item_Code.Caption = "TVC ITEM CODE";
+                gridCol_TVC_Item_Code.FieldName = "TVC_ITEM_CODE";
+                gridCol_TVC_Item_Code.VisibleIndex = 0;
+                gridCol_TVC_Item_Code.Width = 120;
+
+                gridCol_TVC_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+                // CUSTOMER PO
+                gridCol_Customer_PO.Name = "gridCol_Customer_PO";
+                gridCol_Customer_PO.Caption = "CUSTOMER PO";
+                gridCol_Customer_PO.FieldName = "CUSTOMER_PO";
+                gridCol_Customer_PO.VisibleIndex = 0;
+                gridCol_Customer_PO.Width = 120;
+
+                gridCol_Customer_PO.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
                 //PACKAGES NO
-                PlPackagesNo_col.HeaderText = "PACKAGES NO";
-                PlPackagesNo_col.DataPropertyName = "PACKAGES_NO";
-                PlPackagesNo_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlPackagesNo_col.Name = "Packages_No";
-                PlPackagesNo_col.Width = 95;
+                gridCol_Packages_No.Name = "gridCol_Packages_No";
+                gridCol_Packages_No.Caption = "PACKAGES NO";
+                gridCol_Packages_No.FieldName = "PACKAGES_NO";
+                gridCol_Packages_No.VisibleIndex = 0;
+                gridCol_Packages_No.Width = 90;
 
-                //CUSTOMER ITEM CODE
-                PlCusItemCode_col.HeaderText = "CUSTOMER ITEM CODE";
-                PlCusItemCode_col.DataPropertyName = "CUSTOMER_ITEM_CODE";
-                PlCusItemCode_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlCusItemCode_col.Name = "Customer_ItemCode";
-                PlCusItemCode_col.Width = 150;
+                gridCol_Packages_No.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
-                //TVC ITEM CODE
-                PlTVCItemCode_col.HeaderText = "TVC ITEM CODE";
-                PlTVCItemCode_col.DataPropertyName = "TVC_ITEM_CODE";
-                PlTVCItemCode_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlTVCItemCode_col.Name = "TVC_ItemCode";
-                PlTVCItemCode_col.Width = 120;
+                //QTY CARTON
+                gridCol_Qty_Carton.Name = "gridCol_Qty_Carton";
+                gridCol_Qty_Carton.Caption = "QUANTITY CARTON";
+                gridCol_Qty_Carton.FieldName = "QTY_CARTON";
+                gridCol_Qty_Carton.VisibleIndex = 0;
+                gridCol_Qty_Carton.Width = 90;
+                gridCol_Qty_Carton.DisplayFormat.FormatString = "#,##0.##";
+                gridCol_Qty_Carton.DisplayFormat.FormatType = FormatType.Numeric;
 
-                //CUSTOMER PO
-                PlCustomerPO_col.HeaderText = "CUSTOMER PO";
-                PlCustomerPO_col.DataPropertyName = "PL_CUSTOMER_PO";
-                PlCustomerPO_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlCustomerPO_col.Name = "Customer_PO";
-                PlCustomerPO_col.Width = 120;
-
-                //QTY OF CARTON
-                PlQtyCarton_col.HeaderText = "QUANTITY OF CARTON";
-                PlQtyCarton_col.DataPropertyName = "QTY_CARTON";
-                PlQtyCarton_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlQtyCarton_col.Name = "Qty_Carton";
-                PlQtyCarton_col.Width = 100;
-
-                //QTY_PER_CARTON
-                PlQtyPerCarton_col.HeaderText = "QUANTITY / CARTON (PCS)";
-                PlQtyPerCarton_col.DataPropertyName = "BOX_QUANTITY";
-                PlQtyPerCarton_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlQtyPerCarton_col.Name = "Qty_Per_Carton";
-                PlQtyPerCarton_col.Width = 120;
+                //QTY PER CARTON
+                gridCol_Qty_Per_Carton.Name = "gridCol_Qty_Per_Carton";
+                gridCol_Qty_Per_Carton.Caption = "QUANTITY / CARTON (PCS)";
+                gridCol_Qty_Per_Carton.FieldName = "BOX_QUANTITY";
+                gridCol_Qty_Per_Carton.VisibleIndex = 0;
+                gridCol_Qty_Per_Carton.Width = 90;
+                gridCol_Qty_Per_Carton.DisplayFormat.FormatString = "#,##0.##";
+                gridCol_Qty_Per_Carton.DisplayFormat.FormatType = FormatType.Numeric;
 
                 //QTY TOTAL
-                PlQtyTotal_col.HeaderText = "QUANTITY TOTAL(PCS)";
-                PlQtyTotal_col.DataPropertyName = "QTY_TOTAL";
-                PlQtyTotal_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlQtyTotal_col.Name = "Qty_Total";
-                PlQtyTotal_col.Width = 120;
+                gridCol_Qty_Total.Name = "gridCol_Qty_Total";
+                gridCol_Qty_Total.Caption = "QUANTITY TOTAL (PCS)";
+                gridCol_Qty_Total.FieldName = "QTY_TOTAL";
+                gridCol_Qty_Total.VisibleIndex = 0;
+                gridCol_Qty_Total.Width = 90;
+                gridCol_Qty_Total.DisplayFormat.FormatString = "#,##0.##";
+                gridCol_Qty_Total.DisplayFormat.FormatType = FormatType.Numeric;
+
+                gridCol_Gross_Weight.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
                 //QTY TOTAL REVISE
-                PlQtyTotal_Revise_col.HeaderText = "QTY TOTAL REVISE(PCS)";
-                PlQtyTotal_Revise_col.DataPropertyName = "QTY_TOTAL_REVISE";
-                PlQtyTotal_Revise_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlQtyTotal_Revise_col.Name = "Qty_Total_Revise";
-                PlQtyTotal_Revise_col.Width = 120;
+                gridCol_Qty_Total_Revise.Name = "gridCol_Net_Weight";
+                gridCol_Qty_Total_Revise.Caption = "QTY TOTAL REVISE (PCS)";
+                gridCol_Qty_Total_Revise.FieldName = "QTY_TOTAL_REVISE";
+                gridCol_Qty_Total_Revise.VisibleIndex = 0;
+                gridCol_Qty_Total_Revise.Width = 90;
+                gridCol_Qty_Total_Revise.DisplayFormat.FormatString = "#,##0.##";
+                gridCol_Qty_Total_Revise.DisplayFormat.FormatType = FormatType.Numeric;
+
+                gridCol_Gross_Weight.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
                 //NET WEIGHT
-                PlNetWeight_col.HeaderText = "N / W (KG)";
-                PlNetWeight_col.DataPropertyName = "WEIGHT";
-                PlNetWeight_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlNetWeight_col.Name = "Net_Weight";
-                PlNetWeight_col.Width = 90;
+                gridCol_Net_Weight.Name = "gridCol_Net_Weight";
+                gridCol_Net_Weight.Caption = "N / W (KG)";
+                gridCol_Net_Weight.FieldName = "WEIGHT";
+                gridCol_Net_Weight.VisibleIndex = 0;
+                gridCol_Net_Weight.Width = 90;
+                gridCol_Net_Weight.DisplayFormat.FormatString = "#,##0.##";
+                gridCol_Net_Weight.DisplayFormat.FormatType = FormatType.Numeric;
+
+                gridCol_Gross_Weight.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
                 //NET WEIGHT TOTAL
-                PlNetWeightTotal_col.HeaderText = "N / W TOTAL";
-                PlNetWeightTotal_col.DataPropertyName = "WEIGHT_TOTAL";
-                PlNetWeightTotal_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlNetWeightTotal_col.Name = "Net_Weight_Total";
-                PlNetWeightTotal_col.Width = 110;
+                gridCol_Net_Weight_Total.Name = "gridCol_Net_Weight_Total";
+                gridCol_Net_Weight_Total.Caption = "N / W TOTAL";
+                gridCol_Net_Weight_Total.FieldName = "WEIGHT_TOTAL";
+                gridCol_Net_Weight_Total.VisibleIndex = 0;
+                gridCol_Net_Weight_Total.Width = 90;
+                gridCol_Net_Weight_Total.DisplayFormat.FormatString = "#,##0.##";
+                gridCol_Net_Weight_Total.DisplayFormat.FormatType = FormatType.Numeric;
+
+                gridCol_Gross_Weight.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
                 //GROSS WEIGHT
-                PlGrossWeight_col.HeaderText = "G / W (KG)";
-                PlGrossWeight_col.DataPropertyName = "GROSS_WEIGHT";
-                PlGrossWeight_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlGrossWeight_col.Name = "Gross_Weight";
-                PlGrossWeight_col.Width = 100;
+                gridCol_Gross_Weight.Name = "gridCol_Gross_Weight";
+                gridCol_Gross_Weight.Caption = "G / W (KG)";
+                gridCol_Gross_Weight.FieldName = "GROSS_WEIGHT";
+                gridCol_Gross_Weight.VisibleIndex = 0;
+                gridCol_Gross_Weight.Width = 90;
+                gridCol_Gross_Weight.DisplayFormat.FormatString = "#,##0.##";
+                gridCol_Gross_Weight.DisplayFormat.FormatType = FormatType.Numeric;
+
+                gridCol_Gross_Weight.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
                 //LOT NO
-                PlLotNo_col.HeaderText = "LOT NO";
-                PlLotNo_col.DataPropertyName = "LOT_NO";
-                PlLotNo_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                PlLotNo_col.Name = "Lot_No";
-                PlLotNo_col.Width = 134;
+                gridCol_LotNo.Name = "gridCol_LotNo";
+                gridCol_LotNo.Caption = "LOT NO";
+                gridCol_LotNo.FieldName = "LOT_NO";
+                gridCol_LotNo.VisibleIndex = 0;
+                gridCol_LotNo.Width = 150;
 
-                //Setting
-                this.GridView_PackingList.DefaultCellStyle.Font = new Font("Arial", 10.25F, GraphicsUnit.Pixel);
-                this.GridView_PackingList.Columns["Net_Weight"].Visible = false;
-                //this.GridView_PackingList.Columns["Customer_PO"].Visible = false;
+                gridCol_LotNo.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
-                //CUSTOMER CODE
-                this.GridView_PackingList.Columns["Customer_Code"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                //
-                this.GridView_PackingList.Columns["Packages_No"].DefaultCellStyle.Format = "#,##0.##";
-                this.GridView_PackingList.Columns["Packages_No"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                //
-                this.GridView_PackingList.Columns["Qty_Carton"].DefaultCellStyle.Format = "#,##0.##";
-                this.GridView_PackingList.Columns["Qty_Carton"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                //
-                this.GridView_PackingList.Columns["Qty_Per_Carton"].DefaultCellStyle.Format = "#,##0.##";
-                this.GridView_PackingList.Columns["Qty_Per_Carton"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                //
-                this.GridView_PackingList.Columns["Qty_Total"].DefaultCellStyle.Format = "#,##0.##";
-                this.GridView_PackingList.Columns["Qty_Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                //QTY TOTAL REVISE
-                this.GridView_PackingList.Columns["Qty_Total_Revise"].DefaultCellStyle.Format = "#,##0.##";
-                this.GridView_PackingList.Columns["Qty_Total_Revise"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                //
-                this.GridView_PackingList.Columns["Net_Weight"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                this.GridView_PackingList.Columns["Net_Weight"].DefaultCellStyle.Format = "#,##0.###";
-                // 
-                this.GridView_PackingList.Columns["Net_Weight_Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                this.GridView_PackingList.Columns["Net_Weight_Total"].DefaultCellStyle.Format = "#,##0.##";
-                //
-                this.GridView_PackingList.Columns["Gross_Weight"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-                this.GridView_PackingList.Columns["Gross_Weight"].DefaultCellStyle.Format = "#,##0.##";
+                // Add column to gridview
+                gridView_PackingList.Columns.Add(gridCol_Customer_Code);
+                gridView_PackingList.Columns.Add(gridCol_Packages_No);
+                gridView_PackingList.Columns.Add(gridCol_Cus_Item_Code);
+                gridView_PackingList.Columns.Add(gridCol_TVC_Item_Code);
+                gridView_PackingList.Columns.Add(gridCol_Customer_PO);
+                gridView_PackingList.Columns.Add(gridCol_Qty_Carton);
+                gridView_PackingList.Columns.Add(gridCol_Qty_Per_Carton);
+                gridView_PackingList.Columns.Add(gridCol_Qty_Total);
+                gridView_PackingList.Columns.Add(gridCol_Qty_Total_Revise);
+                gridView_PackingList.Columns.Add(gridCol_Net_Weight);
+                gridView_PackingList.Columns.Add(gridCol_Net_Weight_Total);
+                gridView_PackingList.Columns.Add(gridCol_Gross_Weight);
+                gridView_PackingList.Columns.Add(gridCol_LotNo);
+
+                // Set common attribute
+                foreach (GridColumn c in gridView_PackingList.Columns)
+                {
+                    c.AppearanceHeader.Options.UseFont = true;
+                    c.AppearanceHeader.Options.UseForeColor = true;
+                    c.AppearanceHeader.Options.UseTextOptions = true;
+                    c.AppearanceHeader.ForeColor = Color.Black;
+                    c.AppearanceHeader.TextOptions.WordWrap = WordWrap.Wrap;
+                    c.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
+                    c.AppearanceHeader.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+
+                    c.AppearanceCell.Options.UseBackColor = true;
+                    c.AppearanceCell.Options.UseTextOptions = true;
+                }
             }
         }
 
@@ -1086,15 +1540,15 @@ namespace TAKAKO_ERP_3LAYER
                 dtpETD.Enabled = true;
                 dtpDateCreateShipping.Enabled = true;
                 txtInvoiceNo.ReadOnly = false;
-                txtIssuedTo_CompanyCode.ReadOnly = false;
+                sLookUp_IssuedTo_CompanyCode.ReadOnly = false;
                 txtIssuedTo_CompanyName.ReadOnly = false;
-                txtIssuedTo_CompanyAddress.ReadOnly = false;
+                memo_IssuedTo_CompanyAddress.ReadOnly = false;
                 txtIssuedTo_TelNo.ReadOnly = false;
                 txtIssuedTo_FaxNo.ReadOnly = false;
 
-                txtShipTo_CompanyCode.ReadOnly = false;
+                sLookUp_ShipTo_CompanyCode.ReadOnly = false;
                 txtShipTo_CompanyName.ReadOnly = false;
-                txtShipTo_CompanyAddress.ReadOnly = false;
+                memo_ShipTo_CompanyAddress.ReadOnly = false;
                 txtShipTo_TelNo.ReadOnly = false;
                 txtShipTo_FaxNo.ReadOnly = false;
 
@@ -1102,142 +1556,132 @@ namespace TAKAKO_ERP_3LAYER
                 dtpRevenue.Enabled = true;
                 cb_Freight.Enabled = true;
                 txtVessel.ReadOnly = false;
-                txtPortLoading.ReadOnly = false;
-                txtPortDestination.ReadOnly = false;
+                sLookUp_PortLoading.ReadOnly = false;
+                sLookUp_PortDestination.ReadOnly = false;
 
-                txtPriceCondition.ReadOnly = false;
-                txtPaymentTerm.ReadOnly = false;
+                sLookUp_PriceCondition.ReadOnly = false;
+                sLookUp_PaymentTerm.ReadOnly = false;
 
                 //Button Lock, Unlock & Revise Data
                 btnLockData.Enabled = true;
                 btnUnlockData.Enabled = false;
-                btnRevise.Enabled = false;
 
                 //
                 btnSave_Data.Enabled = true;
 
-                //Button search
-                btnSearch_ShippingNo.Enabled = true;
-                btnSearch_IssuedTo.Enabled = true;
-                btnSearch_ShipTo.Enabled = true;
-                btnSearch_PortLoading.Enabled = true;
-                btnSearch_PortDestination.Enabled = true;
-                btnSearch_TradeCondition.Enabled = true;
-                btnSearch_PaymentTerm.Enabled = true;
+                gridView_Invoice.OptionsBehavior.AllowDeleteRows = DefaultBoolean.True;
+                gridView_PackingList.OptionsBehavior.AllowDeleteRows = DefaultBoolean.True;
 
-                GridView_Invoice.AllowUserToDeleteRows = true;
-                GridView_PackingList.AllowUserToDeleteRows = true;
+                ////---------------- Gridview Invoice ----------------//
+                ////------ Disable------//
+                //GridView_Invoice.Columns["Quantity_Revise"].Visible = false;
+                //GridView_Invoice.Columns["Quantity_Revise"].ReadOnly = true;
+                //GridView_Invoice.Columns["Quantity_Revise"].DefaultCellStyle.BackColor = Color.Gray;
+                //GridView_Invoice.Columns["Order_Price_Revise"].Visible = false;
+                //GridView_Invoice.Columns["Order_Price_Revise"].ReadOnly = true;
+                //GridView_Invoice.Columns["Order_Price_Revise"].DefaultCellStyle.BackColor = Color.Gray;
 
-                //---------------- Gridview Invoice ----------------//
-                //------ Disable------//
-                GridView_Invoice.Columns["Quantity_Revise"].Visible = false;
-                GridView_Invoice.Columns["Quantity_Revise"].ReadOnly = true;
-                GridView_Invoice.Columns["Quantity_Revise"].DefaultCellStyle.BackColor = Color.Gray;
-                GridView_Invoice.Columns["Order_Price_Revise"].Visible = false;
-                GridView_Invoice.Columns["Order_Price_Revise"].ReadOnly = true;
-                GridView_Invoice.Columns["Order_Price_Revise"].DefaultCellStyle.BackColor = Color.Gray;
+                ////------------ Gridview PackingLisst ---------------//
+                ////------ Disable------//
+                //GridView_PackingList.Columns["Qty_Total_Revise"].Visible = false;
+                //GridView_PackingList.Columns["Qty_Total_Revise"].ReadOnly = true;
+                //GridView_PackingList.Columns["Qty_Total_Revise"].DefaultCellStyle.BackColor = Color.Gray;
 
-                //------------ Gridview PackingLisst ---------------//
-                //------ Disable------//
-                GridView_PackingList.Columns["Qty_Total_Revise"].Visible = false;
-                GridView_PackingList.Columns["Qty_Total_Revise"].ReadOnly = true;
-                GridView_PackingList.Columns["Qty_Total_Revise"].DefaultCellStyle.BackColor = Color.Gray;
+                //foreach (DataGridViewRow dtRow in GridView_Invoice.Rows)
+                //{
+                //    if (!dtRow.IsNewRow)
+                //    { 
+                //        //---- Enable ----//
+                //        dtRow.Cells["Customer_Code"].ReadOnly = true;
+                //        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
 
-                foreach (DataGridViewRow dtRow in GridView_Invoice.Rows)
-                {
-                    if (!dtRow.IsNewRow)
-                    { 
-                        //---- Enable ----//
-                        dtRow.Cells["Customer_Code"].ReadOnly = true;
-                        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Part_Description"].ReadOnly = false;
+                //        dtRow.Cells["Part_Description"].Style.BackColor = Color.White;
 
-                        dtRow.Cells["Part_Description"].ReadOnly = false;
-                        dtRow.Cells["Part_Description"].Style.BackColor = Color.White;
+                //        dtRow.Cells["Cus_ItemCode"].ReadOnly = true;
+                //        dtRow.Cells["Cus_ItemCode"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Cus_ItemCode"].ReadOnly = true;
-                        dtRow.Cells["Cus_ItemCode"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Tvc_ItemCode"].ReadOnly = true;
+                //        dtRow.Cells["Tvc_ItemCode"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Tvc_ItemCode"].ReadOnly = true;
-                        dtRow.Cells["Tvc_ItemCode"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Customer_PO"].ReadOnly = false;
+                //        dtRow.Cells["Customer_PO"].Style.BackColor = Color.White;
 
-                        dtRow.Cells["Customer_PO"].ReadOnly = false;
-                        dtRow.Cells["Customer_PO"].Style.BackColor = Color.White;
+                //        dtRow.Cells["ThirdParty_PO"].ReadOnly = true;
+                //        dtRow.Cells["ThirdParty_PO"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["ThirdParty_PO"].ReadOnly = true;
-                        dtRow.Cells["ThirdParty_PO"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Order_Date"].ReadOnly = true;
+                //        dtRow.Cells["Order_Date"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Order_Date"].ReadOnly = true;
-                        dtRow.Cells["Order_Date"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["DueDate_PO"].ReadOnly = true;
+                //        dtRow.Cells["DueDate_PO"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["DueDate_PO"].ReadOnly = true;
-                        dtRow.Cells["DueDate_PO"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Quantity"].ReadOnly = false;
+                //        dtRow.Cells["Quantity"].Style.BackColor = Color.White;
 
-                        dtRow.Cells["Quantity"].ReadOnly = false;
-                        dtRow.Cells["Quantity"].Style.BackColor = Color.White;
+                //        dtRow.Cells["Balance"].ReadOnly = true;
+                //        dtRow.Cells["Balance"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Balance"].ReadOnly = true;
-                        dtRow.Cells["Balance"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Unit_Currency"].ReadOnly = true;
+                //        dtRow.Cells["Unit_Currency"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Unit_Currency"].ReadOnly = true;
-                        dtRow.Cells["Unit_Currency"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["USD_Rate"].ReadOnly = false;
+                //        dtRow.Cells["USD_Rate"].Style.BackColor = Color.White;
 
-                        dtRow.Cells["USD_Rate"].ReadOnly = false;
-                        dtRow.Cells["USD_Rate"].Style.BackColor = Color.White;
+                //        dtRow.Cells["Order_Price"].ReadOnly = false;
+                //        dtRow.Cells["Order_Price"].Style.BackColor = Color.White;
 
-                        dtRow.Cells["Order_Price"].ReadOnly = false;
-                        dtRow.Cells["Order_Price"].Style.BackColor = Color.White;
+                //        dtRow.Cells["Global_Price"].ReadOnly = true;
+                //        dtRow.Cells["Global_Price"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Global_Price"].ReadOnly = true;
-                        dtRow.Cells["Global_Price"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Amount_Jpy"].ReadOnly = true;
+                //        dtRow.Cells["Amount_Jpy"].Style.BackColor = Color.Gray;
+                //    }
+                //}
 
-                        dtRow.Cells["Amount_Jpy"].ReadOnly = true;
-                        dtRow.Cells["Amount_Jpy"].Style.BackColor = Color.Gray;
-                    }
-                }
+                ////---------------- Gridview PackingList ----------------//
+                ////---- Enable ----//
+                //foreach (DataGridViewRow dtRow in GridView_PackingList.Rows)
+                //{
+                //    if (!dtRow.IsNewRow)
+                //    { 
+                //        dtRow.Cells["Customer_Code"].ReadOnly = true;
+                //        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
 
-                //---------------- Gridview PackingList ----------------//
-                //---- Enable ----//
-                foreach (DataGridViewRow dtRow in GridView_PackingList.Rows)
-                {
-                    if (!dtRow.IsNewRow)
-                    { 
-                        dtRow.Cells["Customer_Code"].ReadOnly = true;
-                        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Packages_No"].ReadOnly = false;
+                //        dtRow.Cells["Packages_No"].Style.BackColor = Color.White;
 
-                        dtRow.Cells["Packages_No"].ReadOnly = false;
-                        dtRow.Cells["Packages_No"].Style.BackColor = Color.White;
+                //        dtRow.Cells["Customer_ItemCode"].ReadOnly = true;
+                //        dtRow.Cells["Customer_ItemCode"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Customer_ItemCode"].ReadOnly = true;
-                        dtRow.Cells["Customer_ItemCode"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["TVC_ItemCode"].ReadOnly = true;
+                //        dtRow.Cells["TVC_ItemCode"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["TVC_ItemCode"].ReadOnly = true;
-                        dtRow.Cells["TVC_ItemCode"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Customer_PO"].ReadOnly = false;
+                //        dtRow.Cells["Customer_PO"].Style.BackColor = Color.White;
 
-                        dtRow.Cells["Customer_PO"].ReadOnly = false;
-                        dtRow.Cells["Customer_PO"].Style.BackColor = Color.White;
+                //        dtRow.Cells["Qty_Carton"].ReadOnly = false;
+                //        dtRow.Cells["Qty_Carton"].Style.BackColor = Color.White;
 
-                        dtRow.Cells["Qty_Carton"].ReadOnly = false;
-                        dtRow.Cells["Qty_Carton"].Style.BackColor = Color.White;
+                //        dtRow.Cells["Qty_Per_Carton"].ReadOnly = false;
+                //        dtRow.Cells["Qty_Per_Carton"].Style.BackColor = Color.White;
 
-                        dtRow.Cells["Qty_Per_Carton"].ReadOnly = false;
-                        dtRow.Cells["Qty_Per_Carton"].Style.BackColor = Color.White;
+                //        dtRow.Cells["Qty_Total"].ReadOnly = true;
+                //        dtRow.Cells["Qty_Total"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Qty_Total"].ReadOnly = true;
-                        dtRow.Cells["Qty_Total"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Net_Weight"].ReadOnly = false;
+                //        dtRow.Cells["Net_Weight"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Net_Weight"].ReadOnly = false;
-                        dtRow.Cells["Net_Weight"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Net_Weight_Total"].ReadOnly = false;
+                //        dtRow.Cells["Net_Weight_Total"].Style.BackColor = Color.White;
 
-                        dtRow.Cells["Net_Weight_Total"].ReadOnly = false;
-                        dtRow.Cells["Net_Weight_Total"].Style.BackColor = Color.White;
+                //        dtRow.Cells["Gross_Weight"].ReadOnly = false;
+                //        dtRow.Cells["Gross_Weight"].Style.BackColor = Color.White;
 
-                        dtRow.Cells["Gross_Weight"].ReadOnly = false;
-                        dtRow.Cells["Gross_Weight"].Style.BackColor = Color.White;
-
-                        dtRow.Cells["Lot_No"].ReadOnly = false;
-                        dtRow.Cells["Lot_No"].Style.BackColor = Color.White;
-                    }
-                }
+                //        dtRow.Cells["Lot_No"].ReadOnly = false;
+                //        dtRow.Cells["Lot_No"].Style.BackColor = Color.White;
+                //    }
+                //}
             }
             else if (radLock.Checked == true)
             {
@@ -1248,15 +1692,15 @@ namespace TAKAKO_ERP_3LAYER
                 dtpETD.Enabled = false;
                 dtpDateCreateShipping.Enabled = false;
                 txtInvoiceNo.ReadOnly = true;
-                txtIssuedTo_CompanyCode.ReadOnly = true;
+                sLookUp_IssuedTo_CompanyCode.ReadOnly = true;
                 txtIssuedTo_CompanyName.ReadOnly = true;
-                txtIssuedTo_CompanyAddress.ReadOnly = true;
+                memo_IssuedTo_CompanyAddress.ReadOnly = true;
                 txtIssuedTo_TelNo.ReadOnly = true;
                 txtIssuedTo_FaxNo.ReadOnly = true;
 
-                txtShipTo_CompanyCode.ReadOnly = true;
+                sLookUp_ShipTo_CompanyCode.ReadOnly = true;
                 txtShipTo_CompanyName.ReadOnly = true;
-                txtShipTo_CompanyAddress.ReadOnly = true;
+                memo_ShipTo_CompanyAddress.ReadOnly = true;
                 txtShipTo_TelNo.ReadOnly = true;
                 txtShipTo_FaxNo.ReadOnly = true;
 
@@ -1264,11 +1708,11 @@ namespace TAKAKO_ERP_3LAYER
                 dtpRevenue.Enabled = false;
                 cb_Freight.Enabled = false;
                 txtVessel.ReadOnly = true;
-                txtPortLoading.ReadOnly = true;
-                txtPortDestination.ReadOnly = true;
+                sLookUp_PortLoading.ReadOnly = true;
+                sLookUp_PortDestination.ReadOnly = true;
 
-                txtPriceCondition.ReadOnly = true;
-                txtPaymentTerm.ReadOnly = true;
+                sLookUp_PriceCondition.ReadOnly = true;
+                sLookUp_PaymentTerm.ReadOnly = true;
 
                 btnLockData.Enabled = false;
                 if(String.Equals(createBy,_systemDAL.UserName) && String.IsNullOrEmpty(txtInvoiceNo.Text.Trim()))
@@ -1279,131 +1723,116 @@ namespace TAKAKO_ERP_3LAYER
                 {
                     btnUnlockData.Enabled = false;
                 }
-                if (String.Equals(createBy, _systemDAL.UserName) && !String.IsNullOrEmpty(txtInvoiceNo.Text.Trim()))
-                {
-                    btnRevise.Enabled = true;
-                }
-                else
-                {
-                    btnRevise.Enabled = false;
-                }
                 btnSave_Data.Enabled = false;
-                btnSearch_ShippingNo.Enabled = true;
-                btnSearch_IssuedTo.Enabled = false;
-                btnSearch_ShipTo.Enabled = false;
-                btnSearch_PortLoading.Enabled = false;
-                btnSearch_PortDestination.Enabled = false;
-                btnSearch_TradeCondition.Enabled = false;
-                btnSearch_PaymentTerm.Enabled = false;
 
-                GridView_Invoice.AllowUserToDeleteRows = false;
-                GridView_PackingList.AllowUserToDeleteRows = false;
+                gridView_Invoice.OptionsBehavior.AllowDeleteRows = DefaultBoolean.False;
+                gridView_PackingList.OptionsBehavior.AllowDeleteRows = DefaultBoolean.False;
 
-                //---------------- Gridview Invoice ----------------//
-                //---- Disable ----//
-                GridView_Invoice.Columns["Quantity_Revise"].Visible = false;
-                GridView_Invoice.Columns["Quantity_Revise"].ReadOnly = true;
-                GridView_Invoice.Columns["Quantity_Revise"].DefaultCellStyle.BackColor = Color.Gray;
-                //
-                GridView_Invoice.Columns["Order_Price_Revise"].Visible = false;
-                GridView_Invoice.Columns["Order_Price_Revise"].ReadOnly = true;
-                GridView_Invoice.Columns["Order_Price_Revise"].DefaultCellStyle.BackColor = Color.Gray;
+                ////---------------- Gridview Invoice ----------------//
+                ////---- Disable ----//
+                //GridView_Invoice.Columns["Quantity_Revise"].Visible = false;
+                //GridView_Invoice.Columns["Quantity_Revise"].ReadOnly = true;
+                //GridView_Invoice.Columns["Quantity_Revise"].DefaultCellStyle.BackColor = Color.Gray;
+                ////
+                //GridView_Invoice.Columns["Order_Price_Revise"].Visible = false;
+                //GridView_Invoice.Columns["Order_Price_Revise"].ReadOnly = true;
+                //GridView_Invoice.Columns["Order_Price_Revise"].DefaultCellStyle.BackColor = Color.Gray;
 
-                //---- Disable ----//
-                foreach (DataGridViewRow dtRow in GridView_Invoice.Rows)
-                {
-                    if (!dtRow.IsNewRow)
-                    {
-                        dtRow.Cells["Customer_Code"].ReadOnly = true;
-                        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
+                ////---- Disable ----//
+                //foreach (DataGridViewRow dtRow in GridView_Invoice.Rows)
+                //{
+                //    if (!dtRow.IsNewRow)
+                //    {
+                //        dtRow.Cells["Customer_Code"].ReadOnly = true;
+                //        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Part_Description"].ReadOnly = true;
-                        dtRow.Cells["Part_Description"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Part_Description"].ReadOnly = true;
+                //        dtRow.Cells["Part_Description"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Cus_ItemCode"].ReadOnly = true;
-                        dtRow.Cells["Cus_ItemCode"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Cus_ItemCode"].ReadOnly = true;
+                //        dtRow.Cells["Cus_ItemCode"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Tvc_ItemCode"].ReadOnly = true;
-                        dtRow.Cells["Tvc_ItemCode"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Tvc_ItemCode"].ReadOnly = true;
+                //        dtRow.Cells["Tvc_ItemCode"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Customer_PO"].ReadOnly = true;
-                        dtRow.Cells["Customer_PO"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Customer_PO"].ReadOnly = true;
+                //        dtRow.Cells["Customer_PO"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Order_Date"].ReadOnly = true;
-                        dtRow.Cells["Order_Date"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Order_Date"].ReadOnly = true;
+                //        dtRow.Cells["Order_Date"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["ThirdParty_PO"].ReadOnly = true;
-                        dtRow.Cells["ThirdParty_PO"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["ThirdParty_PO"].ReadOnly = true;
+                //        dtRow.Cells["ThirdParty_PO"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["DueDate_PO"].ReadOnly = true;
-                        dtRow.Cells["DueDate_PO"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["DueDate_PO"].ReadOnly = true;
+                //        dtRow.Cells["DueDate_PO"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Quantity"].ReadOnly = true;
-                        dtRow.Cells["Quantity"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Quantity"].ReadOnly = true;
+                //        dtRow.Cells["Quantity"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Balance"].ReadOnly = true;
-                        dtRow.Cells["Balance"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Balance"].ReadOnly = true;
+                //        dtRow.Cells["Balance"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Unit_Currency"].ReadOnly = true;
-                        dtRow.Cells["Unit_Currency"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Unit_Currency"].ReadOnly = true;
+                //        dtRow.Cells["Unit_Currency"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["USD_Rate"].ReadOnly = true;
-                        dtRow.Cells["USD_Rate"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["USD_Rate"].ReadOnly = true;
+                //        dtRow.Cells["USD_Rate"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Order_Price"].ReadOnly = true;
-                        dtRow.Cells["Order_Price"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Order_Price"].ReadOnly = true;
+                //        dtRow.Cells["Order_Price"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Global_Price"].ReadOnly = true;
-                        dtRow.Cells["Global_Price"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Global_Price"].ReadOnly = true;
+                //        dtRow.Cells["Global_Price"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Amount_Jpy"].ReadOnly = true;
-                        dtRow.Cells["Amount_Jpy"].Style.BackColor = Color.Gray;
-                    }
-                }
+                //        dtRow.Cells["Amount_Jpy"].ReadOnly = true;
+                //        dtRow.Cells["Amount_Jpy"].Style.BackColor = Color.Gray;
+                //    }
+                //}
 
-                //---------------- Gridview PackingList ----------------//
-                //---- Disable ----//
-                foreach (DataGridViewRow dtRow in GridView_PackingList.Rows)
-                {
-                    if (!dtRow.IsNewRow)
-                    { 
-                        dtRow.Cells["Customer_Code"].ReadOnly = true;
-                        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
+                ////---------------- Gridview PackingList ----------------//
+                ////---- Disable ----//
+                //foreach (DataGridViewRow dtRow in GridView_PackingList.Rows)
+                //{
+                //    if (!dtRow.IsNewRow)
+                //    { 
+                //        dtRow.Cells["Customer_Code"].ReadOnly = true;
+                //        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Packages_No"].ReadOnly = true;
-                        dtRow.Cells["Packages_No"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Packages_No"].ReadOnly = true;
+                //        dtRow.Cells["Packages_No"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Customer_ItemCode"].ReadOnly = true;
-                        dtRow.Cells["Customer_ItemCode"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Customer_ItemCode"].ReadOnly = true;
+                //        dtRow.Cells["Customer_ItemCode"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["TVC_ItemCode"].ReadOnly = true;
-                        dtRow.Cells["TVC_ItemCode"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["TVC_ItemCode"].ReadOnly = true;
+                //        dtRow.Cells["TVC_ItemCode"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Customer_PO"].ReadOnly = true;
-                        dtRow.Cells["Customer_PO"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Customer_PO"].ReadOnly = true;
+                //        dtRow.Cells["Customer_PO"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Qty_Carton"].ReadOnly = true;
-                        dtRow.Cells["Qty_Carton"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Qty_Carton"].ReadOnly = true;
+                //        dtRow.Cells["Qty_Carton"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Qty_Per_Carton"].ReadOnly = true;
-                        dtRow.Cells["Qty_Per_Carton"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Qty_Per_Carton"].ReadOnly = true;
+                //        dtRow.Cells["Qty_Per_Carton"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Qty_Total"].ReadOnly = true;
-                        dtRow.Cells["Qty_Total"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Qty_Total"].ReadOnly = true;
+                //        dtRow.Cells["Qty_Total"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Net_Weight"].ReadOnly = true;
-                        dtRow.Cells["Net_Weight"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Net_Weight"].ReadOnly = true;
+                //        dtRow.Cells["Net_Weight"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Net_Weight_Total"].ReadOnly = true;
-                        dtRow.Cells["Net_Weight_Total"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Net_Weight_Total"].ReadOnly = true;
+                //        dtRow.Cells["Net_Weight_Total"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Gross_Weight"].ReadOnly = true;
-                        dtRow.Cells["Gross_Weight"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Gross_Weight"].ReadOnly = true;
+                //        dtRow.Cells["Gross_Weight"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Lot_No"].ReadOnly = true;
-                        dtRow.Cells["Lot_No"].Style.BackColor = Color.Gray;
-                    }
-                }
+                //        dtRow.Cells["Lot_No"].ReadOnly = true;
+                //        dtRow.Cells["Lot_No"].Style.BackColor = Color.Gray;
+                //    }
+                //}
             }
             else if(radRevise.Checked == true)
             {
@@ -1413,15 +1842,15 @@ namespace TAKAKO_ERP_3LAYER
                 dtpETD.Enabled = false;
                 dtpDateCreateShipping.Enabled = false;
                 txtInvoiceNo.ReadOnly = true;
-                txtIssuedTo_CompanyCode.ReadOnly = true;
+                sLookUp_IssuedTo_CompanyCode.ReadOnly = true;
                 txtIssuedTo_CompanyName.ReadOnly = true;
-                txtIssuedTo_CompanyAddress.ReadOnly = true;
+                memo_IssuedTo_CompanyAddress.ReadOnly = true;
                 txtIssuedTo_TelNo.ReadOnly = true;
                 txtIssuedTo_FaxNo.ReadOnly = true;
 
-                txtShipTo_CompanyCode.ReadOnly = true;
+                sLookUp_ShipTo_CompanyCode.ReadOnly = true;
                 txtShipTo_CompanyName.ReadOnly = true;
-                txtShipTo_CompanyAddress.ReadOnly = true;
+                memo_ShipTo_CompanyAddress.ReadOnly = true;
                 txtShipTo_TelNo.ReadOnly = true;
                 txtShipTo_FaxNo.ReadOnly = true;
 
@@ -1429,137 +1858,128 @@ namespace TAKAKO_ERP_3LAYER
                 dtpRevenue.Enabled = false;
                 cb_Freight.Enabled = false;
                 txtVessel.ReadOnly = true;
-                txtPortLoading.ReadOnly = true;
-                txtPortDestination.ReadOnly = true;
+                sLookUp_PortLoading.ReadOnly = true;
+                sLookUp_PortDestination.ReadOnly = true;
 
-                txtPriceCondition.ReadOnly = true;
-                txtPaymentTerm.ReadOnly = true;
+                sLookUp_PriceCondition.ReadOnly = true;
+                sLookUp_PaymentTerm.ReadOnly = true;
 
                 btnLockData.Enabled = false;
                 btnUnlockData.Enabled = false;
                 btnSave_Data.Enabled = true;
 
-                //Button Search
-                btnSearch_ShippingNo.Enabled = true;
-                btnSearch_IssuedTo.Enabled = false;
-                btnSearch_ShipTo.Enabled = false;
-                btnSearch_PortLoading.Enabled = false;
-                btnSearch_PortDestination.Enabled = false;
-                btnSearch_TradeCondition.Enabled = false;
-                btnSearch_PaymentTerm.Enabled = false;
+                gridView_Invoice.OptionsBehavior.AllowDeleteRows = DefaultBoolean.False;
+                gridView_PackingList.OptionsBehavior.AllowDeleteRows = DefaultBoolean.False;
 
-                GridView_Invoice.AllowUserToDeleteRows = false;
-                GridView_PackingList.AllowUserToDeleteRows = false;
+                ////---- Enable ----//
+                ////Gridview Invoice
+                //GridView_Invoice.Columns["Quantity_Revise"].Visible = true;
+                //GridView_Invoice.Columns["Quantity_Revise"].ReadOnly = false;
+                //GridView_Invoice.Columns["Quantity_Revise"].DefaultCellStyle.BackColor = Color.White;
+                ////
+                //GridView_Invoice.Columns["Order_Price_Revise"].Visible = true;
+                //GridView_Invoice.Columns["Order_Price_Revise"].ReadOnly = false;
+                //GridView_Invoice.Columns["Order_Price_Revise"].DefaultCellStyle.BackColor = Color.White;
+                ////Gridview PackingList
+                //GridView_PackingList.Columns["Qty_Total_Revise"].Visible = true;
+                //GridView_PackingList.Columns["Qty_Total_Revise"].ReadOnly = false;
+                //GridView_PackingList.Columns["Qty_Total_Revise"].DefaultCellStyle.BackColor = Color.White;
 
-                //---- Enable ----//
-                //Gridview Invoice
-                GridView_Invoice.Columns["Quantity_Revise"].Visible = true;
-                GridView_Invoice.Columns["Quantity_Revise"].ReadOnly = false;
-                GridView_Invoice.Columns["Quantity_Revise"].DefaultCellStyle.BackColor = Color.White;
-                //
-                GridView_Invoice.Columns["Order_Price_Revise"].Visible = true;
-                GridView_Invoice.Columns["Order_Price_Revise"].ReadOnly = false;
-                GridView_Invoice.Columns["Order_Price_Revise"].DefaultCellStyle.BackColor = Color.White;
-                //Gridview PackingList
-                GridView_PackingList.Columns["Qty_Total_Revise"].Visible = true;
-                GridView_PackingList.Columns["Qty_Total_Revise"].ReadOnly = false;
-                GridView_PackingList.Columns["Qty_Total_Revise"].DefaultCellStyle.BackColor = Color.White;
+                ////---- Disable ----//
+                //foreach(DataGridViewRow dtRow in GridView_Invoice.Rows)
+                //{
+                //    if (!dtRow.IsNewRow)
+                //    {
+                //        dtRow.Cells["Customer_Code"].ReadOnly = true;
+                //        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
 
-                //---- Disable ----//
-                foreach(DataGridViewRow dtRow in GridView_Invoice.Rows)
-                {
-                    if (!dtRow.IsNewRow)
-                    {
-                        dtRow.Cells["Customer_Code"].ReadOnly = true;
-                        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Part_Description"].ReadOnly = true;
+                //        dtRow.Cells["Part_Description"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Part_Description"].ReadOnly = true;
-                        dtRow.Cells["Part_Description"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Tvc_ItemCode"].ReadOnly = true;
+                //        dtRow.Cells["Tvc_ItemCode"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Tvc_ItemCode"].ReadOnly = true;
-                        dtRow.Cells["Tvc_ItemCode"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Customer_PO"].ReadOnly = true;
+                //        dtRow.Cells["Customer_PO"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Customer_PO"].ReadOnly = true;
-                        dtRow.Cells["Customer_PO"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Order_Date"].ReadOnly = true;
+                //        dtRow.Cells["Order_Date"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Order_Date"].ReadOnly = true;
-                        dtRow.Cells["Order_Date"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["ThirdParty_PO"].ReadOnly = true;
+                //        dtRow.Cells["ThirdParty_PO"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["ThirdParty_PO"].ReadOnly = true;
-                        dtRow.Cells["ThirdParty_PO"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["DueDate_PO"].ReadOnly = true;
+                //        dtRow.Cells["DueDate_PO"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["DueDate_PO"].ReadOnly = true;
-                        dtRow.Cells["DueDate_PO"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Quantity"].ReadOnly = true;
+                //        dtRow.Cells["Quantity"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Quantity"].ReadOnly = true;
-                        dtRow.Cells["Quantity"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Balance"].ReadOnly = true;
+                //        dtRow.Cells["Balance"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Balance"].ReadOnly = true;
-                        dtRow.Cells["Balance"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Unit_Currency"].ReadOnly = true;
+                //        dtRow.Cells["Unit_Currency"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Unit_Currency"].ReadOnly = true;
-                        dtRow.Cells["Unit_Currency"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["USD_Rate"].ReadOnly = true;
+                //        dtRow.Cells["USD_Rate"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["USD_Rate"].ReadOnly = true;
-                        dtRow.Cells["USD_Rate"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Order_Price"].ReadOnly = true;
+                //        dtRow.Cells["Order_Price"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Order_Price"].ReadOnly = true;
-                        dtRow.Cells["Order_Price"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Global_Price"].ReadOnly = true;
+                //        dtRow.Cells["Global_Price"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Global_Price"].ReadOnly = true;
-                        dtRow.Cells["Global_Price"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Amount_Jpy"].ReadOnly = true;
+                //        dtRow.Cells["Amount_Jpy"].Style.BackColor = Color.Gray;
+                //    }
+                //}
 
-                        dtRow.Cells["Amount_Jpy"].ReadOnly = true;
-                        dtRow.Cells["Amount_Jpy"].Style.BackColor = Color.Gray;
-                    }
-                }
+                ////---------------- Gridview PackingList ----------------//
+                ////---- Disable ----//
+                //foreach (DataGridViewRow dtRow in GridView_PackingList.Rows)
+                //{
+                //    if (!dtRow.IsNewRow)
+                //    { 
+                //        dtRow.Cells["Customer_Code"].ReadOnly = true;
+                //        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
 
-                //---------------- Gridview PackingList ----------------//
-                //---- Disable ----//
-                foreach (DataGridViewRow dtRow in GridView_PackingList.Rows)
-                {
-                    if (!dtRow.IsNewRow)
-                    { 
-                        dtRow.Cells["Customer_Code"].ReadOnly = true;
-                        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Packages_No"].ReadOnly = true;
+                //        dtRow.Cells["Packages_No"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Packages_No"].ReadOnly = true;
-                        dtRow.Cells["Packages_No"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Customer_ItemCode"].ReadOnly = true;
+                //        dtRow.Cells["Customer_ItemCode"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Customer_ItemCode"].ReadOnly = true;
-                        dtRow.Cells["Customer_ItemCode"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["TVC_ItemCode"].ReadOnly = true;
+                //        dtRow.Cells["TVC_ItemCode"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["TVC_ItemCode"].ReadOnly = true;
-                        dtRow.Cells["TVC_ItemCode"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Customer_PO"].ReadOnly = true;
+                //        dtRow.Cells["Customer_PO"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Customer_PO"].ReadOnly = true;
-                        dtRow.Cells["Customer_PO"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Qty_Carton"].ReadOnly = true;
+                //        dtRow.Cells["Qty_Carton"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Qty_Carton"].ReadOnly = true;
-                        dtRow.Cells["Qty_Carton"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Qty_Per_Carton"].ReadOnly = true;
+                //        dtRow.Cells["Qty_Per_Carton"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Qty_Per_Carton"].ReadOnly = true;
-                        dtRow.Cells["Qty_Per_Carton"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Qty_Total"].ReadOnly = true;
+                //        dtRow.Cells["Qty_Total"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Qty_Total"].ReadOnly = true;
-                        dtRow.Cells["Qty_Total"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Qty_Total_Revise"].ReadOnly = true;
+                //        dtRow.Cells["Qty_Total_Revise"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Qty_Total_Revise"].ReadOnly = true;
-                        dtRow.Cells["Qty_Total_Revise"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Net_Weight"].ReadOnly = true;
+                //        dtRow.Cells["Net_Weight"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Net_Weight"].ReadOnly = true;
-                        dtRow.Cells["Net_Weight"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Net_Weight_Total"].ReadOnly = true;
+                //        dtRow.Cells["Net_Weight_Total"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Net_Weight_Total"].ReadOnly = true;
-                        dtRow.Cells["Net_Weight_Total"].Style.BackColor = Color.Gray;
+                //        dtRow.Cells["Gross_Weight"].ReadOnly = true;
+                //        dtRow.Cells["Gross_Weight"].Style.BackColor = Color.Gray;
 
-                        dtRow.Cells["Gross_Weight"].ReadOnly = true;
-                        dtRow.Cells["Gross_Weight"].Style.BackColor = Color.Gray;
-
-                        dtRow.Cells["Lot_No"].ReadOnly = true;
-                        dtRow.Cells["Lot_No"].Style.BackColor = Color.Gray;
-                    }
-                }
+                //        dtRow.Cells["Lot_No"].ReadOnly = true;
+                //        dtRow.Cells["Lot_No"].Style.BackColor = Color.Gray;
+                //    }
+                //}
             }
         }
 
@@ -1575,46 +1995,62 @@ namespace TAKAKO_ERP_3LAYER
                 rowIndex = e.RowIndex;
                 columnIndex = e.ColumnIndex;
 
-                if (GridView_Invoice.Columns[columnIndex] is DataGridViewButtonColumn)
-                {
-                    _listItemCodeInfo = null;
-                    if(GridView_Invoice.Rows.Count > 1)
-                    {
-                        foreach (DataGridViewRow dr in GridView_Invoice.Rows)
-                        {
-                            if (dr.Cells["Unit_Currency"].Value != null)
-                            {
-                                _unitCurrency = dr.Cells["Unit_Currency"].Value.ToString();
-                                break;
-                            }
-                        }
-                    }
-                    Form_Search_PO_New _formSearch = new Form_Search_PO_New(_systemDAL, txtIssuedTo_CompanyCode.Text, _unitCurrency, _dateCreateInvoice);
+                //if (GridView_Invoice.Columns[columnIndex] is DataGridViewButtonColumn)
+                //{
+                //    _listItemCodeInfo = null;
+                    //if(GridView_Invoice.Rows.Count > 1)
+                    //{
+                    //    foreach (DataGridViewRow dr in GridView_Invoice.Rows)
+                    //    {
+                    //        if (dr.Cells["Unit_Currency"].Value != null)
+                    //        {
+                    //            _unitCurrency = dr.Cells["Unit_Currency"].Value.ToString();
+                    //            break;
+                    //        }
+                    //    }
+                    //}
+                    Form_Search_PO_New _formSearch = new Form_Search_PO_New(
+                        _systemDAL
+                        , Convert.ToString(cb_CompanyCode.SelectedValue)
+                        , Convert.ToString(sLookUp_IssuedTo_CompanyCode.EditValue)
+                        , _unitCurrency
+                        , _dateCreateInvoice
+                        , this);
                     _formSearch.StartPosition = FormStartPosition.CenterParent;
-                    _formSearch.ShowDialog();
+                    _formSearch.Show();
 
-                    //Move data from form search to current Form
-                    GetSelectedItem(_listItemCodeInfo);
+                    ////Move data from form search to current Form
+                    //GetSelectedItem(_listItemCodeInfo);
 
-                    //Sum Invoice
-                    btnSumInvoice_Click(sender, e);
+                    ////Sum Invoice
+                    //btnSumInvoice_Click(sender, e);
 
-                    //Sum packing List
-                    btnSumPL_Click(sender, e);
+                    ////Sum packing List
+                    //btnSumPL_Click(sender, e);
 
-                    GridView_Invoice.ClearSelection();
-                    int nRowIndex = GridView_Invoice.Rows.Count - 1;
+                    //GridView_Invoice.ClearSelection();
+                    //int nRowIndex = GridView_Invoice.Rows.Count - 1;
 
-                    GridView_Invoice.Rows[nRowIndex].Selected = true;
-                    GridView_Invoice.Rows[nRowIndex].Cells[8].Selected = true;
-                }
+                    //GridView_Invoice.Rows[nRowIndex].Selected = true;
+                    //GridView_Invoice.Rows[nRowIndex].Cells[8].Selected = true;
+                //}
             }
+        }
+
+        public void RefreshGridView(object sender, EventArgs e)
+        {
+            ////Load Invoice
+            //btn_SearchShipping_Click(sender, e);
+
+            ////Setting enable item
+            //SettingInitGridView();
+            MessageBox.Show("Clicked");
         }
 
         private void GridView_Invoice_KeyDown(object sender, KeyEventArgs e)
         {
-            int _RowIndex = 0;
-            int _ColumnIndex = 0;
+            //int _RowIndex = 0;
+            //int _ColumnIndex = 0;
 
             if (e.KeyCode == Keys.Tab)
             {
@@ -1624,261 +2060,261 @@ namespace TAKAKO_ERP_3LAYER
 
             if (e.KeyCode == Keys.F5)
             {
-                //Get row index
-                int rowIndex = 0;
-                rowIndex = GridView_Invoice.CurrentCell.RowIndex;
-                //Get column index
-                int columnIndex = 0;
-                columnIndex = GridView_Invoice.CurrentCell.ColumnIndex;
-                String _unitCurrency = "";
-                DateTime _dateCreateInvoice = dtpDateCreateShipping.Value;
+                ////Get row index
+                //int rowIndex = 0;
+                //rowIndex = GridView_Invoice.CurrentCell.RowIndex;
+                ////Get column index
+                //int columnIndex = 0;
+                //columnIndex = GridView_Invoice.CurrentCell.ColumnIndex;
+                //String _unitCurrency = "";
+                //DateTime _dateCreateInvoice = dtpDateCreateShipping.Value;
 
-                if (rowIndex >= 0)
-                {
-                    _listItemCodeInfo = null;
-                    if (GridView_Invoice.Rows.Count > 1)
-                    {
-                        foreach (DataGridViewRow dr in GridView_Invoice.Rows)
-                        {
-                            if (dr.Cells["Unit_Currency"].Value != null)
-                            {
-                                _unitCurrency = dr.Cells["Unit_Currency"].Value.ToString();
-                                break;
-                            }
-                        }
-                    }
-                    Form_Search_PO _formSearch = new Form_Search_PO(_systemDAL,"btnSearch_ItemCode", txtIssuedTo_CompanyCode.Text, _unitCurrency, _dateCreateInvoice);
-                    _formSearch.StartPosition = FormStartPosition.CenterParent;
-                    _formSearch.ShowDialog();
+                //if (rowIndex >= 0)
+                //{
+                //    _listItemCodeInfo = null;
+                //    if (GridView_Invoice.Rows.Count > 1)
+                //    {
+                //        foreach (DataGridViewRow dr in GridView_Invoice.Rows)
+                //        {
+                //            if (dr.Cells["Unit_Currency"].Value != null)
+                //            {
+                //                _unitCurrency = dr.Cells["Unit_Currency"].Value.ToString();
+                //                break;
+                //            }
+                //        }
+                //    }
+                //    Form_Search_PO _formSearch = new Form_Search_PO(_systemDAL,"btnSearch_ItemCode", txtIssuedTo_CompanyCode.Text, _unitCurrency, _dateCreateInvoice);
+                //    _formSearch.StartPosition = FormStartPosition.CenterParent;
+                //    _formSearch.ShowDialog();
 
-                    //
-                    GetSelectedItem(_listItemCodeInfo);
+                //    //
+                //    GetSelectedItem(_listItemCodeInfo);
 
-                    //Sum Invoice
-                    btnSumInvoice_Click(sender, e);
+                //    //Sum Invoice
+                //    btnSumInvoice_Click(sender, e);
 
-                    //Sum packing List
-                    btnSumPL_Click(sender, e);
+                //    //Sum packing List
+                //    btnSumPL_Click(sender, e);
 
-                    GridView_Invoice.ClearSelection();
-                    int nRowIndex = GridView_Invoice.Rows.Count - 1;
+                //    GridView_Invoice.ClearSelection();
+                //    int nRowIndex = GridView_Invoice.Rows.Count - 1;
 
-                    GridView_Invoice.Rows[nRowIndex].Selected = true;
-                    GridView_Invoice.Rows[nRowIndex].Cells[8].Selected = true;
-                }
+                //    GridView_Invoice.Rows[nRowIndex].Selected = true;
+                //    GridView_Invoice.Rows[nRowIndex].Cells[8].Selected = true;
+                //}
             }
 
-            if (e.Control && e.KeyCode == Keys.C)
-            {
-                if (GridView_Invoice.SelectedCells.Count == 1
-                    && (GridView_Invoice.CurrentCell.Value != null))
-                {
-                    _RowIndex = GridView_Invoice.CurrentCell.RowIndex;
-                    _ColumnIndex = GridView_Invoice.CurrentCell.ColumnIndex;
-                     Clipboard.SetText(GridView_Invoice.Rows[_RowIndex].Cells[_ColumnIndex].Value.ToString());
-                }
-            }
+            //if (e.Control && e.KeyCode == Keys.C)
+            //{
+            //    if (GridView_Invoice.SelectedCells.Count == 1
+            //        && (GridView_Invoice.CurrentCell.Value != null))
+            //    {
+            //        _RowIndex = GridView_Invoice.CurrentCell.RowIndex;
+            //        _ColumnIndex = GridView_Invoice.CurrentCell.ColumnIndex;
+            //         Clipboard.SetText(GridView_Invoice.Rows[_RowIndex].Cells[_ColumnIndex].Value.ToString());
+            //    }
+            //}
 
-            if (e.Control && e.KeyCode == Keys.V)
-            {
-                if (GridView_Invoice.SelectedCells.Count == 1)
-                {
-                    _RowIndex = GridView_Invoice.CurrentCell.RowIndex;
-                    _ColumnIndex = GridView_Invoice.CurrentCell.ColumnIndex;
-                    GridView_Invoice.Rows[_RowIndex].Cells[_ColumnIndex].Value = Clipboard.GetText();
-                }
-            }
+            //if (e.Control && e.KeyCode == Keys.V)
+            //{
+            //    if (GridView_Invoice.SelectedCells.Count == 1)
+            //    {
+            //        _RowIndex = GridView_Invoice.CurrentCell.RowIndex;
+            //        _ColumnIndex = GridView_Invoice.CurrentCell.ColumnIndex;
+            //        GridView_Invoice.Rows[_RowIndex].Cells[_ColumnIndex].Value = Clipboard.GetText();
+            //    }
+            //}
 
-            if (e.KeyCode == Keys.Delete)
-            {
-                string exitMessageText = "Do you want to remove this row?";
-                string exitCaption = "Confirm";
-                MessageBoxButtons button = MessageBoxButtons.YesNo;
-                DialogResult res = MessageBox.Show(exitMessageText, exitCaption, button, MessageBoxIcon.Exclamation);
-                if (res == DialogResult.Yes)
-                {
-                    //Get row index
-                    int rowIndex = GridView_Invoice.CurrentRow.Index;
-                    string Inv_Customer_PO = "";
-                    string PL_Customer_PO = "";
-                    int index = 0;
-                    List<int> list = new List<int>();
+            //if (e.KeyCode == Keys.Delete)
+            //{
+            //    string exitMessageText = "Do you want to remove this row?";
+            //    string exitCaption = "Confirm";
+            //    MessageBoxButtons button = MessageBoxButtons.YesNo;
+            //    DialogResult res = MessageBox.Show(exitMessageText, exitCaption, button, MessageBoxIcon.Exclamation);
+            //    if (res == DialogResult.Yes)
+            //    {
+            //        //Get row index
+            //        int rowIndex = GridView_Invoice.CurrentRow.Index;
+            //        string Inv_Customer_PO = "";
+            //        string PL_Customer_PO = "";
+            //        int index = 0;
+            //        List<int> list = new List<int>();
 
-                    if (GridView_Invoice.Rows[rowIndex].Cells["Customer_PO"].Value != null)
-                    {
-                        Inv_Customer_PO = GridView_Invoice.Rows[rowIndex].Cells["Customer_PO"].Value.ToString();
-                    }
+            //        if (GridView_Invoice.Rows[rowIndex].Cells["Customer_PO"].Value != null)
+            //        {
+            //            Inv_Customer_PO = GridView_Invoice.Rows[rowIndex].Cells["Customer_PO"].Value.ToString();
+            //        }
 
-                    if (!String.IsNullOrEmpty(Inv_Customer_PO))
-                    { 
-                        foreach (DataGridViewRow row in GridView_PackingList.Rows)
-                        {
-                            PL_Customer_PO = Convert.ToString(row.Cells["Customer_PO"].Value);
-                            if (PL_Customer_PO == Inv_Customer_PO)
-                            {
-                                tabControl.SelectedIndex = 1;
-                                //
-                                exitMessageText = "Do you want to remove row 「" + (index + 1) + "」.\nCustomer PO「" + Inv_Customer_PO + "」 of 「Packing List」 ?";
-                                exitCaption = "Confirm";
-                                res = MessageBox.Show(exitMessageText, exitCaption, button, MessageBoxIcon.Exclamation);
-                                if (res == DialogResult.Yes)
-                                {
-                                    list.Add(index);
-                                }
-                            }
-                            index++;
-                        }
-                        foreach (int indexRemove in list.AsEnumerable().Reverse())
-                        {
-                            GridView_PackingList.Rows.RemoveAt(indexRemove);
-                        }
-                    }
-                } else
-                {
-                    e.Handled = true;
-                }
-            }
+            //        if (!String.IsNullOrEmpty(Inv_Customer_PO))
+            //        { 
+            //            foreach (DataGridViewRow row in GridView_PackingList.Rows)
+            //            {
+            //                PL_Customer_PO = Convert.ToString(row.Cells["Customer_PO"].Value);
+            //                if (PL_Customer_PO == Inv_Customer_PO)
+            //                {
+            //                    tabControl.SelectedIndex = 1;
+            //                    //
+            //                    exitMessageText = "Do you want to remove row 「" + (index + 1) + "」.\nCustomer PO「" + Inv_Customer_PO + "」 of 「Packing List」 ?";
+            //                    exitCaption = "Confirm";
+            //                    res = MessageBox.Show(exitMessageText, exitCaption, button, MessageBoxIcon.Exclamation);
+            //                    if (res == DialogResult.Yes)
+            //                    {
+            //                        list.Add(index);
+            //                    }
+            //                }
+            //                index++;
+            //            }
+            //            foreach (int indexRemove in list.AsEnumerable().Reverse())
+            //            {
+            //                GridView_PackingList.Rows.RemoveAt(indexRemove);
+            //            }
+            //        }
+            //    } else
+            //    {
+            //        e.Handled = true;
+            //    }
+            //}
 
-            if (e.Control && e.KeyCode == Keys.F)
-            {
-                txt_Search_Grid.Focus();
-            }
+            //if (e.Control && e.KeyCode == Keys.F)
+            //{
+            //    txt_Search_Grid.Focus();
+            //}
 
         }
 
         private void GridView_Invoice_CellValidated(object sender, DataGridViewCellEventArgs e)
         {
-            decimal quantity, quantity_revise, price, price_revise, price_compare, amount, USD_Rate, balance;
-            string _customer_PO = "";
+            //decimal quantity, quantity_revise, price, price_revise, price_compare, amount, USD_Rate, balance;
+            //string _customer_PO = "";
 
-            if (e.RowIndex != GridView_Invoice.NewRowIndex)
-            {
-                //Normal data
-                if (radNormal.Checked == true)
-                {
-                    if (GridView_Invoice.Rows[e.RowIndex].Cells["Quantity"].Value != null
-                    && GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Value != null)
-                    {
-                        if (decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Quantity"].Value.ToString(), out quantity)
-                        && decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Value.ToString(), out price))
-                        {
-                            if (GridView_Invoice.Rows[e.RowIndex].Cells["Balance"].Value != null)
-                            {
-                                decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Balance"].Value.ToString(), out balance);
-                                if (quantity > balance)
-                                {
-                                    MessageBox.Show("Số lượng còn lại: " + balance + ".\nSố lượng nhập: " + quantity, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                            }
+            //if (e.RowIndex != GridView_Invoice.NewRowIndex)
+            //{
+            //    //Normal data
+            //    if (radNormal.Checked == true)
+            //    {
+            //        if (GridView_Invoice.Rows[e.RowIndex].Cells["Quantity"].Value != null
+            //        && GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Value != null)
+            //        {
+            //            if (decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Quantity"].Value.ToString(), out quantity)
+            //            && decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Value.ToString(), out price))
+            //            {
+            //                if (GridView_Invoice.Rows[e.RowIndex].Cells["Balance"].Value != null)
+            //                {
+            //                    decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Balance"].Value.ToString(), out balance);
+            //                    if (quantity > balance)
+            //                    {
+            //                        MessageBox.Show("Số lượng còn lại: " + balance + ".\nSố lượng nhập: " + quantity, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //                    }
+            //                }
 
-                            if (GridView_Invoice.Rows[e.RowIndex].Cells["Customer_PO"].Value != null)
-                            {
-                                _customer_PO = GridView_Invoice.Rows[e.RowIndex].Cells["Customer_PO"].Value.ToString();
-                            }
+            //                if (GridView_Invoice.Rows[e.RowIndex].Cells["Customer_PO"].Value != null)
+            //                {
+            //                    _customer_PO = GridView_Invoice.Rows[e.RowIndex].Cells["Customer_PO"].Value.ToString();
+            //                }
 
-                            if (GridView_Invoice.Rows[e.RowIndex].Cells["Unit_Currency"].Value.ToString().ToUpper() == "JPY")
-                            {
-                                //Cal Amount
-                                amount = quantity * price;
-                                GridView_Invoice.Rows[e.RowIndex].Cells["Amount_Jpy"].Value = Math.Round(amount, 0, MidpointRounding.AwayFromZero);
-                            }
-                            else if (GridView_Invoice.Rows[e.RowIndex].Cells["Unit_Currency"].Value.ToString().ToUpper() == "USD")
-                            {
-                                //Cal Amount(USD)
-                                amount = quantity * price;
-                                GridView_Invoice.Rows[e.RowIndex].Cells["Amount_Jpy"].Value = Math.Round(amount, 2, MidpointRounding.AwayFromZero);
-                            }
-                        }
-                    }
+            //                if (GridView_Invoice.Rows[e.RowIndex].Cells["Unit_Currency"].Value.ToString().ToUpper() == "JPY")
+            //                {
+            //                    //Cal Amount
+            //                    amount = quantity * price;
+            //                    GridView_Invoice.Rows[e.RowIndex].Cells["Amount_Jpy"].Value = Math.Round(amount, 0, MidpointRounding.AwayFromZero);
+            //                }
+            //                else if (GridView_Invoice.Rows[e.RowIndex].Cells["Unit_Currency"].Value.ToString().ToUpper() == "USD")
+            //                {
+            //                    //Cal Amount(USD)
+            //                    amount = quantity * price;
+            //                    GridView_Invoice.Rows[e.RowIndex].Cells["Amount_Jpy"].Value = Math.Round(amount, 2, MidpointRounding.AwayFromZero);
+            //                }
+            //            }
+            //        }
 
-                    //Background red when quantity = 0
-                    if (GridView_Invoice.Rows[e.RowIndex].Cells["Quantity"].Value != null)
-                    {
-                        if (Convert.ToDecimal(GridView_Invoice.Rows[e.RowIndex].Cells["Quantity"].Value) == 0)
-                        {
-                            GridView_Invoice.Rows[e.RowIndex].Cells["Quantity"].Style.BackColor = Color.Red;
-                        }
-                        else
-                        {
-                            GridView_Invoice.Rows[e.RowIndex].Cells["Quantity"].Style.BackColor = Color.White;
-                        }
-                    }
+            //        //Background red when quantity = 0
+            //        if (GridView_Invoice.Rows[e.RowIndex].Cells["Quantity"].Value != null)
+            //        {
+            //            if (Convert.ToDecimal(GridView_Invoice.Rows[e.RowIndex].Cells["Quantity"].Value) == 0)
+            //            {
+            //                GridView_Invoice.Rows[e.RowIndex].Cells["Quantity"].Style.BackColor = Color.Red;
+            //            }
+            //            else
+            //            {
+            //                GridView_Invoice.Rows[e.RowIndex].Cells["Quantity"].Style.BackColor = Color.White;
+            //            }
+            //        }
 
-                    //Background red when order different from global price
-                    if (GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Value != null
-                     && GridView_Invoice.Rows[e.RowIndex].Cells["Global_Price"].Value != null)
-                    {
-                        if (decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Value.ToString(), out price)
-                         && decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Global_Price"].Value.ToString(), out price_compare))
-                        {
-                            if (price == price_compare)
-                            {
-                                GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Style.BackColor = Color.White;
-                                GridView_Invoice.Rows[e.RowIndex].Cells["Global_Price"].Style.BackColor = Color.White;
-                            }
-                            else
-                            {
-                                GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Style.BackColor = Color.Red;
-                                GridView_Invoice.Rows[e.RowIndex].Cells["Global_Price"].Style.BackColor = Color.Red;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Style.BackColor = Color.Red;
-                        GridView_Invoice.Rows[e.RowIndex].Cells["Global_Price"].Style.BackColor = Color.Red;
-                    }
+            //        //Background red when order different from global price
+            //        if (GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Value != null
+            //         && GridView_Invoice.Rows[e.RowIndex].Cells["Global_Price"].Value != null)
+            //        {
+            //            if (decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Value.ToString(), out price)
+            //             && decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Global_Price"].Value.ToString(), out price_compare))
+            //            {
+            //                if (price == price_compare)
+            //                {
+            //                    GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Style.BackColor = Color.White;
+            //                    GridView_Invoice.Rows[e.RowIndex].Cells["Global_Price"].Style.BackColor = Color.White;
+            //                }
+            //                else
+            //                {
+            //                    GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Style.BackColor = Color.Red;
+            //                    GridView_Invoice.Rows[e.RowIndex].Cells["Global_Price"].Style.BackColor = Color.Red;
+            //                }
+            //            }
+            //        }
+            //        else
+            //        {
+            //            GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price"].Style.BackColor = Color.Red;
+            //            GridView_Invoice.Rows[e.RowIndex].Cells["Global_Price"].Style.BackColor = Color.Red;
+            //        }
 
-                    if (GridView_Invoice.Rows[e.RowIndex].Cells["USD_Rate"].Value != null)
-                    {
-                        USD_Rate = decimal.Parse(GridView_Invoice.Rows[e.RowIndex].Cells["USD_Rate"].Value.ToString());
-                        foreach (DataGridViewRow dr in GridView_Invoice.Rows)
-                        {
-                            if (dr.Cells["TVC_ItemCode"].Value != null)
-                            {
-                                dr.Cells["USD_Rate"].Value = USD_Rate;
-                            }
-                        }
-                    }
-                }
+            //        if (GridView_Invoice.Rows[e.RowIndex].Cells["USD_Rate"].Value != null)
+            //        {
+            //            USD_Rate = decimal.Parse(GridView_Invoice.Rows[e.RowIndex].Cells["USD_Rate"].Value.ToString());
+            //            foreach (DataGridViewRow dr in GridView_Invoice.Rows)
+            //            {
+            //                if (dr.Cells["TVC_ItemCode"].Value != null)
+            //                {
+            //                    dr.Cells["USD_Rate"].Value = USD_Rate;
+            //                }
+            //            }
+            //        }
+            //    }
 
-                //Revise data
-                if (radRevise.Checked == true)
-                {
-                    if (GridView_Invoice.Rows[e.RowIndex].Cells["Quantity_Revise"].Value != null
-                     && GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price_Revise"].Value != null)
-                    {
-                        if (decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Quantity_Revise"].Value.ToString(), out quantity_revise)
-                         && decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price_Revise"].Value.ToString(), out price_revise))
-                        {
-                            if (GridView_Invoice.Rows[e.RowIndex].Cells["Unit_Currency"].Value.ToString().ToUpper() == "JPY")
-                            {
-                                //Cal Amount
-                                amount = quantity_revise * price_revise;
-                                GridView_Invoice.Rows[e.RowIndex].Cells["Amount_Jpy"].Value = Math.Round(amount, 0, MidpointRounding.AwayFromZero);
-                            }
-                            else if (GridView_Invoice.Rows[e.RowIndex].Cells["Unit_Currency"].Value.ToString().ToUpper() == "USD")
-                            {
-                                //Cal Amount(USD)
-                                amount = quantity_revise * price_revise;
-                                GridView_Invoice.Rows[e.RowIndex].Cells["Amount_Jpy"].Value = Math.Round(amount, 2, MidpointRounding.AwayFromZero);
-                            }
-                        }
-                    }
-                }
+            //    //Revise data
+            //    if (radRevise.Checked == true)
+            //    {
+            //        if (GridView_Invoice.Rows[e.RowIndex].Cells["Quantity_Revise"].Value != null
+            //         && GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price_Revise"].Value != null)
+            //        {
+            //            if (decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Quantity_Revise"].Value.ToString(), out quantity_revise)
+            //             && decimal.TryParse(GridView_Invoice.Rows[e.RowIndex].Cells["Order_Price_Revise"].Value.ToString(), out price_revise))
+            //            {
+            //                if (GridView_Invoice.Rows[e.RowIndex].Cells["Unit_Currency"].Value.ToString().ToUpper() == "JPY")
+            //                {
+            //                    //Cal Amount
+            //                    amount = quantity_revise * price_revise;
+            //                    GridView_Invoice.Rows[e.RowIndex].Cells["Amount_Jpy"].Value = Math.Round(amount, 0, MidpointRounding.AwayFromZero);
+            //                }
+            //                else if (GridView_Invoice.Rows[e.RowIndex].Cells["Unit_Currency"].Value.ToString().ToUpper() == "USD")
+            //                {
+            //                    //Cal Amount(USD)
+            //                    amount = quantity_revise * price_revise;
+            //                    GridView_Invoice.Rows[e.RowIndex].Cells["Amount_Jpy"].Value = Math.Round(amount, 2, MidpointRounding.AwayFromZero);
+            //                }
+            //            }
+            //        }
+            //    }
 
-                //Sum Invoice
-                btnSumInvoice_Click(sender, e);
+            //    //Sum Invoice
+            //    btnSumInvoice_Click(sender, e);
 
-                //Sum packing List
-                btnSumPL_Click(sender, e);
-            }
+            //    //Sum packing List
+            //    btnSumPL_Click(sender, e);
+            //}
         }
 
         private void GridView_PackingList_KeyDown(object sender, KeyEventArgs e)
         {
-            int _RowIndex = 0;
-            int _ColumnIndex = 0;
+            //int _RowIndex = 0;
+            //int _ColumnIndex = 0;
 
             if (e.KeyCode == Keys.Tab)
             {
@@ -1886,26 +2322,26 @@ namespace TAKAKO_ERP_3LAYER
                 this.SelectNextControl((Control)sender, true, true, true, true);
             }
 
-            if (e.Control && e.KeyCode == Keys.C)
-            {
-                if (GridView_PackingList.SelectedCells.Count == 1
-                    && (GridView_PackingList.CurrentCell.Value != null))
-                {
-                    _RowIndex = GridView_PackingList.CurrentCell.RowIndex;
-                    _ColumnIndex = GridView_PackingList.CurrentCell.ColumnIndex;
-                    Clipboard.SetText(GridView_PackingList.Rows[_RowIndex].Cells[_ColumnIndex].Value.ToString());
-                }
-            }
+            //if (e.Control && e.KeyCode == Keys.C)
+            //{
+            //    if (GridView_PackingList.SelectedCells.Count == 1
+            //        && (GridView_PackingList.CurrentCell.Value != null))
+            //    {
+            //        _RowIndex = GridView_PackingList.CurrentCell.RowIndex;
+            //        _ColumnIndex = GridView_PackingList.CurrentCell.ColumnIndex;
+            //        Clipboard.SetText(GridView_PackingList.Rows[_RowIndex].Cells[_ColumnIndex].Value.ToString());
+            //    }
+            //}
 
-            if (e.Control && e.KeyCode == Keys.V)
-            {
-                if (GridView_PackingList.SelectedCells.Count == 1)
-                {
-                    _RowIndex = GridView_PackingList.CurrentCell.RowIndex;
-                    _ColumnIndex = GridView_PackingList.CurrentCell.ColumnIndex;
-                    GridView_PackingList.Rows[_RowIndex].Cells[_ColumnIndex].Value = Clipboard.GetText();
-                }
-            }
+            //if (e.Control && e.KeyCode == Keys.V)
+            //{
+            //    if (GridView_PackingList.SelectedCells.Count == 1)
+            //    {
+            //        _RowIndex = GridView_PackingList.CurrentCell.RowIndex;
+            //        _ColumnIndex = GridView_PackingList.CurrentCell.ColumnIndex;
+            //        GridView_PackingList.Rows[_RowIndex].Cells[_ColumnIndex].Value = Clipboard.GetText();
+            //    }
+            //}
 
             //if (e.KeyCode == Keys.Delete)
             //{
@@ -1915,123 +2351,10 @@ namespace TAKAKO_ERP_3LAYER
             //    //DialogResult res = MessageBox.Show(exitMessageText, exitCaption, button, MessageBoxIcon.Exclamation);
             //    //e.Handled = true;
             //}
-
-            if (e.Control && e.KeyCode == Keys.F)
-            {
-                txt_Search_Grid.Focus();
-            }
         }
         #endregion
 
         #region KeyDown_Event
-        private void txtIssuedTo_CompanyCode_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                btnSearch_IssuedTo_Click(sender, e);
-            }
-            if (e.KeyCode == Keys.Enter)
-            {
-                //Upper Issued to company Code
-                string IssuedTo_CompanyCode = txtIssuedTo_CompanyCode.Text.ToString().ToUpper();
-                txtIssuedTo_CompanyCode.Text = IssuedTo_CompanyCode;
-
-                //Search value company code
-                DataTable _tempTable = new DataTable();
-                _tempTable = _searchDAO.GetCustomer_IssuedTo(IssuedTo_CompanyCode);
-
-                if (_tempTable.Rows.Count > 0)
-                {
-                    foreach (DataRow dtRow in _tempTable.Rows)
-                    {
-                        if (!String.IsNullOrEmpty(Convert.ToString(dtRow["CUSTOMER_CODE"])))
-                        { 
-                            txtIssuedTo_CompanyCode.Text = dtRow["CUSTOMER_CODE"].ToString();
-                            txtIssuedTo_CompanyName.Text = dtRow["CUSTOMER_NAME1"].ToString();
-                            txtIssuedTo_CompanyAddress.Text = dtRow["ADDRESS"].ToString();
-                            txtIssuedTo_TelNo.Text = dtRow["TEL_NO"].ToString();
-                            txtIssuedTo_FaxNo.Text = dtRow["FAX_NO"].ToString();
-                        }
-                    }
-                    this.SelectNextControl((Control)sender,true, true, true, true);
-                } else
-                {
-                    MessageBox.Show("Can't find info IssuedTo!");
-                    txtIssuedTo_CompanyCode.Focus();
-                }
-            }
-        }
-
-        private void txtShipTo_CompanyCode_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                btnSearch_ShipTo_Click(sender, e);
-            }
-            if (e.KeyCode == Keys.Enter)
-            {
-                //Upper Issued to company Code
-                string ShipTo_CompanyCode = txtShipTo_CompanyCode.Text.ToString().ToUpper();
-                txtShipTo_CompanyCode.Text = ShipTo_CompanyCode;
-
-                //Search value company code
-                DataTable _tempTable = new DataTable();
-                _tempTable = _searchDAO.GetCustomer_ShipTo(ShipTo_CompanyCode);
-
-                if (_tempTable.Rows.Count > 0)
-                {
-                    foreach (DataRow dtRow in _tempTable.Rows)
-                    {
-                        if (!String.IsNullOrEmpty(Convert.ToString(dtRow["CUSTOMER_CODE"])))
-                        {
-                            txtShipTo_CompanyCode.Text = dtRow["CUSTOMER_CODE"].ToString();
-                            txtShipTo_CompanyName.Text = dtRow["CUSTOMER_NAME1"].ToString();
-                            txtShipTo_CompanyAddress.Text = dtRow["ADDRESS"].ToString();
-                            txtShipTo_TelNo.Text = dtRow["TEL_NO"].ToString();
-                            txtShipTo_FaxNo.Text = dtRow["FAX_NO"].ToString();
-                        }
-                    }
-                    this.SelectNextControl((Control)sender, true, true, true, true);
-                }
-                else
-                {
-                    MessageBox.Show("Can't find info ShipTo!");
-                    txtShipTo_CompanyCode.Focus();
-                }
-            }
-        }
-
-        private void txtPortLoading_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                btnSearch_PortLoading_Click(sender, e);
-            }
-        }
-
-        private void txtPortDestination_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                btnSearch_PortDestination_Click(sender, e);
-            }
-        }
-
-        private void txtPriceCondition_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                btnSearch_PriceCondition_Click(sender, e);
-            }
-        }
-
-        private void txtPaymentTerm_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                btnSearch_PaymentTerm_Click(sender, e);
-            }
-        }
         #endregion
 
         #region Event
@@ -2052,7 +2375,7 @@ namespace TAKAKO_ERP_3LAYER
 
         private void btnSave_Data_Click(object sender, EventArgs e)
         {
-            int Version = 0;
+            //int Version = 0;
             if ((MessageBox.Show("Xác nhận lưu dữ liệu?", "Xác Nhận"
                 , MessageBoxButtons.YesNo, MessageBoxIcon.Question
                 , MessageBoxDefaultButton.Button1) == System.Windows.Forms.DialogResult.Yes))
@@ -2060,7 +2383,7 @@ namespace TAKAKO_ERP_3LAYER
                 if (CheckError() == true)
                 {
                     string _invoiceNo = txtInvoiceNo.Text.Trim();
-                    string _shippingNo = txtShippingNo.Text.Trim();
+                    string _shippingNo = Convert.ToString(sLookUp_ShippingNo.EditValue).Trim();
                     DataTable dtInvoiceMS = new DataTable();
                     DataTable dtInvoiceDetail = new DataTable();
                     DataTable dtPackingListDetail = new DataTable();
@@ -2279,97 +2602,97 @@ namespace TAKAKO_ERP_3LAYER
                     invoiceMS["InvoiceNo"] = _invoiceNo;
                     invoiceMS["InvoiceNo"] = "";
                     invoiceMS["DateCreate"] = dtpDateCreateShipping.Value;
-                    invoiceMS["IssuedToCode"] = txtIssuedTo_CompanyCode.Text.Trim();
+                    invoiceMS["IssuedToCode"] = Convert.ToString(sLookUp_IssuedTo_CompanyCode.EditValue).Trim();
                     invoiceMS["IssuedToName"] = txtIssuedTo_CompanyName.Text.Trim();
-                    invoiceMS["IssuedToAddress"] = txtIssuedTo_CompanyAddress.Text.Trim();
+                    invoiceMS["IssuedToAddress"] = Convert.ToString(memo_IssuedTo_CompanyAddress.EditValue).Trim();
                     invoiceMS["IssuedTelNo"] = txtIssuedTo_TelNo.Text.Trim();
                     invoiceMS["IssuedFaxNo"] = txtIssuedTo_FaxNo.Text.Trim();
-                    invoiceMS["ShipToCode"] = txtShipTo_CompanyCode.Text.Trim();
+                    invoiceMS["ShipToCode"] = sLookUp_ShipTo_CompanyCode.Text.Trim();
                     invoiceMS["ShipToName"] = txtShipTo_CompanyName.Text.Trim();
-                    invoiceMS["ShipToAddress"] = txtShipTo_CompanyAddress.Text.Trim();
+                    invoiceMS["ShipToAddress"] = Convert.ToString(memo_ShipTo_CompanyAddress.EditValue).Trim();
                     invoiceMS["ShipToTelNo"] = txtShipTo_TelNo.Text.Trim();
                     invoiceMS["ShipToFaxNo"] = txtShipTo_FaxNo.Text.Trim();
                     invoiceMS["Revenue"] = dtpRevenue.Value.ToString("MM/yyyy");
                     invoiceMS["ShipVia"] = txtShipVia.Text.Trim();
                     invoiceMS["Freight"] = Convert.ToInt32(cb_Freight.SelectedValue);
                     invoiceMS["Vessel"] = txtVessel.Text.Trim();
-                    invoiceMS["PortLoading"] = txtPortLoading.Text.Trim();
-                    invoiceMS["PortDestination"] = txtPortDestination.Text.Trim();
+                    invoiceMS["PortLoading"] = Convert.ToString(sLookUp_PortLoading.EditValue).Trim();
+                    invoiceMS["PortDestination"] = Convert.ToString(sLookUp_PortDestination).Trim();
                     invoiceMS["ETD"] = dtpETD.Value;
                     invoiceMS["ETA"] = dtpETA.Value;
-                    invoiceMS["TradeCondition"] = txtPriceCondition.Text.Trim();
-                    invoiceMS["PaymentTerm"] = txtPaymentTerm.Text.Trim();
+                    invoiceMS["TradeCondition"] = Convert.ToString(sLookUp_PriceCondition.EditValue).Trim();
+                    invoiceMS["PaymentTerm"] = Convert.ToString(sLookUp_PaymentTerm.EditValue).Trim();
                     invoiceMS["CreateBy"] = _systemDAL.UserName;
                     invoiceMS["CreateAt"] = DateTime.Now;
                     invoiceMS["EditBy"] = _systemDAL.UserName;
                     invoiceMS["EditAt"] = DateTime.Now;
                     dtInvoiceMS.Rows.Add(invoiceMS);
 
-                    //Grid Invoice
-                    foreach (DataGridViewRow row in GridView_Invoice.Rows)
-                    {
-                        if (row.Cells["Tvc_ItemCode"].Value != null)
-                        {
-                            DataRow invoiceDetail = dtInvoiceDetail.NewRow();
-                            invoiceDetail["CompanyCode"] = _systemDAL.CompanyCode;
-                            invoiceDetail["CustomerCode"] = row.Cells["Customer_Code"].Value.ToString();
-                            invoiceDetail["ShippingNo"] = _shippingNo;
-                            invoiceDetail["InvoiceNo"] = _invoiceNo;
-                            //Mode: Add new
-                            if (radNormal.Checked == true)
-                            {
-                                invoiceDetail["ReviseNo"] = "";
-                                invoiceDetail["ReviseDate"] = DateTime.Now;
-                                invoiceDetail["Version"] = Number.Zero;                     //Init = 0
-                            }
-                            else if (radRevise.Checked == true)
-                            {
-                                invoiceDetail["ReviseNo"] = _shippingNo + "_Revise_" + Convert.ToInt32(Version + 1);
-                                invoiceDetail["ReviseDate"] = DateTime.Now;
-                                invoiceDetail["Version"] = Convert.ToInt32(Version + 1);    //Init = 0
-                            }
-                            invoiceDetail["ItemName"] = row.Cells["Part_Description"].Value.ToString();
-                            invoiceDetail["Cus_ItemCode"] = row.Cells["Cus_ItemCode"].Value.ToString();
-                            invoiceDetail["Tvc_ItemCode"] = row.Cells["Tvc_ItemCode"].Value.ToString();
-                            invoiceDetail["Customer_PO"] = row.Cells["Customer_PO"].Value.ToString();
-                            if (row.Cells["ThirdParty_ItemCode"].Value != null)
-                            { 
-                                invoiceDetail["ThirdParty_ItemCode"] = row.Cells["ThirdParty_ItemCode"].Value.ToString();
-                            }
-                            if (row.Cells["ThirdParty_PO"].Value != null) {
-                                invoiceDetail["ThirdParty_PO"] = row.Cells["ThirdParty_PO"].Value.ToString();
-                            }
-                            if (row.Cells["Order_Date"].Value != null)
-                            { 
-                                invoiceDetail["Order_Date"] = Convert.ToDateTime(row.Cells["Order_Date"].Value);
-                            }
-                            if (row.Cells["DueDate_PO"].Value != null) { 
-                                invoiceDetail["DueDate_PO"] = Convert.ToDateTime(row.Cells["DueDate_PO"].Value);
-                            }
-                            invoiceDetail["Quantity"] = Convert.ToDecimal(row.Cells["Quantity"].Value);
-                            if (radRevise.Checked == true)
-                            { 
-                                invoiceDetail["QuantityRevise"] = Convert.ToDecimal(row.Cells["Quantity_Revise"].Value);
-                            } else if (radNormal.Checked == true || radLock.Checked == true)
-                            {
-                                invoiceDetail["QuantityRevise"] = 0;
-                            }
-                            invoiceDetail["Balance"] = Convert.ToDecimal(row.Cells["Balance"].Value);
-                            invoiceDetail["Unit_Currency"] = row.Cells["Unit_Currency"].Value.ToString();
-                            invoiceDetail["USD_Rate"] = row.Cells["USD_Rate"].Value;
-                            invoiceDetail["OrderPrice"] = Convert.ToDecimal(row.Cells["Order_Price"].Value);
-                            if (radRevise.Checked == true) { 
-                                invoiceDetail["OrderPriceRevise"] = Convert.ToDecimal(row.Cells["Order_Price_Revise"].Value);
-                            }
-                            else if (radNormal.Checked == true || radLock.Checked== true)
-                            {
-                                invoiceDetail["OrderPriceRevise"] = 0;
-                            }
-                            invoiceDetail["Global_Price"] = Convert.ToDecimal(row.Cells["Global_Price"].Value);
-                            invoiceDetail["Amount"] = Convert.ToDecimal(row.Cells["Amount_Jpy"].Value);
-                            dtInvoiceDetail.Rows.Add(invoiceDetail);
-                        }
-                    }
+                    ////Grid Invoice
+                    //foreach (DataGridViewRow row in GridView_Invoice.Rows)
+                    //{
+                    //    if (row.Cells["Tvc_ItemCode"].Value != null)
+                    //    {
+                    //        DataRow invoiceDetail = dtInvoiceDetail.NewRow();
+                    //        invoiceDetail["CompanyCode"] = _systemDAL.CompanyCode;
+                    //        invoiceDetail["CustomerCode"] = row.Cells["Customer_Code"].Value.ToString();
+                    //        invoiceDetail["ShippingNo"] = _shippingNo;
+                    //        invoiceDetail["InvoiceNo"] = _invoiceNo;
+                    //        //Mode: Add new
+                    //        if (radNormal.Checked == true)
+                    //        {
+                    //            invoiceDetail["ReviseNo"] = "";
+                    //            invoiceDetail["ReviseDate"] = DateTime.Now;
+                    //            invoiceDetail["Version"] = Number.Zero;                     //Init = 0
+                    //        }
+                    //        else if (radRevise.Checked == true)
+                    //        {
+                    //            invoiceDetail["ReviseNo"] = _shippingNo + "_Revise_" + Convert.ToInt32(Version + 1);
+                    //            invoiceDetail["ReviseDate"] = DateTime.Now;
+                    //            invoiceDetail["Version"] = Convert.ToInt32(Version + 1);    //Init = 0
+                    //        }
+                    //        invoiceDetail["ItemName"] = row.Cells["Part_Description"].Value.ToString();
+                    //        invoiceDetail["Cus_ItemCode"] = row.Cells["Cus_ItemCode"].Value.ToString();
+                    //        invoiceDetail["Tvc_ItemCode"] = row.Cells["Tvc_ItemCode"].Value.ToString();
+                    //        invoiceDetail["Customer_PO"] = row.Cells["Customer_PO"].Value.ToString();
+                    //        if (row.Cells["ThirdParty_ItemCode"].Value != null)
+                    //        { 
+                    //            invoiceDetail["ThirdParty_ItemCode"] = row.Cells["ThirdParty_ItemCode"].Value.ToString();
+                    //        }
+                    //        if (row.Cells["ThirdParty_PO"].Value != null) {
+                    //            invoiceDetail["ThirdParty_PO"] = row.Cells["ThirdParty_PO"].Value.ToString();
+                    //        }
+                    //        if (row.Cells["Order_Date"].Value != null)
+                    //        { 
+                    //            invoiceDetail["Order_Date"] = Convert.ToDateTime(row.Cells["Order_Date"].Value);
+                    //        }
+                    //        if (row.Cells["DueDate_PO"].Value != null) { 
+                    //            invoiceDetail["DueDate_PO"] = Convert.ToDateTime(row.Cells["DueDate_PO"].Value);
+                    //        }
+                    //        invoiceDetail["Quantity"] = Convert.ToDecimal(row.Cells["Quantity"].Value);
+                    //        if (radRevise.Checked == true)
+                    //        { 
+                    //            invoiceDetail["QuantityRevise"] = Convert.ToDecimal(row.Cells["Quantity_Revise"].Value);
+                    //        } else if (radNormal.Checked == true || radLock.Checked == true)
+                    //        {
+                    //            invoiceDetail["QuantityRevise"] = 0;
+                    //        }
+                    //        invoiceDetail["Balance"] = Convert.ToDecimal(row.Cells["Balance"].Value);
+                    //        invoiceDetail["Unit_Currency"] = row.Cells["Unit_Currency"].Value.ToString();
+                    //        invoiceDetail["USD_Rate"] = row.Cells["USD_Rate"].Value;
+                    //        invoiceDetail["OrderPrice"] = Convert.ToDecimal(row.Cells["Order_Price"].Value);
+                    //        if (radRevise.Checked == true) { 
+                    //            invoiceDetail["OrderPriceRevise"] = Convert.ToDecimal(row.Cells["Order_Price_Revise"].Value);
+                    //        }
+                    //        else if (radNormal.Checked == true || radLock.Checked== true)
+                    //        {
+                    //            invoiceDetail["OrderPriceRevise"] = 0;
+                    //        }
+                    //        invoiceDetail["Global_Price"] = Convert.ToDecimal(row.Cells["Global_Price"].Value);
+                    //        invoiceDetail["Amount"] = Convert.ToDecimal(row.Cells["Amount_Jpy"].Value);
+                    //        dtInvoiceDetail.Rows.Add(invoiceDetail);
+                    //    }
+                    //}
 
                     //Check trùng dữ liệu Invoice trước khi lưu
                     var count_Duplication_Inv = dtPackingListDetail.AsEnumerable().GroupBy(
@@ -2399,53 +2722,53 @@ namespace TAKAKO_ERP_3LAYER
                         return;
                     }
 
-                    //Grid Packing List
-                    foreach (DataGridViewRow row in GridView_PackingList.Rows)
-                    {
-                        if (row.Cells["Customer_ItemCode"].Value != null)
-                        {
-                            DataRow packingListDetail = dtPackingListDetail.NewRow();
-                            packingListDetail["CompanyCode"] = _systemDAL.CompanyCode;
-                            packingListDetail["CustomerCode"] = row.Cells["Customer_Code"].Value.ToString();
-                            packingListDetail["ShippingNo"] = _shippingNo;
-                            packingListDetail["InvoiceNo"] = _invoiceNo;
-                            //Mode: Add new
-                            if (radNormal.Checked == true)
-                            {
-                                packingListDetail["ReviseNo"] = _shippingNo;
-                                packingListDetail["ReviseDate"] = DateTime.Now;
-                                packingListDetail["Version"] = Number.Zero;                     //Init = 0
-                            }
-                            else if (radRevise.Checked == true)
-                            {
-                                packingListDetail["ReviseNo"] = _shippingNo + "_Revise_" + Convert.ToInt32(Version + 1);
-                                packingListDetail["ReviseDate"] = DateTime.Now;
-                                packingListDetail["Version"] = Convert.ToInt32(Version + 1);    //Init = 0
-                            }
-                            if (row.Cells["Packages_No"].Value != null)
-                            { 
-                                packingListDetail["PackagesNo"] = row.Cells["Packages_No"].Value.ToString();
-                            }
-                            packingListDetail["Customer_ItemCode"] = row.Cells["Customer_ItemCode"].Value.ToString();
-                            packingListDetail["TVC_ItemCode"] = row.Cells["TVC_ItemCode"].Value.ToString();
-                            packingListDetail["Customer_PO"] = row.Cells["Customer_PO"].Value.ToString();
-                            packingListDetail["QtyCarton"] = Convert.ToDecimal(row.Cells["Qty_Carton"].Value);
-                            packingListDetail["QtyPerCarton"] = row.Cells["Qty_Per_Carton"].Value.ToString();
-                            packingListDetail["QuantityTotal"] = Convert.ToDecimal(row.Cells["Qty_Total"].Value);
-                            if (radRevise.Checked == true)
-                            {
-                                packingListDetail["QuantityTotalRevise"] = Convert.ToDecimal(row.Cells["Qty_Total_Revise"].Value);
-                            } else if (radNormal.Checked == true || radLock.Checked == true)
-                            {
-                                packingListDetail["QuantityTotalRevise"] = 0;
-                            }
-                            packingListDetail["NetWeight"] = Convert.ToDecimal(row.Cells["Net_Weight"].Value);
-                            packingListDetail["NetWeight_Total"] = Convert.ToDecimal(row.Cells["Net_Weight_Total"].Value);
-                            packingListDetail["GrossWeight"] = Convert.ToDecimal(row.Cells["Gross_Weight"].Value);
-                            packingListDetail["LotNo"] = row.Cells["Lot_No"].Value.ToString();
-                            dtPackingListDetail.Rows.Add(packingListDetail);
-                        }
-                    }
+                    ////Grid Packing List
+                    //foreach (DataGridViewRow row in GridView_PackingList.Rows)
+                    //{
+                    //    if (row.Cells["Customer_ItemCode"].Value != null)
+                    //    {
+                    //        DataRow packingListDetail = dtPackingListDetail.NewRow();
+                    //        packingListDetail["CompanyCode"] = _systemDAL.CompanyCode;
+                    //        packingListDetail["CustomerCode"] = row.Cells["Customer_Code"].Value.ToString();
+                    //        packingListDetail["ShippingNo"] = _shippingNo;
+                    //        packingListDetail["InvoiceNo"] = _invoiceNo;
+                    //        //Mode: Add new
+                    //        if (radNormal.Checked == true)
+                    //        {
+                    //            packingListDetail["ReviseNo"] = _shippingNo;
+                    //            packingListDetail["ReviseDate"] = DateTime.Now;
+                    //            packingListDetail["Version"] = Number.Zero;                     //Init = 0
+                    //        }
+                    //        else if (radRevise.Checked == true)
+                    //        {
+                    //            packingListDetail["ReviseNo"] = _shippingNo + "_Revise_" + Convert.ToInt32(Version + 1);
+                    //            packingListDetail["ReviseDate"] = DateTime.Now;
+                    //            packingListDetail["Version"] = Convert.ToInt32(Version + 1);    //Init = 0
+                    //        }
+                    //        if (row.Cells["Packages_No"].Value != null)
+                    //        { 
+                    //            packingListDetail["PackagesNo"] = row.Cells["Packages_No"].Value.ToString();
+                    //        }
+                    //        packingListDetail["Customer_ItemCode"] = row.Cells["Customer_ItemCode"].Value.ToString();
+                    //        packingListDetail["TVC_ItemCode"] = row.Cells["TVC_ItemCode"].Value.ToString();
+                    //        packingListDetail["Customer_PO"] = row.Cells["Customer_PO"].Value.ToString();
+                    //        packingListDetail["QtyCarton"] = Convert.ToDecimal(row.Cells["Qty_Carton"].Value);
+                    //        packingListDetail["QtyPerCarton"] = row.Cells["Qty_Per_Carton"].Value.ToString();
+                    //        packingListDetail["QuantityTotal"] = Convert.ToDecimal(row.Cells["Qty_Total"].Value);
+                    //        if (radRevise.Checked == true)
+                    //        {
+                    //            packingListDetail["QuantityTotalRevise"] = Convert.ToDecimal(row.Cells["Qty_Total_Revise"].Value);
+                    //        } else if (radNormal.Checked == true || radLock.Checked == true)
+                    //        {
+                    //            packingListDetail["QuantityTotalRevise"] = 0;
+                    //        }
+                    //        packingListDetail["NetWeight"] = Convert.ToDecimal(row.Cells["Net_Weight"].Value);
+                    //        packingListDetail["NetWeight_Total"] = Convert.ToDecimal(row.Cells["Net_Weight_Total"].Value);
+                    //        packingListDetail["GrossWeight"] = Convert.ToDecimal(row.Cells["Gross_Weight"].Value);
+                    //        packingListDetail["LotNo"] = row.Cells["Lot_No"].Value.ToString();
+                    //        dtPackingListDetail.Rows.Add(packingListDetail);
+                    //    }
+                    //}
 
                     //Check trùng dữ liệu Packing List trước khi lưu
                     var count_Duplication_PL = dtPackingListDetail.AsEnumerable().GroupBy(
@@ -2481,15 +2804,15 @@ namespace TAKAKO_ERP_3LAYER
 
                     try
                     {
-                        if (GridView_Invoice.Rows.Count == 0)
-                        {
+                        //if (GridView_Invoice.Rows.Count == 0)
+                        //{
 
-                        }
+                        //}
 
                         //Insert new data
                         if (_shippingDAO.insertShipping(dtInvoiceMS,Grid_Invoice,dtInvoiceDetail, dtPackingListDetail) == true)
                         {
-                            string Message = "Lưu thành công shipping : \"" + txtShippingNo.Text + "\"!";
+                            string Message = "Lưu thành công shipping : \"" + Convert.ToString(sLookUp_ShippingNo.EditValue) + "\"!";
                             MessageBox.Show(Message, "Notify", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             //Write Lock
@@ -2503,8 +2826,8 @@ namespace TAKAKO_ERP_3LAYER
                             {
                                 _typeLock = "NEW";
                             }
-                            Message += " Computer: " + Environment.MachineName + ". Invoice " + (GridView_Invoice.Rows.Count - 1) + " rows";
-                            Message += ". Packing List " + (GridView_PackingList.Rows.Count - 1) + " rows";
+                            //Message += " Computer: " + Environment.MachineName + ". Invoice " + (GridView_Invoice.Rows.Count - 1) + " rows";
+                            //Message += ". Packing List " + (GridView_PackingList.Rows.Count - 1) + " rows";
                             _logDAO.InsertLog(_systemDAL.CompanyCode, _systemDAL.UserName, _typeLock, Message);
 
                             //Clear data
@@ -2641,7 +2964,7 @@ namespace TAKAKO_ERP_3LAYER
             //        MessageBox.Show("Error: Can't read file. Original error: " + ex.Message);
             //    }
             //}
-            string shippingNo = txtShippingNo.Text.Trim();
+            string shippingNo = Convert.ToString(sLookUp_ShippingNo.EditValue).Trim();
 
             Form_Shipping_Output_PackingList form_Shipping_Output_PackingList = new Form_Shipping_Output_PackingList(_systemDAL, shippingNo);
             form_Shipping_Output_PackingList.StartPosition = FormStartPosition.CenterParent;
@@ -2649,7 +2972,7 @@ namespace TAKAKO_ERP_3LAYER
 
             ClearData();
 
-            txtShippingNo.Text = shippingNo;
+            //txtShippingNo.Text = shippingNo;
 
             //Load Invoice
             btn_SearchShipping_Click(sender, e);
@@ -2660,7 +2983,7 @@ namespace TAKAKO_ERP_3LAYER
 
         private void btnLockData_Click(object sender, EventArgs e)
         {
-            string _shippingNo = txtShippingNo.Text.Trim();
+            string _shippingNo = Convert.ToString(sLookUp_ShippingNo.EditValue).Trim();
             if (radNormal.Checked == true)
             {
                 if ((MessageBox.Show("Do you want to Lock Shipping Instruction?", "Confirm"
@@ -2715,7 +3038,7 @@ namespace TAKAKO_ERP_3LAYER
 
         private void btnUnlockData_Click(object sender, EventArgs e)
         {
-            string _shippingNo = txtShippingNo.Text.Trim();
+            string _shippingNo = Convert.ToString(sLookUp_ShippingNo.EditValue).Trim();
             if (radLock.Checked == true)
             {
                 if ((MessageBox.Show("Do you want to Unlock Shipping Instruction?", "Confirm"
@@ -2762,7 +3085,7 @@ namespace TAKAKO_ERP_3LAYER
 
         private void btnRevise_Click(object sender, EventArgs e)
         {
-            string _shippingNo = txtShippingNo.Text.Trim();
+            string _shippingNo = Convert.ToString(sLookUp_ShippingNo.EditValue).Trim();
             if (radLock.Checked == true)
             {
                 if ((MessageBox.Show("Do you want to Revise Shipping Instruction?", "Confirm"
@@ -2793,7 +3116,7 @@ namespace TAKAKO_ERP_3LAYER
                                     //
                                     ClearData();
                                     //
-                                    txtShippingNo.Text = _shippingNo;
+                                    //txtShippingNo.Text = _shippingNo;
                                     //Reload Shipping Instruction
                                     btn_SearchShipping_Click(sender, e);
                                     radRevise.Checked = true;
@@ -2816,7 +3139,7 @@ namespace TAKAKO_ERP_3LAYER
 
         private void btn_SearchShipping_Click(object sender, EventArgs e)
         {
-            string _shippingNo = txtShippingNo.Text.Trim();
+            string _shippingNo = Convert.ToString(sLookUp_ShippingNo.EditValue).Trim();
             try
             {
                 //Get data header
@@ -2836,19 +3159,19 @@ namespace TAKAKO_ERP_3LAYER
                         //DATE CREATE SHIPPING
                         dtpDateCreateShipping.Value = Convert.ToDateTime(row["DATE_CREATE"]);
 
-                        //SHIPPING NO
-                        txtShippingNo.Text = row["SHIPPING_NO"].ToString();
-                        txtShippingNo.Enabled = false;
+                        ////SHIPPING NO
+                        //txtShippingNo.Text = row["SHIPPING_NO"].ToString();
+                        //txtShippingNo.Enabled = false;
 
                         //INVOICE NO
                         txtInvoiceNo.Text = row["INVOICE_NO"].ToString();
 
                         //ISSUEDTO
-                        txtIssuedTo_CompanyCode.Text = row["ISSUEDTO_CUSTOMER_CODE"].ToString();
-                        txtIssuedTo_CompanyName.Text = row["ISSUEDTO_CUSTOMER_NAME"].ToString();
-                        txtIssuedTo_CompanyAddress.Text = row["ISSUEDTO_CUSTOMER_ADDRESS"].ToString();
-                        txtIssuedTo_TelNo.Text = row["ISSUEDTO_CUSTOMER_TEL_NO"].ToString();
-                        txtIssuedTo_FaxNo.Text = row["ISSUEDTO_CUSTOMER_FAX_NO"].ToString();
+                        sLookUp_IssuedTo_CompanyCode.EditValue  = Convert.ToString(row["ISSUEDTO_CUSTOMER_CODE"]);
+                        txtIssuedTo_CompanyName.EditValue       = Convert.ToString(row["ISSUEDTO_CUSTOMER_NAME"]);
+                        memo_IssuedTo_CompanyAddress.EditValue  = Convert.ToString(row["ISSUEDTO_CUSTOMER_ADDRESS"]);
+                        txtIssuedTo_TelNo.EditValue             = Convert.ToString(row["ISSUEDTO_CUSTOMER_TEL_NO"]);
+                        txtIssuedTo_FaxNo.EditValue             = Convert.ToString(row["ISSUEDTO_CUSTOMER_FAX_NO"]);
 
                         //if (row["ISSUEDTO_CUSTOMER_CODE"].Equals("TTC"))
                         //{
@@ -2859,11 +3182,11 @@ namespace TAKAKO_ERP_3LAYER
                         //}
 
                         //SHIPTO
-                        txtShipTo_CompanyCode.Text = row["SHIPTO_CUSTOMER_CODE"].ToString();
-                        txtShipTo_CompanyName.Text = row["SHIPTO_CUSTOMER_NAME"].ToString();
-                        txtShipTo_CompanyAddress.Text = row["SHIPTO_CUSTOMER_ADDRESS"].ToString();
-                        txtShipTo_TelNo.Text = row["SHIPTO_CUSTOMER_TEL_NO"].ToString();
-                        txtShipTo_FaxNo.Text = row["SHIPTO_CUSTOMER_FAX_NO"].ToString();
+                        sLookUp_ShipTo_CompanyCode.EditValue = Convert.ToString(row["SHIPTO_CUSTOMER_CODE"]);
+                        txtShipTo_CompanyName.EditValue = Convert.ToString(row["SHIPTO_CUSTOMER_NAME"]);
+                        memo_ShipTo_CompanyAddress.EditValue = Convert.ToString(row["SHIPTO_CUSTOMER_ADDRESS"]);
+                        txtShipTo_TelNo.EditValue = Convert.ToString(row["SHIPTO_CUSTOMER_TEL_NO"]);
+                        txtShipTo_FaxNo.EditValue = Convert.ToString(row["SHIPTO_CUSTOMER_FAX_NO"]);
 
                         if (!String.IsNullOrEmpty(Convert.ToString(row["REVENUE"])))
                         {
@@ -2886,10 +3209,10 @@ namespace TAKAKO_ERP_3LAYER
                         txtVessel.Text = row["VESSEL"].ToString();
 
                         //PORT OF LOADING
-                        txtPortLoading.Text = row["PORT_OF_LOADING"].ToString();
+                        sLookUp_PortLoading.EditValue = Convert.ToString(row["PORT_OF_LOADING"]);
 
                         //PORT OF DESTINATION
-                        txtPortDestination.Text = row["PORT_OF_DESTINATION"].ToString();
+                        sLookUp_PortDestination.EditValue = Convert.ToString(row["PORT_OF_DESTINATION"]);
 
                         //ETD
                         dtpETD.Value = Convert.ToDateTime(row["ETD"]);
@@ -2898,10 +3221,10 @@ namespace TAKAKO_ERP_3LAYER
                         dtpETA.Value = Convert.ToDateTime(row["ETA"]);
 
                         //TRADE CONDITION
-                        txtPriceCondition.Text = row["TRADE_CONDITION"].ToString();
+                        sLookUp_PriceCondition.Text = Convert.ToString(row["TRADE_CONDITION"]);
 
                         //PAYMENT TERM
-                        txtPaymentTerm.Text = row["PAYMENT_TERM"].ToString();
+                        sLookUp_PaymentTerm.Text = Convert.ToString(row["PAYMENT_TERM"]);
 
                         //CREATE BY
                         createBy = row["CREATE_BY"].ToString();
@@ -2915,37 +3238,37 @@ namespace TAKAKO_ERP_3LAYER
                     }
                     else if (Grid_Invoice.Rows.Count >= 1)
                     {
-                        //Clear DataGridView
-                        GridView_Invoice.Rows.Clear();
-                        GridView_PackingList.Rows.Clear();
-                        foreach (DataRow row in Grid_Invoice.Rows)
-                        {
-                            if (!String.IsNullOrEmpty(row["INV_CUSTOMER_CODE"].ToString()))
-                            {
-                                int indexInv = GridView_Invoice.Rows.Add();
-                                //Binding for Invoice
-                                GridView_Invoice.Rows[indexInv].Cells["Customer_Code"].Value = row["INV_CUSTOMER_CODE"].ToString();
-                                GridView_Invoice.Rows[indexInv].Cells["Part_Description"].Value = row["INV_ITEM_NAME"].ToString();
-                                GridView_Invoice.Rows[indexInv].Cells["Cus_ItemCode"].Value = row["INV_CUS_ITEM_CODE"].ToString();
-                                GridView_Invoice.Rows[indexInv].Cells["Tvc_ItemCode"].Value = row["INV_ITEM_CODE"].ToString();
-                                GridView_Invoice.Rows[indexInv].Cells["Customer_PO"].Value = row["INV_REF_PO_NO"].ToString();
-                                GridView_Invoice.Rows[indexInv].Cells["ThirdParty_PO"].Value = row["THIRD_PARTY_PO"].ToString();
-                                if (!String.IsNullOrEmpty(Convert.ToString(row["ORDER_DATE"])))
-                                {
-                                    GridView_Invoice.Rows[indexInv].Cells["Order_Date"].Value = Convert.ToDateTime(row["ORDER_DATE"]).ToString("dd/MM/yyyy");
-                                }
-                                GridView_Invoice.Rows[indexInv].Cells["DueDate_PO"].Value = Convert.ToDateTime(row["DUE_DATE_PO"]).ToString("dd/MM/yyyy");
-                                GridView_Invoice.Rows[indexInv].Cells["Quantity"].Value = row["INV_QUANTITY"];
-                                GridView_Invoice.Rows[indexInv].Cells["Quantity_Revise"].Value = row["INV_QUANTITY_REVISE"];
-                                GridView_Invoice.Rows[indexInv].Cells["Balance"].Value = row["INV_BALANCE"];
-                                GridView_Invoice.Rows[indexInv].Cells["Unit_Currency"].Value = row["INV_UNIT_CURRENCY"];
-                                GridView_Invoice.Rows[indexInv].Cells["USD_Rate"].Value = row["INV_USD_RATE"];
-                                GridView_Invoice.Rows[indexInv].Cells["Order_Price"].Value = row["INV_ORDER_PRICE"];
-                                GridView_Invoice.Rows[indexInv].Cells["Order_Price_Revise"].Value = row["INV_ORDER_PRICE_REVISE"];
-                                GridView_Invoice.Rows[indexInv].Cells["Global_Price"].Value = row["GLOBAL_PRICE"];
-                                GridView_Invoice.Rows[indexInv].Cells["Amount_Jpy"].Value = row["INV_AMOUNT"];
-                            }
-                        }
+                        ////Clear DataGridView
+                        //GridView_Invoice.Rows.Clear();
+                        //GridView_PackingList.Rows.Clear();
+                        //foreach (DataRow row in Grid_Invoice.Rows)
+                        //{
+                        //    if (!String.IsNullOrEmpty(row["INV_CUSTOMER_CODE"].ToString()))
+                        //    {
+                        //        int indexInv = GridView_Invoice.Rows.Add();
+                        //        //Binding for Invoice
+                        //        GridView_Invoice.Rows[indexInv].Cells["Customer_Code"].Value = row["INV_CUSTOMER_CODE"].ToString();
+                        //        GridView_Invoice.Rows[indexInv].Cells["Part_Description"].Value = row["INV_ITEM_NAME"].ToString();
+                        //        GridView_Invoice.Rows[indexInv].Cells["Cus_ItemCode"].Value = row["INV_CUS_ITEM_CODE"].ToString();
+                        //        GridView_Invoice.Rows[indexInv].Cells["Tvc_ItemCode"].Value = row["INV_ITEM_CODE"].ToString();
+                        //        GridView_Invoice.Rows[indexInv].Cells["Customer_PO"].Value = row["INV_REF_PO_NO"].ToString();
+                        //        GridView_Invoice.Rows[indexInv].Cells["ThirdParty_PO"].Value = row["THIRD_PARTY_PO"].ToString();
+                        //        if (!String.IsNullOrEmpty(Convert.ToString(row["ORDER_DATE"])))
+                        //        {
+                        //            GridView_Invoice.Rows[indexInv].Cells["Order_Date"].Value = Convert.ToDateTime(row["ORDER_DATE"]).ToString("dd/MM/yyyy");
+                        //        }
+                        //        GridView_Invoice.Rows[indexInv].Cells["DueDate_PO"].Value = Convert.ToDateTime(row["DUE_DATE_PO"]).ToString("dd/MM/yyyy");
+                        //        GridView_Invoice.Rows[indexInv].Cells["Quantity"].Value = row["INV_QUANTITY"];
+                        //        GridView_Invoice.Rows[indexInv].Cells["Quantity_Revise"].Value = row["INV_QUANTITY_REVISE"];
+                        //        GridView_Invoice.Rows[indexInv].Cells["Balance"].Value = row["INV_BALANCE"];
+                        //        GridView_Invoice.Rows[indexInv].Cells["Unit_Currency"].Value = row["INV_UNIT_CURRENCY"];
+                        //        GridView_Invoice.Rows[indexInv].Cells["USD_Rate"].Value = row["INV_USD_RATE"];
+                        //        GridView_Invoice.Rows[indexInv].Cells["Order_Price"].Value = row["INV_ORDER_PRICE"];
+                        //        GridView_Invoice.Rows[indexInv].Cells["Order_Price_Revise"].Value = row["INV_ORDER_PRICE_REVISE"];
+                        //        GridView_Invoice.Rows[indexInv].Cells["Global_Price"].Value = row["GLOBAL_PRICE"];
+                        //        GridView_Invoice.Rows[indexInv].Cells["Amount_Jpy"].Value = row["INV_AMOUNT"];
+                        //    }
+                        //}
 
                         //
                         Grid_PackingList = _shippingDAO.GetDetail_ShipPL(_shippingNo);
@@ -2955,28 +3278,28 @@ namespace TAKAKO_ERP_3LAYER
                             {
                                 if (row["PL_CUSTOMER_CODE"] != null)
                                 {
-                                    int indexPL = GridView_PackingList.Rows.Add();
-                                    GridView_PackingList.Rows[indexPL].Cells["Customer_Code"].Value = row["PL_CUSTOMER_CODE"].ToString();
-                                    GridView_PackingList.Rows[indexPL].Cells["Packages_No"].Value = row["PL_PACKAGES_NO"].ToString();
-                                    GridView_PackingList.Rows[indexPL].Cells["Customer_ItemCode"].Value = row["PL_ITEM_CODE"].ToString();
-                                    GridView_PackingList.Rows[indexPL].Cells["TVC_ItemCode"].Value = row["PL_TVC_ITEM_CODE"].ToString();
-                                    GridView_PackingList.Rows[indexPL].Cells["Customer_PO"].Value = row["PL_CUSTOMER_PO"].ToString();
-                                    GridView_PackingList.Rows[indexPL].Cells["Qty_Carton"].Value = Convert.ToDecimal(row["PL_QTY_CARTON"]);
-                                    GridView_PackingList.Rows[indexPL].Cells["Qty_Per_Carton"].Value = Convert.ToDecimal(row["PL_QTY_PER_CARTON"]);
-                                    GridView_PackingList.Rows[indexPL].Cells["Qty_Total"].Value = Convert.ToDecimal(row["PL_QTY_TOTAL"]);
-                                    GridView_PackingList.Rows[indexPL].Cells["Qty_Total_Revise"].Value = row["PL_QTY_TOTAL_REVISE"];
-                                    GridView_PackingList.Rows[indexPL].Cells["Net_Weight"].Value = Convert.ToDecimal(row["PL_NET_WEIGHT"]);
-                                    GridView_PackingList.Rows[indexPL].Cells["Net_Weight_Total"].Value = Convert.ToDecimal(row["PL_NET_WEIGHT_TOTAL"]);
-                                    GridView_PackingList.Rows[indexPL].Cells["Gross_Weight"].Value = Convert.ToDecimal(row["PL_GROSS_WEIGHT"]);
-                                    GridView_PackingList.Rows[indexPL].Cells["Lot_No"].Value = row["PL_LOT_NO"].ToString();
+                                    //int indexPL = GridView_PackingList.Rows.Add();
+                                    //GridView_PackingList.Rows[indexPL].Cells["Customer_Code"].Value = row["PL_CUSTOMER_CODE"].ToString();
+                                    //GridView_PackingList.Rows[indexPL].Cells["Packages_No"].Value = row["PL_PACKAGES_NO"].ToString();
+                                    //GridView_PackingList.Rows[indexPL].Cells["Customer_ItemCode"].Value = row["PL_ITEM_CODE"].ToString();
+                                    //GridView_PackingList.Rows[indexPL].Cells["TVC_ItemCode"].Value = row["PL_TVC_ITEM_CODE"].ToString();
+                                    //GridView_PackingList.Rows[indexPL].Cells["Customer_PO"].Value = row["PL_CUSTOMER_PO"].ToString();
+                                    //GridView_PackingList.Rows[indexPL].Cells["Qty_Carton"].Value = Convert.ToDecimal(row["PL_QTY_CARTON"]);
+                                    //GridView_PackingList.Rows[indexPL].Cells["Qty_Per_Carton"].Value = Convert.ToDecimal(row["PL_QTY_PER_CARTON"]);
+                                    //GridView_PackingList.Rows[indexPL].Cells["Qty_Total"].Value = Convert.ToDecimal(row["PL_QTY_TOTAL"]);
+                                    //GridView_PackingList.Rows[indexPL].Cells["Qty_Total_Revise"].Value = row["PL_QTY_TOTAL_REVISE"];
+                                    //GridView_PackingList.Rows[indexPL].Cells["Net_Weight"].Value = Convert.ToDecimal(row["PL_NET_WEIGHT"]);
+                                    //GridView_PackingList.Rows[indexPL].Cells["Net_Weight_Total"].Value = Convert.ToDecimal(row["PL_NET_WEIGHT_TOTAL"]);
+                                    //GridView_PackingList.Rows[indexPL].Cells["Gross_Weight"].Value = Convert.ToDecimal(row["PL_GROSS_WEIGHT"]);
+                                    //GridView_PackingList.Rows[indexPL].Cells["Lot_No"].Value = row["PL_LOT_NO"].ToString();
                                 }
                             }
                         }
 
-                        //Sum Invoice
-                        btnSumInvoice_Click(sender, e);
-                        //Sum Packing List
-                        btnSumPL_Click(sender, e);
+                        ////Sum Invoice
+                        //btnSumInvoice_Click(sender, e);
+                        ////Sum Packing List
+                        //btnSumPL_Click(sender, e);
                     }
                 }
 
@@ -2985,34 +3308,6 @@ namespace TAKAKO_ERP_3LAYER
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void Binding_Grid_Invoice(DataTable _tempInvoiceTable)
-        {
-            foreach (DataRow row in _tempInvoiceTable.Rows)
-            {
-                if (!String.IsNullOrEmpty(row["INV_CUSTOMER_CODE"].ToString()))
-                {
-                    int indexInv = GridView_Invoice.Rows.Add();
-                    //Binding for Invoice
-                    GridView_Invoice.Rows[indexInv].Cells["Customer_Code"].Value = row["INV_CUSTOMER_CODE"].ToString();
-                    GridView_Invoice.Rows[indexInv].Cells["Part_Description"].Value = row["INV_ITEM_NAME"].ToString();
-                    GridView_Invoice.Rows[indexInv].Cells["Cus_ItemCode"].Value = row["INV_CUS_ITEM_CODE"].ToString();
-                    GridView_Invoice.Rows[indexInv].Cells["Tvc_ItemCode"].Value = row["INV_ITEM_CODE"].ToString();
-                    GridView_Invoice.Rows[indexInv].Cells["Customer_PO"].Value = row["INV_REF_PO_NO"].ToString();
-                    GridView_Invoice.Rows[indexInv].Cells["ThirdParty_PO"].Value = row["THIRD_PARTY_PO"].ToString();
-                    GridView_Invoice.Rows[indexInv].Cells["DueDate_PO"].Value = Convert.ToDateTime(row["DUE_DATE_PO"]).ToString("dd/MM/yyyy");
-                    GridView_Invoice.Rows[indexInv].Cells["Quantity"].Value = row["INV_QUANTITY"];
-                    GridView_Invoice.Rows[indexInv].Cells["Quantity_Revise"].Value = row["INV_QUANTITY_REVISE"];
-                    GridView_Invoice.Rows[indexInv].Cells["Balance"].Value = row["INV_BALANCE"];
-                    GridView_Invoice.Rows[indexInv].Cells["Unit_Currency"].Value = row["INV_UNIT_CURRENCY"];
-                    GridView_Invoice.Rows[indexInv].Cells["USD_Rate"].Value = row["INV_USD_RATE"];
-                    GridView_Invoice.Rows[indexInv].Cells["Order_Price"].Value = row["INV_ORDER_PRICE"];
-                    GridView_Invoice.Rows[indexInv].Cells["Order_Price_Revise"].Value = row["INV_ORDER_PRICE_REVISE"];
-                    GridView_Invoice.Rows[indexInv].Cells["Global_Price"].Value = row["GLOBAL_PRICE"];
-                    GridView_Invoice.Rows[indexInv].Cells["Amount_Jpy"].Value = row["INV_AMOUNT"];
-                }
             }
         }
 
@@ -3025,72 +3320,6 @@ namespace TAKAKO_ERP_3LAYER
         private void btn_NewRow_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void btn_CoppyRow_Click(object sender, EventArgs e)
-        {
-            if (tabControl.SelectedIndex == 0)
-            {
-                if (GridView_Invoice.SelectedRows.Count > 0)
-                {
-
-                }
-            }
-            else if (tabControl.SelectedIndex == 1)
-            {
-                if(GridView_PackingList.Rows.Count > 1)
-                {
-                    if (GridView_PackingList.SelectedRows.Count == 1)
-                    {
-                        int selectedRow = GridView_PackingList.CurrentRow.Index;
-                        int position = selectedRow + 1;
-                        GridView_PackingList.Rows.Insert(position);
-                        GridView_PackingList.Rows[position].Cells["Customer_Code"].Value = GridView_PackingList.Rows[selectedRow].Cells["Customer_Code"].Value;
-                        GridView_PackingList.Rows[position].Cells["Packages_No"].Value = GridView_PackingList.Rows[selectedRow].Cells["Packages_No"].Value;
-                        GridView_PackingList.Rows[position].Cells["Customer_ItemCode"].Value = GridView_PackingList.Rows[selectedRow].Cells["Customer_ItemCode"].Value;
-                        GridView_PackingList.Rows[position].Cells["TVC_ItemCode"].Value = GridView_PackingList.Rows[selectedRow].Cells["TVC_ItemCode"].Value;
-                        GridView_PackingList.Rows[position].Cells["Customer_PO"].Value = GridView_PackingList.Rows[selectedRow].Cells["Customer_PO"].Value;
-                        GridView_PackingList.Rows[position].Cells["Qty_Carton"].Value = GridView_PackingList.Rows[selectedRow].Cells["Qty_Carton"].Value;
-                        GridView_PackingList.Rows[position].Cells["Qty_Per_Carton"].Value = GridView_PackingList.Rows[selectedRow].Cells["Qty_Per_Carton"].Value;
-                        GridView_PackingList.Rows[position].Cells["Qty_Total"].Value = GridView_PackingList.Rows[selectedRow].Cells["Qty_Total"].Value;
-                        GridView_PackingList.Rows[position].Cells["Qty_Total_Revise"].Value = GridView_PackingList.Rows[selectedRow].Cells["Qty_Total_Revise"].Value;
-                        GridView_PackingList.Rows[position].Cells["Net_Weight"].Value = GridView_PackingList.Rows[selectedRow].Cells["Net_Weight"].Value;
-                        GridView_PackingList.Rows[position].Cells["Net_Weight_Total"].Value = GridView_PackingList.Rows[selectedRow].Cells["Net_Weight_Total"].Value;
-                        GridView_PackingList.Rows[position].Cells["Gross_Weight"].Value = GridView_PackingList.Rows[selectedRow].Cells["Gross_Weight"].Value;
-                        GridView_PackingList.Rows[position].Cells["Lot_No"].Value = GridView_PackingList.Rows[selectedRow].Cells["Lot_No"].Value;
-                        GridView_PackingList.CurrentCell = GridView_PackingList.Rows[position].Cells["Packages_No"];
-                        GridView_PackingList.Rows[position].Cells["Packages_No"].Selected = true;
-                        GridView_PackingList.BeginEdit(true);
-                    } else if (GridView_PackingList.SelectedRows.Count > 1)
-                    {
-                        MessageBox.Show("Xin chỉ chọn 1 dòng cần copy!", "Cảnh Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    } else
-                    {
-                        MessageBox.Show("Xin hãy chọn dòng cần copy!", "Cảnh Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                } else if (GridView_PackingList.Rows.Count == 1)
-                {
-                    MessageBox.Show("Packing List rỗng, không có dữ liệu copy!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-
-            //Sum packing List
-            btnSumPL_Click(sender, e);
-        }
-
-        /// <summary>
-        /// Set focus to last row added
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void GridView_Invoice_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            if (GridView_Invoice.CurrentCell != null)
-                GridView_Invoice.CurrentCell.OwningRow.Selected = false;
-            if (lastSelected != null)
-                lastSelected.Selected = false;
-            lastSelected = GridView_Invoice.Rows[e.RowIndex];
-            lastSelected.Selected = true;
         }
 
         private void txtShippingNo_KeyDown(object sender, KeyEventArgs e)
@@ -3107,164 +3336,9 @@ namespace TAKAKO_ERP_3LAYER
             }
         }
 
-        private void txtSearchValue_Gridview_Enter(object sender, EventArgs e)
-        {           
-            //Setting color text search
-            if (txt_Search_Grid.Text == "Search Value")
-            {
-                txt_Search_Grid.Text = "";
-                txt_Search_Grid.ForeColor = Color.Black;
-            }
-        }
-
-        private void txtSearchValue_Gridview_Leave(object sender, EventArgs e)
-        {
-            string _valueSearch = txt_Search_Grid.Text.Trim();
-            List<int> _listIndex = new List<int>();
-            int _counter = 0;
-            //Current Index of gridview
-            int currentIndex = 0;
-
-            //
-            if (txt_Search_Grid.Text.Trim() == "")
-            {
-                txt_Search_Grid.Text = "Search Value";
-                txt_Search_Grid.ForeColor = Color.Gray;
-            }
-
-            //
-            if (!String.IsNullOrEmpty(_valueSearch) && _valueSearch != "Search Value")
-            {
-                _listIndex.Clear();
-
-                //Grid Invoice
-                if (tabControl.SelectedIndex == 0)
-                {
-                    foreach (DataGridViewRow row in GridView_Invoice.Rows)
-                    {
-                        if (row.Cells["Customer_PO"].Value != null)
-                        {
-                            if (row.Cells["Customer_PO"].Value.ToString().Contains(_valueSearch))
-                            {
-                                _listIndex.Add(row.Index);
-                            }
-                        }
-                    }
-
-                    _counter = _listIndex.Count;
-                    if (_listIndex.Count > 0)
-                    {
-                        int indexList = 0;
-                        int paraIndex = 0;
-                        foreach (int rowIndex in _listIndex)
-                        {
-                            paraIndex = 0;
-                            if (GridView_Invoice.SelectedRows.Count > 0)
-                            {
-                                currentIndex = GridView_Invoice.SelectedRows[0].Index;
-                            }
-                            //Index nhỏ hơn min của List index
-                            if ((currentIndex < rowIndex))
-                            {
-                                GridView_Invoice.ClearSelection();
-                                GridView_Invoice.Rows[rowIndex].Selected = true;
-                                GridView_Invoice.Rows[rowIndex].Cells["Part_Description"].Selected = true;
-                                GridView_Invoice.FirstDisplayedScrollingRowIndex = rowIndex;
-                                txt_Search_Grid.Focus();
-                                break;
-                            }
-                            //Index lớn hơn rowIndex của foreach
-                            //Nhưng bé hơn max của List index
-                            else if (((currentIndex > rowIndex) || (currentIndex == rowIndex)) && (currentIndex < Find_Bigger_Number(_listIndex, rowIndex, out paraIndex)))
-                            {
-                                GridView_Invoice.ClearSelection();
-                                GridView_Invoice.Rows[paraIndex].Selected = true;
-                                GridView_Invoice.Rows[paraIndex].Cells["Part_Description"].Selected = true;
-                                GridView_Invoice.FirstDisplayedScrollingRowIndex = paraIndex;
-                                txt_Search_Grid.Focus();
-                                break;
-                            }
-                            //Last result
-                            else if ((currentIndex == _listIndex[_counter - 1]) || (GridView_Invoice.SelectedRows[0].IsNewRow))
-                            {
-                                MessageBox.Show("Tìm kiếm hoàn thành!\nCó " + _counter + " kết quả!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                GridView_Invoice.ClearSelection();
-                                GridView_Invoice.Rows[_listIndex[0]].Selected = true;
-                                GridView_Invoice.Rows[_listIndex[0]].Cells["Part_Description"].Selected = true;
-                                GridView_Invoice.FirstDisplayedScrollingRowIndex = _listIndex[0];
-                                break;
-                            }
-                            indexList++;
-
-                        }
-                    }
-                }
-                //Grid Packing List
-                else if (tabControl.SelectedIndex == 1)
-                {
-                    foreach (DataGridViewRow row in GridView_PackingList.Rows)
-                    {
-                        if (row.Cells["Tvc_ItemCode"].Value != null)
-                        {
-                            if (row.Cells["Tvc_ItemCode"].Value.ToString().Contains(_valueSearch))
-                            {
-                                _listIndex.Add(row.Index);
-                            }
-                        }
-                    }
-
-                    _counter = _listIndex.Count;
-                    if (_counter > 0)
-                    {
-                        int indexList = 0;
-                        foreach (int rowIndex in _listIndex)
-                        {
-                            int paraIndex = 0;
-                            if (GridView_PackingList.SelectedRows.Count > 0)
-                            {
-                                currentIndex = GridView_PackingList.SelectedRows[0].Index;
-                            }
-                            //Index nhỏ hơn min của List index
-                            if ((currentIndex < rowIndex))
-                            {
-                                GridView_PackingList.ClearSelection();
-                                GridView_PackingList.Rows[rowIndex].Selected = true;
-                                GridView_PackingList.Rows[rowIndex].Cells["Packages_No"].Selected = true;
-                                GridView_PackingList.FirstDisplayedScrollingRowIndex = rowIndex;
-                                txt_Search_Grid.Focus();
-                                break;
-                            }
-                            //Index lớn hơn rowIndex của foreach
-                            //Nhưng bé hơn max của List index
-                            else if (((currentIndex > rowIndex) || (currentIndex == rowIndex)) && (currentIndex < Find_Bigger_Number(_listIndex, rowIndex, out paraIndex)))
-                            {
-                                GridView_PackingList.ClearSelection();
-                                GridView_PackingList.Rows[paraIndex].Selected = true;
-                                GridView_PackingList.Rows[paraIndex].Cells["Packages_No"].Selected = true;
-                                GridView_PackingList.FirstDisplayedScrollingRowIndex = paraIndex;
-                                txt_Search_Grid.Focus();
-                                break;
-                            }
-                            //Last result
-                            else if ((currentIndex == _listIndex[_counter - 1]) || (GridView_PackingList.SelectedRows[0].IsNewRow))
-                            {
-                                MessageBox.Show("Tìm kiếm hoàn thành!\nCó " + _counter + " kết quả!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                GridView_PackingList.ClearSelection();
-                                GridView_PackingList.Rows[_listIndex[0]].Selected = true;
-                                GridView_PackingList.Rows[_listIndex[0]].Cells["Packages_No"].Selected = true;
-                                GridView_PackingList.FirstDisplayedScrollingRowIndex = _listIndex[0];
-                                break;
-                            }
-                            indexList++;
-                        }
-                    }
-                }
-            }
-        }
-
         private void btnSort_Click(object sender, EventArgs e)
         {
-            GridView_PackingList.Sort(GridView_PackingList.Columns["Packages_No"], ListSortDirection.Ascending);
+            //GridView_PackingList.Sort(GridView_PackingList.Columns["Packages_No"], ListSortDirection.Ascending);
         }
 
         private void picBox_BackToMain_Click(object sender, EventArgs e)
@@ -3294,55 +3368,6 @@ namespace TAKAKO_ERP_3LAYER
             tt.SetToolTip(btn_CoppyRow, "Coppy dòng hiện tại thành 1 dòng mới ngay phía dưới.");
         }
 
-        private int Find_Bigger_Number(List<int> list,int number,out int index)
-        {
-            index = 0;
-            foreach (int value in list)
-            {
-                if (value > number)
-                    return index++;
-                if (value == number)
-                    return ++index;
-                else index++;
-            }
-            return index;
-        }
-
-        private void GridView_PackingList_CellValidated(object sender, DataGridViewCellEventArgs e)
-        {
-            decimal _qtyCarton = 0, _qtyPerCarton = 0, _qtyTotal = 0;
-
-            if (e.RowIndex != GridView_PackingList.NewRowIndex) { 
-                if (GridView_PackingList.Rows[e.RowIndex].Cells["Qty_Carton"].Value != null
-                    && GridView_PackingList.Rows[e.RowIndex].Cells["Qty_Per_Carton"].Value != null)
-                {
-                    if (decimal.TryParse(GridView_PackingList.Rows[e.RowIndex].Cells["Qty_Carton"].Value.ToString(), out _qtyCarton)
-                     && decimal.TryParse(GridView_PackingList.Rows[e.RowIndex].Cells["Qty_Per_Carton"].Value.ToString(), out _qtyPerCarton))
-                    {
-                        if (_qtyCarton > 0 && _qtyPerCarton > 0)
-                        { 
-                            _qtyTotal = _qtyCarton * _qtyPerCarton;
-
-                            //Normal data
-                            if (radNormal.Checked == true)
-                            {
-                                GridView_PackingList.Rows[e.RowIndex].Cells["Qty_Total"].Value = _qtyTotal;
-                            }
-
-                            //Revise data
-                            if (radRevise.Checked == true)
-                            {
-                                GridView_PackingList.Rows[e.RowIndex].Cells["Qty_Total_Revise"].Value = _qtyTotal;
-                            }
-                        }
-                    }
-                }
-
-                //Sum packing List
-                btnSumPL_Click(sender, e);
-            }
-        }
-
         public Boolean CheckError()
         {
 
@@ -3353,12 +3378,12 @@ namespace TAKAKO_ERP_3LAYER
                 return false;
             }
 
-            if (String.IsNullOrEmpty(txtShippingNo.Text.Trim()))
-            {
-                MessageBox.Show("Xin hãy nhập 「Shipping No」!");
-                txtShippingNo.Focus();
-                return false;
-            }
+            //if (String.IsNullOrEmpty(txtShippingNo.Text.Trim()))
+            //{
+            //    MessageBox.Show("Xin hãy nhập 「Shipping No」!");
+            //    txtShippingNo.Focus();
+            //    return false;
+            //}
 
             if (String.IsNullOrEmpty(txtIssuedTo_CompanyName.Text.Trim()))
             {
@@ -3380,206 +3405,334 @@ namespace TAKAKO_ERP_3LAYER
                 return false;
             }
 
-            DataTable _tempTable = new DataTable();
-            _tempTable = _shippingDAO.Check_Shipping(txtShippingNo.Text.Trim());
-
-            if (_tempTable.Rows.Count > 0)
-            {
-                if (MessageBox.Show("Shipping:" + txtShippingNo.Text.Trim() + "đã tồn tại!\nBạn muốn CẬP NHẬT dữ liệu (Chọn OK)!\nBạn muốn THOÁT tiến trình lưu dữ liệu (Chọn Cancel)!", "Cảnh Báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == System.Windows.Forms.DialogResult.Cancel)
-                {
-                    return false;
-                }
-            }
-
-            if (GridView_Invoice.Rows.Count == 1)
-            {
-                //MessageBox.Show("Grid Invoice đang rỗng!");
-                //GridView_Invoice.Focus();
-                //return false;
-            }
-            else
-            {
-                int rowIndex = 1;
-                foreach (DataGridViewRow row in GridView_Invoice.Rows)
-                {
-                    if (!row.IsNewRow)
-                    {
-                        if (String.IsNullOrEmpty(row.Cells["Tvc_ItemCode"].Value as string))
-                        {
-                            MessageBox.Show("Tab Invoice, \"TVC ITEM CODE\" dòng số " + rowIndex + " đang rỗng!");
-                            tabControl.SelectedIndex = 0;
-                            GridView_Invoice.Focus();
-                            GridView_Invoice.ClearSelection();
-                            GridView_Invoice.CurrentCell = row.Cells["Tvc_ItemCode"];
-                            row.Cells["Tvc_ItemCode"].Selected = true;
-                            return false;
-                        }
-
-                        if (String.IsNullOrEmpty(row.Cells["Customer_PO"].Value as string))
-                        {
-                            MessageBox.Show("Tab Invoice,\"Customer_PO\" dòng số " + rowIndex + " đang rỗng!");
-                            tabControl.SelectedIndex = 0;
-                            GridView_Invoice.Focus();
-                            GridView_Invoice.ClearSelection();
-                            GridView_Invoice.CurrentCell = row.Cells["Customer_PO"];
-                            row.Cells["Customer_PO"].Selected = true;
-                            return false;
-                        }
-
-                        if (Convert.ToDecimal(row.Cells["Quantity"].Value) == 0)
-                        {
-                            MessageBox.Show("Tab Invoice,\"QUANTITY\" dòng số " + rowIndex + " không thể rỗng hoặc bằng 0!");
-                            tabControl.SelectedIndex = 0;
-                            GridView_Invoice.Focus();
-                            GridView_Invoice.ClearSelection();
-                            GridView_Invoice.CurrentCell = row.Cells["Quantity"];
-                            row.Cells["Quantity"].Selected = true;
-                            return false;
-                        }
-
-                        if (Convert.ToDecimal(row.Cells["Quantity"].Value) > Convert.ToDecimal(row.Cells["Balance"].Value))
-                        {
-                            MessageBox.Show("Tab Invoice, \"QUANTITY\" dòng số " + rowIndex + " không thể lớn hơn \"BALANCE\"!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            tabControl.SelectedIndex = 0;
-                            GridView_Invoice.Focus();
-                            GridView_Invoice.ClearSelection();
-                            GridView_Invoice.CurrentCell = row.Cells["Quantity"];
-                            row.Cells["Quantity"].Selected = true;
-                            return false;
-                        }
-
-                        DateTime _tempDate;
-                        if (row.Cells["Order_Date"].Value != null)
-                        {
-                            if (!DateTime.TryParse(row.Cells["Order_Date"].Value.ToString(), out _tempDate))
-                            {
-                                MessageBox.Show("Tab Invoice, Định dạng \"Order_Date\" dòng số " + rowIndex + " không đúng!\nĐịnh dạng đúng \"01/01/2019\"", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                tabControl.SelectedIndex = 0;
-                                GridView_Invoice.Focus();
-                                GridView_Invoice.ClearSelection();
-                                GridView_Invoice.CurrentCell = row.Cells["Order_Date"];
-                                row.Cells["Order_Date"].Selected = true;
-                                return false;
-                            }
-                        }
-
-                        if (row.Cells["DueDate_PO"].Value != null)
-                        {
-                            if (!DateTime.TryParse(row.Cells["DueDate_PO"].Value.ToString(), out _tempDate))
-                            {
-                                MessageBox.Show("Tab Invoice, Định dạng \"DueDate_PO\" dòng số " + rowIndex + " không đúng!\nĐịnh dạng đúng \"01/01/2019\"", "Lỗi định dạng", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                tabControl.SelectedIndex = 0;
-                                GridView_Invoice.Focus();
-                                GridView_Invoice.ClearSelection();
-                                GridView_Invoice.CurrentCell = row.Cells["DueDate_PO"];
-                                row.Cells["DueDate_PO"].Selected = true;
-                                return false;
-                            }
-                        }
-
-                        string Currency = row.Cells["Unit_Currency"].Value.ToString();
-
-                        if (String.IsNullOrEmpty(Currency))
-                        {
-                            MessageBox.Show("Tab Invoice,\"UNIT CURRENCY\" dòng số " + rowIndex + " đang rỗng!");
-                            tabControl.SelectedIndex = 0;
-                            GridView_Invoice.Focus();
-                            GridView_Invoice.ClearSelection();
-                            GridView_Invoice.CurrentCell = row.Cells["Unit_Currency"];
-                            row.Cells["Unit_Currency"].Selected = true;
-                            return false;
-                        }
-
-                        if (String.IsNullOrEmpty(row.Cells["Customer_PO"].Value as string))
-                        {
-                            MessageBox.Show("Tab Invoice,\"Customer_PO\" dòng số " + rowIndex + " đang rỗng!");
-                            tabControl.SelectedIndex = 0;
-                            GridView_Invoice.Focus();
-                            GridView_Invoice.ClearSelection();
-                            GridView_Invoice.CurrentCell = row.Cells["Customer_PO"];
-                            row.Cells["Customer_PO"].Selected = true;
-                            return false;
-                        }
-                        rowIndex++;
-                    }
-                }
-            }
-
-            //Check Total Invocie
-            if(txtTotalQuantity.Text != null && txtTotal_Qty.Text != null)
-            {
-                int _totalQtyInv = 0;
-                int _totalQtyPL = 0;
-                if (!String.IsNullOrEmpty(txtTotalQuantity.Text))
-                {
-                    _totalQtyInv = int.Parse(txtTotalQuantity.Text, System.Globalization.NumberStyles.AllowThousands);
-                }
-                if(!String.IsNullOrEmpty(txtTotal_Qty.Text))
-                {
-                    _totalQtyPL = int.Parse(txtTotal_Qty.Text, System.Globalization.NumberStyles.AllowThousands);
-                }
-
-                if (_totalQtyInv > 0 && _totalQtyPL > 0)
-                {
-                    if (!Equals(_totalQtyInv, _totalQtyPL))
-                    {
-                        MessageBox.Show("Số lượng(quantity) của Invoice đang khác với số lượng(quantity) của Packing List!", "Cảnh Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        txtTotalQuantity.Focus();
-                        //return false;
-                    }
-                }
-            }
-
             return true;
         }
 
         public Boolean CheckError_Lock()
         {
-            //Check Total Invocie
-            int _totalQtyInv = 0;
-            int _totalQtyPL = 0;
-            if (!String.IsNullOrEmpty(txtTotalQuantity.Text))
-            {
-                _totalQtyInv = int.Parse(txtTotalQuantity.Text, System.Globalization.NumberStyles.AllowThousands);
-            }
-            if (!String.IsNullOrEmpty(txtTotal_Qty.Text))
-            {
-                _totalQtyPL = int.Parse(txtTotal_Qty.Text, System.Globalization.NumberStyles.AllowThousands);
-            }
+            ////Check Total Invocie
+            //int _totalQtyInv = 0;
+            //int _totalQtyPL = 0;
+            //if (!String.IsNullOrEmpty(txtTotalQuantity.Text))
+            //{
+            //    _totalQtyInv = int.Parse(txtTotalQuantity.Text, System.Globalization.NumberStyles.AllowThousands);
+            //}
+            //if (!String.IsNullOrEmpty(txtTotal_Qty.Text))
+            //{
+            //    _totalQtyPL = int.Parse(txtTotal_Qty.Text, System.Globalization.NumberStyles.AllowThousands);
+            //}
 
-            if (_totalQtyInv > 0 && _totalQtyPL > 0)
-            {
-                if (!Equals(_totalQtyInv, _totalQtyPL))
-                {
-                    MessageBox.Show("Số lượng(quantity) của Invoice đang khác với số lượng(quantity) của Packing List!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtTotalQuantity.Focus();
-                    return false;
-                }
-            }
+            //if (_totalQtyInv > 0 && _totalQtyPL > 0)
+            //{
+            //    if (!Equals(_totalQtyInv, _totalQtyPL))
+            //    {
+            //        MessageBox.Show("Số lượng(quantity) của Invoice đang khác với số lượng(quantity) của Packing List!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        txtTotalQuantity.Focus();
+            //        return false;
+            //    }
+            //}
 
             return true;
         }
 
         private void TxtShipTo_CompanyCode_TextChanged(object sender, EventArgs e)
         {
-            if (txtShipTo_CompanyCode.Text.Trim().ToUpper() == "TTC")
-            {
-                this.GridView_PackingList.Columns["Customer_PO"].Visible = true;
-            }
-            else
-            {
-                this.GridView_PackingList.Columns["Customer_PO"].Visible = false;
-            }
+            //if (txtShipTo_CompanyCode.Text.Trim().ToUpper() == "TTC")
+            //{
+            //    this.GridView_PackingList.Columns["Customer_PO"].Visible = true;
+            //}
+            //else
+            //{
+            //    this.GridView_PackingList.Columns["Customer_PO"].Visible = false;
+            //}
         }
 
         private void GridView_Invoice_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
-            btnSumInvoice_Click(sender, e);
+            //btnSumInvoice_Click(sender, e);
         }
 
         private void GridView_PackingList_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
-            btnSumPL_Click(sender, e);
+            //btnSumPL_Click(sender, e);
+        }
+
+        private void GetInfo_Shipping()
+        {
+            using (Takako_Entities db = new Takako_Entities())
+            {
+                string sqlQuery =
+                    @"SELECT 
+                             MS.[ISSUEDTO_CUSTOMER_CODE]
+                            ,MS.[SHIPTO_CUSTOMER_CODE]
+                            ,MS.[SHIPPING_NO]
+                            ,MS.[INVOICE_NO]
+                            ,CASE
+                                WHEN MS.[LOCK_STATUS] = 0 THEN 'NORMAL'
+                                WHEN MS.[LOCK_STATUS] = 1 THEN 'LOCK'
+                                WHEN MS.[LOCK_STATUS] = 2 THEN 'REVISE'
+                        	 END AS LOCK_STATUS  
+                            ,DT.[UNIT_CURRENCY]
+                            ,MS.[ETD]
+                            ,MS.[DATE_CREATE]
+	                        ,DT.[AMOUNT]
+                        FROM 
+                            [dbo].[TVC_SHIPPING_MS] MS
+                        INNER JOIN
+                        	(
+                        		SELECT
+                        			 MS.SHIPPING_NO
+                                    ,DT.UNIT_CURRENCY
+                        			,MAX(DT.REVISE_VERSION)     AS REVISE_VERSION
+                                    ,SUM(ISNULL(DT.AMOUNT,0))   AS AMOUNT	
+                        		FROM
+                                    [dbo].[TVC_SHIPPING_MS] MS
+                                LEFT JOIN
+                                    [dbo].[TVC_SHIPPING_INV_DETAIL] DT
+                                ON  MS.SHIPPING_NO = DT.SHIPPING_NO
+                                GROUP BY
+                                     MS.SHIPPING_NO
+                                    ,DT.UNIT_CURRENCY
+                            ) DT
+                        ON	MS.SHIPPING_NO = DT.SHIPPING_NO
+                        ORDER BY
+                             MS.[LOCK_STATUS] ASC
+                            ,MS.[ETD] DESC";
+                List<Search_Shipping> result = db.Database.SqlQuery<Search_Shipping>(sqlQuery).ToList();
+
+                if (result.Count > 0)
+                {
+                    sLookUp_ShippingNo.Properties.DataSource = result;
+                    sLookUp_ShippingNo.Properties.ValueMember = "SHIPPING_NO";
+                    sLookUp_ShippingNo.Properties.DisplayMember = "SHIPPING_NO";
+                }
+                else
+                {
+                    sLookUp_ShippingNo.Properties.DataSource = "";
+                }
+            }
+        }
+
+        private void GetInfo_Customer(SearchLookUpEdit _sLookUpEdit)
+        {
+            using (Takako_Entities db = new Takako_Entities())
+            {
+                var result = 
+                    (from cus in db.CUSTOMMFs
+                    where
+                        cus.CUSTOMER_CLASS.Equals("1")
+                    ||  cus.CUSTOMER_CLASS.Equals("3")
+                    select new
+                    {
+                        cus.CUSTOMER_CODE,
+                        cus.CUSTOMER_NAME1,
+                        ADDRESS = cus.ADDRESS1 + cus.ADDRESS2 + cus.ADDRESS3,
+                        cus.TEL_NO,
+                        cus.FAX_NO,
+                        cus.INVOICE_FORMAT
+                    }).ToList();
+
+                if (result.Count > 0)
+                {
+                    _sLookUpEdit.Properties.DataSource = result;
+                    _sLookUpEdit.Properties.ValueMember = "CUSTOMER_CODE";
+                    _sLookUpEdit.Properties.DisplayMember = "CUSTOMER_CODE";
+                }
+                else
+                {
+                    _sLookUpEdit.Properties.DataSource = "";
+                }
+            }
+        }
+
+        public void GetInfoDestination(SearchLookUpEdit _sLookUpEdit)
+        {
+            using (Takako_Entities db = new Takako_Entities())
+            {
+                List<DESTINATIONMF> result = db.DESTINATIONMFs.ToList();
+
+                if (result.Count > 0)
+                {
+                    _sLookUpEdit.Properties.DataSource = result;
+                    _sLookUpEdit.Properties.ValueMember = "DESTINATION_ID";
+                    _sLookUpEdit.Properties.DisplayMember = "DESTINATION_ID";
+                }
+                else
+                {
+                    _sLookUpEdit.Properties.DataSource = "";
+                }
+            }
+        }
+
+        public void GetInfoPriceCondition(SearchLookUpEdit _sLookUpEdit)
+        {
+            using (Takako_Entities db = new Takako_Entities())
+            {
+                List<PRICE_CONDITIONMF> result = db.PRICE_CONDITIONMF.ToList();
+
+                if (result.Count > 0)
+                {
+                    _sLookUpEdit.Properties.DataSource = result;
+                    _sLookUpEdit.Properties.ValueMember = "PRICE_COND";
+                    _sLookUpEdit.Properties.DisplayMember = "PRICE_COND";
+                }
+                else
+                {
+                    _sLookUpEdit.Properties.DataSource = "";
+                }
+            }
+        }
+
+        public void GetInfoPaymentTerm(SearchLookUpEdit _sLookUpEdit)
+        {
+            using (Takako_Entities db = new Takako_Entities())
+            {
+                List<PAYMENT_TERMMF> result = db.PAYMENT_TERMMF.ToList();
+
+                if (result.Count > 0)
+                {
+                    _sLookUpEdit.Properties.DataSource = result;
+                    _sLookUpEdit.Properties.ValueMember = "PAYMENT_ID";
+                    _sLookUpEdit.Properties.DisplayMember = "PAYMENT_ID";
+                }
+                else
+                {
+                    _sLookUpEdit.Properties.DataSource = "";
+                }
+            }
+        }
+
+        private void sLookUp_IssuedTo_CompanyCode_Properties_EditValueChanged(object sender, EventArgs e)
+        {
+            GridView view = sLookUp_IssuedTo_CompanyCode_View;
+            int index = sLookUp_IssuedTo_CompanyCode.Properties.GetIndexByKeyValue(this.sLookUp_IssuedTo_CompanyCode.EditValue);
+
+            string _customerName = Convert.ToString(view.GetRowCellValue(index, view.Columns["CUSTOMER_NAME1"]));
+            string _customerAddress = Convert.ToString(view.GetRowCellValue(index, view.Columns["ADDRESS"]));
+            string _customerTelNo = Convert.ToString(view.GetRowCellValue(index, view.Columns["TEL_NO"]));
+            string _customerFaxNo = Convert.ToString(view.GetRowCellValue(index, view.Columns["FAX_NO"]));
+
+            txtIssuedTo_CompanyName.EditValue = _customerName;
+            memo_IssuedTo_CompanyAddress.EditValue = _customerAddress;
+            txtIssuedTo_TelNo.EditValue = _customerTelNo;
+            txtIssuedTo_FaxNo.EditValue = _customerFaxNo;
+        }
+
+        private void sLookUp_ShipTo_CompanyCode_EditValueChanged(object sender, EventArgs e)
+        {
+            GridView view = sLookUp_ShipTo_CompanyCode_View;
+            int index = sLookUp_ShipTo_CompanyCode.Properties.GetIndexByKeyValue(this.sLookUp_ShipTo_CompanyCode.EditValue);
+
+            string _customerName    = Convert.ToString(view.GetRowCellValue(index, view.Columns["CUSTOMER_NAME1"]));
+            string _customerAddress = Convert.ToString(view.GetRowCellValue(index, view.Columns["ADDRESS"]));
+            string _customerTelNo   = Convert.ToString(view.GetRowCellValue(index, view.Columns["TEL_NO"]));
+            string _customerFaxNo   = Convert.ToString(view.GetRowCellValue(index, view.Columns["FAX_NO"]));
+
+            txtShipTo_CompanyName.EditValue         = _customerName;
+            memo_ShipTo_CompanyAddress.EditValue    = _customerAddress;
+            txtShipTo_TelNo.EditValue               = _customerTelNo;
+            txtShipTo_FaxNo.EditValue               = _customerFaxNo;
+        }
+
+        private void sLookUp_ShippingNo_EditValueChanged(object sender, EventArgs e)
+        {
+            string _shippingNo = Convert.ToString(this.sLookUp_ShippingNo.EditValue);
+            TVC_SHIPPING_MS _headerShipping = new TVC_SHIPPING_MS();
+            List<TVC_SHIPPING_INV_DETAIL> _detailInvoice = new List<TVC_SHIPPING_INV_DETAIL>();
+            List<TVC_SHIPPING_PL_DETAIL> _detailPackingList = new List<TVC_SHIPPING_PL_DETAIL>();
+
+            // Get Data Shipping No
+            using (Takako_Entities db = new Takako_Entities())
+            {
+                _headerShipping = db.TVC_SHIPPING_MS.Where(x => x.SHIPPING_NO.Equals(_shippingNo)).FirstOrDefault();
+                _detailInvoice = db.TVC_SHIPPING_INV_DETAIL.Where(x => x.SHIPPING_NO.Equals(_shippingNo)).ToList();
+                _detailPackingList = db.TVC_SHIPPING_PL_DETAIL.Where(x => x.SHIPPING_NO.Equals(_shippingNo)).ToList();
+            }
+
+            if(_headerShipping != null)
+            {
+                //COMPANY CODE
+                cb_CompanyCode.SelectedValue            = _headerShipping.COMPANY_CODE;
+
+                //DATE CREATE SHIPPING
+                dtpDateCreateShipping.Value             = _headerShipping.DATE_CREATE;
+
+                //INVOICE NO
+                txtInvoiceNo.Text                       = _headerShipping.INVOICE_NO;
+
+                //ISSUEDTO
+                sLookUp_IssuedTo_CompanyCode.EditValue  = _headerShipping.ISSUEDTO_CUSTOMER_CODE;
+                txtIssuedTo_CompanyName.EditValue       = _headerShipping.ISSUEDTO_CUSTOMER_NAME;
+                memo_IssuedTo_CompanyAddress.EditValue  = _headerShipping.ISSUEDTO_CUSTOMER_ADDRESS;
+                txtIssuedTo_TelNo.EditValue             = _headerShipping.ISSUEDTO_CUSTOMER_TEL_NO;
+                txtIssuedTo_FaxNo.EditValue             = _headerShipping.ISSUEDTO_CUSTOMER_FAX_NO;
+
+                //if (row["ISSUEDTO_CUSTOMER_CODE"].Equals("TTC"))
+                //{
+                //    this.GridView_PackingList.Columns["Customer_PO"].Visible = true;
+                //} else
+                //{
+                //    this.GridView_PackingList.Columns["Customer_PO"].Visible = false;
+                //}
+
+                //SHIPTO
+                sLookUp_ShipTo_CompanyCode.EditValue    = _headerShipping.SHIPTO_CUSTOMER_CODE;
+                txtShipTo_CompanyName.EditValue         = _headerShipping.SHIPTO_CUSTOMER_NAME;
+                memo_ShipTo_CompanyAddress.EditValue    = _headerShipping.SHIPTO_CUSTOMER_ADDRESS;
+                txtShipTo_TelNo.EditValue               = _headerShipping.SHIPTO_CUSTOMER_TEL_NO;
+                txtShipTo_FaxNo.EditValue               = _headerShipping.SHIPTO_CUSTOMER_FAX_NO;
+
+                if (!String.IsNullOrEmpty(_headerShipping.REVENUE))
+                {
+                    //REVENUE
+                    dtpRevenue.Value = Convert.ToDateTime(_headerShipping.REVENUE);
+                }
+                else
+                {
+                    //REVENUE
+                    dtpRevenue.Value = DateTime.MinValue;
+                }
+
+                //SHIP VIA
+                txtShipVia.Text                         = _headerShipping.SHIP_VIA;
+
+                //FREIGHT
+                cb_Freight.SelectedValue                = _headerShipping.FREIGHT;
+
+                //VESSEL
+                txtVessel.Text                          = _headerShipping.VESSEL;
+
+                //PORT OF LOADING
+                sLookUp_PortLoading.EditValue           = _headerShipping.PORT_OF_LOADING;
+
+                //PORT OF DESTINATION
+                sLookUp_PortDestination.EditValue       = _headerShipping.PORT_OF_DESTINATION;
+
+                //ETD
+                dtpETD.Value                            = _headerShipping.ETD;
+
+                //ETA
+                dtpETA.Value                            = _headerShipping.ETA;
+
+                //TRADE CONDITION
+                sLookUp_PriceCondition.Text             = _headerShipping.TRADE_CONDITION;
+
+                //PAYMENT TERM
+                sLookUp_PaymentTerm.Text                = _headerShipping.PAYMENT_TERM;
+
+                //CREATE BY
+                createBy                                = _headerShipping.CREATE_BY;
+            }
+
+            if(_detailInvoice.Count > 0)
+            {
+                gridControl_Invoice.DataSource = _detailInvoice;
+            }
+
+            if (_detailPackingList.Count > 0)
+            {
+                gridControl_PackingList.DataSource = _detailPackingList;
+            }
         }
     }
 }

@@ -12,6 +12,9 @@ namespace TAKAKO_ERP_3LAYER
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Objects;
+    using System.Data.Objects.DataClasses;
+    using System.Linq;
     
     public partial class Takako_Entities : DbContext
     {
@@ -34,5 +37,26 @@ namespace TAKAKO_ERP_3LAYER
         public DbSet<TVC_PL_DETAIL> TVC_PL_DETAIL { get; set; }
         public DbSet<PRODUCTMF> PRODUCTMFs { get; set; }
         public DbSet<SPRICE_GLOBALMF> SPRICE_GLOBALMF { get; set; }
+        public DbSet<CUSTOMMF> CUSTOMMFs { get; set; }
+        public DbSet<DESTINATIONMF> DESTINATIONMFs { get; set; }
+        public DbSet<PRICE_CONDITIONMF> PRICE_CONDITIONMF { get; set; }
+        public DbSet<PAYMENT_TERMMF> PAYMENT_TERMMF { get; set; }
+    
+        public virtual ObjectResult<SP_TVC_GET_DATA_PO_Result> SP_TVC_GET_DATA_PO(string companyCode, string customerCode, string unitCurrency)
+        {
+            var companyCodeParameter = companyCode != null ?
+                new ObjectParameter("CompanyCode", companyCode) :
+                new ObjectParameter("CompanyCode", typeof(string));
+    
+            var customerCodeParameter = customerCode != null ?
+                new ObjectParameter("CustomerCode", customerCode) :
+                new ObjectParameter("CustomerCode", typeof(string));
+    
+            var unitCurrencyParameter = unitCurrency != null ?
+                new ObjectParameter("UnitCurrency", unitCurrency) :
+                new ObjectParameter("UnitCurrency", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_TVC_GET_DATA_PO_Result>("SP_TVC_GET_DATA_PO", companyCodeParameter, customerCodeParameter, unitCurrencyParameter);
+        }
     }
 }

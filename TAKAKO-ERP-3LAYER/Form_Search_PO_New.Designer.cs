@@ -106,11 +106,14 @@
             this.gridControl_Search_PO.TabIndex = 2;
             this.gridControl_Search_PO.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.View_PO_List});
+            this.gridControl_Search_PO.Click += new System.EventHandler(this.gridControl_Search_PO_Click);
             // 
             // View_PO_List
             // 
             this.View_PO_List.GridControl = this.gridControl_Search_PO;
             this.View_PO_List.Name = "View_PO_List";
+            this.View_PO_List.OptionsScrollAnnotations.ShowSelectedRows = DevExpress.Utils.DefaultBoolean.True;
+            this.View_PO_List.DoubleClick += new System.EventHandler(this.View_PO_List_DoubleClick);
             // 
             // Form_Search_PO_New
             // 

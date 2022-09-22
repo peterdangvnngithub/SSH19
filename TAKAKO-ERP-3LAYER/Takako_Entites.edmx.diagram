@@ -14,6 +14,10 @@
         <EntityTypeShape EntityType="Takako_Model.TVC_PL_DETAIL" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Takako_Model.PRODUCTMF" Width="1.5" PointX="16.75" PointY="0.75" />
         <EntityTypeShape EntityType="Takako_Model.SPRICE_GLOBALMF" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="Takako_Model.CUSTOMMF" Width="1.5" PointX="0.75" PointY="3.5" />
+        <EntityTypeShape EntityType="Takako_Model.DESTINATIONMF" Width="1.5" PointX="2.75" PointY="4" />
+        <EntityTypeShape EntityType="Takako_Model.PRICE_CONDITIONMF" Width="1.5" PointX="2.75" PointY="5.375" />
+        <EntityTypeShape EntityType="Takako_Model.PAYMENT_TERMMF" Width="1.5" PointX="2.75" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

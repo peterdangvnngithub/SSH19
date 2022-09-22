@@ -42,50 +42,6 @@ namespace TAKAKO_ERP_3LAYER.DAO
             return conn.executeSelectQuery(StrQuery, sqlParameters);
         }
 
-        public DataTable GetCustomer_IssuedTo(string _searchValue)
-        {
-            string StrQuery = "";
-            DataTable _tempDataTable = new DataTable();
-
-            StrQuery = @"SELECT  [CUSTOMER_CODE]
-                                ,[CUSTOMER_NAME1]
-                                ,CONCAT([ADDRESS1], [ADDRESS2], [ADDRESS3]) AS ADDRESS
-                                ,[TEL_NO]
-                                ,[FAX_NO]
-                                ,[INVOICE_FORMAT]
-                        FROM
-                                [dbo].[CUSTOMMF]
-                        WHERE
-                                [CUSTOMER_CLASS] IN (1, 3)   
-                            AND CUSTOMER_CODE LIKE CONCAT('%',@searchValue,'%')";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter("@searchValue", SqlDbType.VarChar);
-            sqlParameters[0].Value = Convert.ToString(_searchValue);
-            return conn.executeSelectQuery(StrQuery, sqlParameters);
-        }
-
-        public DataTable GetCustomer_ShipTo(string _searchValue)
-        {
-            string StrQuery = "";
-            DataTable _tempDataTable = new DataTable();
-
-            StrQuery = @"SELECT  [CUSTOMER_CODE]
-                                ,[CUSTOMER_NAME1]
-                                ,CONCAT([ADDRESS1], [ADDRESS2], [ADDRESS3]) AS ADDRESS
-                                ,[TEL_NO]
-                                ,[FAX_NO]
-                                ,[INVOICE_FORMAT]
-                        FROM
-                                [dbo].[CUSTOMMF]
-                        WHERE
-                                [CUSTOMER_CLASS] IN (1, 3)   
-                            AND CUSTOMER_CODE LIKE CONCAT('%',@searchValue,'%')";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter("@searchValue", SqlDbType.VarChar);
-            sqlParameters[0].Value = Convert.ToString(_searchValue);
-            return conn.executeSelectQuery(StrQuery, sqlParameters);
-        }
-
         public DataTable GetInfoPO(string _searchValue)
         {
             string StrQuery = "";
@@ -200,57 +156,6 @@ namespace TAKAKO_ERP_3LAYER.DAO
             sqlParameters[0].Value = Convert.ToString(_searchValue);
             sqlParameters[1] = new SqlParameter("@filter1", SqlDbType.VarChar);
             sqlParameters[1].Value = Convert.ToString(_filter1);
-            return conn.executeSelectQuery(StrQuery, sqlParameters);
-        }
-
-        public DataTable GetInfoPriceCondition(string _searchValue)
-        {
-            string StrQuery = "";
-            DataTable _tempDataTable = new DataTable();
-
-            StrQuery = @"SELECT
-                            [PRICE_COND]
-                         FROM 
-                            [dbo].[PRICE_CONDITIONMF]
-                        WHERE
-                            [PRICE_COND] LIKE CONCAT('%',@searchValue,'%')";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter("@searchValue", SqlDbType.VarChar);
-            sqlParameters[0].Value = Convert.ToString(_searchValue);
-            return conn.executeSelectQuery(StrQuery, sqlParameters);
-        }
-
-        public DataTable GetInfoPaymentTerm(string _searchValue)
-        {
-            string StrQuery = "";
-            DataTable _tempDataTable = new DataTable();
-
-            StrQuery = @"SELECT 
-                            [PAYMENT_ID]
-                         FROM
-                            [dbo].[PAYMENT_TERMMF]
-                        WHERE
-                            [PAYMENT_ID] LIKE CONCAT('%',@searchValue,'%')";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter("@searchValue", SqlDbType.VarChar);
-            sqlParameters[0].Value = Convert.ToString(_searchValue);
-            return conn.executeSelectQuery(StrQuery, sqlParameters);
-        }
-
-        public DataTable GetInfoDestination(string _searchValue)
-        {
-            string StrQuery = "";
-            DataTable _tempDataTable = new DataTable();
-
-            StrQuery = @"SELECT
-                            [DESTINATION_ID]
-                         FROM
-                            [dbo].[DESTINATIONMF]
-                         WHERE
-                            [DESTINATION_ID] LIKE CONCAT('%',@searchValue,'%')";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter("@searchValue", SqlDbType.VarChar);
-            sqlParameters[0].Value = Convert.ToString(_searchValue);
             return conn.executeSelectQuery(StrQuery, sqlParameters);
         }
 

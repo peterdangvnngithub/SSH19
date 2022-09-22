@@ -5,6 +5,70 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Takako_Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CUSTOMMF">
+          <Key>
+            <PropertyRef Name="CUSTOMER_CODE" />
+          </Key>
+          <Property Name="CUSTOMER_CODE" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="REP_CODE" Type="varchar" MaxLength="10" />
+          <Property Name="ACCOUNT_CODE" Type="varchar" MaxLength="10" />
+          <Property Name="CUSTOMER_CLASS" Type="char" MaxLength="1" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="255" />
+          <Property Name="EMAIL2" Type="varchar" MaxLength="255" />
+          <Property Name="CUSTOMER_NAME1" Type="varchar" MaxLength="255" />
+          <Property Name="CUSTOMER_NAME2" Type="varchar" MaxLength="255" />
+          <Property Name="NATIONAL_NO" Type="varchar" MaxLength="4" />
+          <Property Name="ADDRESS1" Type="varchar" MaxLength="255" />
+          <Property Name="ADDRESS2" Type="varchar" MaxLength="255" />
+          <Property Name="ADDRESS3" Type="varchar" MaxLength="255" />
+          <Property Name="TEL_NO" Type="varchar" MaxLength="255" />
+          <Property Name="FAX_NO" Type="varchar" MaxLength="255" />
+          <Property Name="WEBSITE" Type="varchar" MaxLength="255" />
+          <Property Name="CERTIFICATION" Type="varchar" MaxLength="255" />
+          <Property Name="INPUT_DATE" Type="smalldatetime" />
+          <Property Name="INPUT_PERSON" Type="varchar" MaxLength="8" />
+          <Property Name="MODIFY_DATE" Type="smalldatetime" />
+          <Property Name="MODIFY_PERSON" Type="varchar" MaxLength="8" />
+          <Property Name="BEGIN_DATE" Type="smalldatetime" />
+          <Property Name="FINISH_DATE" Type="smalldatetime" />
+          <Property Name="MEMO" Type="varchar" MaxLength="255" />
+          <Property Name="ATTN1" Type="varchar" MaxLength="255" />
+          <Property Name="ATTN2" Type="varchar" MaxLength="255" />
+          <Property Name="MOBILE1" Type="varchar" MaxLength="255" />
+          <Property Name="MOBILE2" Type="varchar" MaxLength="255" />
+          <Property Name="SHORT_CODE" Type="varchar" MaxLength="10" />
+          <Property Name="AUTO_ORDER_NO" Type="float" />
+          <Property Name="TAX_ID" Type="varchar" MaxLength="50" />
+          <Property Name="SETTLEMENT" Type="varchar" MaxLength="50" />
+          <Property Name="PAYMENT" Type="varchar" MaxLength="50" />
+          <Property Name="CURRENCY" Type="varchar" MaxLength="4" />
+          <Property Name="INVOICE_FORMAT" Type="varchar" MaxLength="50" />
+          <Property Name="DELIVERY_TIME" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="TVC_DELIVERY_TIME" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="LEAD_TIME_S" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="SUPPLIER_RATE" Type="numeric" Precision="18" Scale="4" />
+          <Property Name="EVALUE_ABILITY" Type="numeric" Precision="18" Scale="4" />
+          <Property Name="Payable_ACC" Type="varchar" MaxLength="10" />
+          <Property Name="Receivable_ACC" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="DESTINATIONMF">
+          <Key>
+            <PropertyRef Name="DESTINATION_ID" />
+          </Key>
+          <Property Name="DESTINATION_ID" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PAYMENT_TERMMF">
+          <Key>
+            <PropertyRef Name="PAYMENT_ID" />
+          </Key>
+          <Property Name="PAYMENT_ID" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PRICE_CONDITIONMF">
+          <Key>
+            <PropertyRef Name="PRICE_COND" />
+          </Key>
+          <Property Name="PRICE_COND" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
         <EntityType Name="PRODUCTMF">
           <Key>
             <PropertyRef Name="ITEM_CODE" />
@@ -322,7 +386,16 @@ warning 6002: The table/view 'Takako_1.dbo.TVC_PL_DETAIL' does not have a primar
           <Property Name="EDIT_BY" Type="nvarchar" MaxLength="50" />
           <Property Name="EDIT_AT" Type="datetime" />
         </EntityType>
+        <Function Name="SP_TVC_GET_DATA_PO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="CompanyCode" Type="varchar" Mode="In" />
+          <Parameter Name="CustomerCode" Type="varchar" Mode="In" />
+          <Parameter Name="UnitCurrency" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="Takako_ModelStoreContainer">
+          <EntitySet Name="CUSTOMMF" EntityType="Self.CUSTOMMF" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DESTINATIONMF" EntityType="Self.DESTINATIONMF" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PAYMENT_TERMMF" EntityType="Self.PAYMENT_TERMMF" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRICE_CONDITIONMF" EntityType="Self.PRICE_CONDITIONMF" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PRODUCTMF" EntityType="Self.PRODUCTMF" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SPRICE_GLOBALMF" EntityType="Self.SPRICE_GLOBALMF" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TVC_COMPANY_MS" EntityType="Self.TVC_COMPANY_MS" Schema="dbo" store:Type="Tables" />
@@ -584,6 +657,15 @@ FROM [dbo].[TVC_PL_DETAIL] AS [TVC_PL_DETAIL]</DefiningQuery>
           <EntitySet Name="TVC_PL_DETAIL" EntityType="Self.TVC_PL_DETAIL" />
           <EntitySet Name="PRODUCTMFs" EntityType="Takako_Model.PRODUCTMF" />
           <EntitySet Name="SPRICE_GLOBALMF" EntityType="Takako_Model.SPRICE_GLOBALMF" />
+          <FunctionImport Name="SP_TVC_GET_DATA_PO" ReturnType="Collection(Takako_Model.SP_TVC_GET_DATA_PO_Result)">
+            <Parameter Name="CompanyCode" Mode="In" Type="String" />
+            <Parameter Name="CustomerCode" Mode="In" Type="String" />
+            <Parameter Name="UnitCurrency" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="CUSTOMMFs" EntityType="Takako_Model.CUSTOMMF" />
+          <EntitySet Name="DESTINATIONMFs" EntityType="Takako_Model.DESTINATIONMF" />
+          <EntitySet Name="PRICE_CONDITIONMF" EntityType="Takako_Model.PRICE_CONDITIONMF" />
+          <EntitySet Name="PAYMENT_TERMMF" EntityType="Takako_Model.PAYMENT_TERMMF" />
         </EntityContainer>
         <EntityType Name="PRODUCTMF">
           <Key>
@@ -688,6 +770,90 @@ FROM [dbo].[TVC_PL_DETAIL] AS [TVC_PL_DETAIL]</DefiningQuery>
           <Property Name="INPUT_PERSON" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="MODIFY_DATE" Type="DateTime" Precision="3" />
           <Property Name="MODIFY_PERSON" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="SP_TVC_GET_DATA_PO_Result">
+          <Property Type="String" Name="CUSTOMER_CODE" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="RECEIVE_NO" Nullable="false" MaxLength="18" />
+          <Property Type="String" Name="CUS_ITEM_CODE" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="ITEM_CODE" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="ITEM_NAME" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="DUE_DATE" Nullable="false" />
+          <Property Type="DateTime" Name="ORDER_DATE" Nullable="true" />
+          <Property Type="Int32" Name="BALANCE" Nullable="true" />
+          <Property Type="Decimal" Name="BOX_QUANTITY" Nullable="false" Precision="18" Scale="6" />
+          <Property Type="Decimal" Name="WEIGHT" Nullable="false" Precision="18" Scale="6" />
+          <Property Type="String" Name="CUSTOMER_PO" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="THIRD_PARTY_ITEM_CODE" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="THIRD_PARTY_PO" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="UNIT_CURRENCY" Nullable="true" MaxLength="3" />
+          <Property Type="Decimal" Name="ORDER_PRICE" Nullable="true" Precision="19" Scale="4" />
+          <Property Type="String" Name="UNIT_CURRENCY1" Nullable="true" MaxLength="3" />
+          <Property Type="Decimal" Name="PRICE" Nullable="false" Precision="18" Scale="6" />
+          <Property Type="String" Name="NOTE" Nullable="true" MaxLength="1000" />
+        </ComplexType>
+        <EntityType Name="CUSTOMMF">
+          <Key>
+            <PropertyRef Name="CUSTOMER_CODE" />
+          </Key>
+          <Property Name="CUSTOMER_CODE" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="REP_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="ACCOUNT_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_CLASS" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_NAME1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CUSTOMER_NAME2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="NATIONAL_NO" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="ADDRESS1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ADDRESS2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ADDRESS3" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="TEL_NO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FAX_NO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="WEBSITE" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="CERTIFICATION" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="INPUT_DATE" Type="DateTime" Precision="0" />
+          <Property Name="INPUT_PERSON" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="MODIFY_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MODIFY_PERSON" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="BEGIN_DATE" Type="DateTime" Precision="0" />
+          <Property Name="FINISH_DATE" Type="DateTime" Precision="0" />
+          <Property Name="MEMO" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ATTN1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ATTN2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="MOBILE1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="MOBILE2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SHORT_CODE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="AUTO_ORDER_NO" Type="Double" />
+          <Property Name="TAX_ID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SETTLEMENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PAYMENT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CURRENCY" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="INVOICE_FORMAT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DELIVERY_TIME" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="TVC_DELIVERY_TIME" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="LEAD_TIME_S" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SUPPLIER_RATE" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="EVALUE_ABILITY" Type="Decimal" Precision="18" Scale="4" />
+          <Property Name="Payable_ACC" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Receivable_ACC" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DESTINATIONMF">
+          <Key>
+            <PropertyRef Name="DESTINATION_ID" />
+          </Key>
+          <Property Name="DESTINATION_ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PRICE_CONDITIONMF">
+          <Key>
+            <PropertyRef Name="PRICE_COND" />
+          </Key>
+          <Property Name="PRICE_COND" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PAYMENT_TERMMF">
+          <Key>
+            <PropertyRef Name="PAYMENT_ID" />
+          </Key>
+          <Property Name="PAYMENT_ID" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -989,6 +1155,98 @@ FROM [dbo].[TVC_PL_DETAIL] AS [TVC_PL_DETAIL]</DefiningQuery>
                 <ScalarProperty Name="GLOBAL_CODE" ColumnName="GLOBAL_CODE" />
                 <ScalarProperty Name="CUSTOMER_CODE" ColumnName="CUSTOMER_CODE" />
                 <ScalarProperty Name="PRICE_CODE" ColumnName="PRICE_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SP_TVC_GET_DATA_PO" FunctionName="Takako_Model.Store.SP_TVC_GET_DATA_PO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Takako_Model.SP_TVC_GET_DATA_PO_Result">
+                <ScalarProperty Name="CUSTOMER_CODE" ColumnName="CUSTOMER_CODE" />
+                <ScalarProperty Name="RECEIVE_NO" ColumnName="RECEIVE_NO" />
+                <ScalarProperty Name="CUS_ITEM_CODE" ColumnName="CUS_ITEM_CODE" />
+                <ScalarProperty Name="ITEM_CODE" ColumnName="ITEM_CODE" />
+                <ScalarProperty Name="ITEM_NAME" ColumnName="ITEM_NAME" />
+                <ScalarProperty Name="DUE_DATE" ColumnName="DUE_DATE" />
+                <ScalarProperty Name="ORDER_DATE" ColumnName="ORDER_DATE" />
+                <ScalarProperty Name="BALANCE" ColumnName="BALANCE" />
+                <ScalarProperty Name="BOX_QUANTITY" ColumnName="BOX_QUANTITY" />
+                <ScalarProperty Name="WEIGHT" ColumnName="WEIGHT" />
+                <ScalarProperty Name="CUSTOMER_PO" ColumnName="CUSTOMER_PO" />
+                <ScalarProperty Name="THIRD_PARTY_ITEM_CODE" ColumnName="THIRD_PARTY_ITEM_CODE" />
+                <ScalarProperty Name="THIRD_PARTY_PO" ColumnName="THIRD_PARTY_PO" />
+                <ScalarProperty Name="UNIT_CURRENCY" ColumnName="UNIT_CURRENCY" />
+                <ScalarProperty Name="ORDER_PRICE" ColumnName="ORDER_PRICE" />
+                <ScalarProperty Name="UNIT_CURRENCY1" ColumnName="UNIT_CURRENCY1" />
+                <ScalarProperty Name="PRICE" ColumnName="PRICE" />
+                <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="CUSTOMMFs">
+            <EntityTypeMapping TypeName="Takako_Model.CUSTOMMF">
+              <MappingFragment StoreEntitySet="CUSTOMMF">
+                <ScalarProperty Name="Receivable_ACC" ColumnName="Receivable_ACC" />
+                <ScalarProperty Name="Payable_ACC" ColumnName="Payable_ACC" />
+                <ScalarProperty Name="EVALUE_ABILITY" ColumnName="EVALUE_ABILITY" />
+                <ScalarProperty Name="SUPPLIER_RATE" ColumnName="SUPPLIER_RATE" />
+                <ScalarProperty Name="LEAD_TIME_S" ColumnName="LEAD_TIME_S" />
+                <ScalarProperty Name="TVC_DELIVERY_TIME" ColumnName="TVC_DELIVERY_TIME" />
+                <ScalarProperty Name="DELIVERY_TIME" ColumnName="DELIVERY_TIME" />
+                <ScalarProperty Name="INVOICE_FORMAT" ColumnName="INVOICE_FORMAT" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+                <ScalarProperty Name="PAYMENT" ColumnName="PAYMENT" />
+                <ScalarProperty Name="SETTLEMENT" ColumnName="SETTLEMENT" />
+                <ScalarProperty Name="TAX_ID" ColumnName="TAX_ID" />
+                <ScalarProperty Name="AUTO_ORDER_NO" ColumnName="AUTO_ORDER_NO" />
+                <ScalarProperty Name="SHORT_CODE" ColumnName="SHORT_CODE" />
+                <ScalarProperty Name="MOBILE2" ColumnName="MOBILE2" />
+                <ScalarProperty Name="MOBILE1" ColumnName="MOBILE1" />
+                <ScalarProperty Name="ATTN2" ColumnName="ATTN2" />
+                <ScalarProperty Name="ATTN1" ColumnName="ATTN1" />
+                <ScalarProperty Name="MEMO" ColumnName="MEMO" />
+                <ScalarProperty Name="FINISH_DATE" ColumnName="FINISH_DATE" />
+                <ScalarProperty Name="BEGIN_DATE" ColumnName="BEGIN_DATE" />
+                <ScalarProperty Name="MODIFY_PERSON" ColumnName="MODIFY_PERSON" />
+                <ScalarProperty Name="MODIFY_DATE" ColumnName="MODIFY_DATE" />
+                <ScalarProperty Name="INPUT_PERSON" ColumnName="INPUT_PERSON" />
+                <ScalarProperty Name="INPUT_DATE" ColumnName="INPUT_DATE" />
+                <ScalarProperty Name="CERTIFICATION" ColumnName="CERTIFICATION" />
+                <ScalarProperty Name="WEBSITE" ColumnName="WEBSITE" />
+                <ScalarProperty Name="FAX_NO" ColumnName="FAX_NO" />
+                <ScalarProperty Name="TEL_NO" ColumnName="TEL_NO" />
+                <ScalarProperty Name="ADDRESS3" ColumnName="ADDRESS3" />
+                <ScalarProperty Name="ADDRESS2" ColumnName="ADDRESS2" />
+                <ScalarProperty Name="ADDRESS1" ColumnName="ADDRESS1" />
+                <ScalarProperty Name="NATIONAL_NO" ColumnName="NATIONAL_NO" />
+                <ScalarProperty Name="CUSTOMER_NAME2" ColumnName="CUSTOMER_NAME2" />
+                <ScalarProperty Name="CUSTOMER_NAME1" ColumnName="CUSTOMER_NAME1" />
+                <ScalarProperty Name="EMAIL2" ColumnName="EMAIL2" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="CUSTOMER_CLASS" ColumnName="CUSTOMER_CLASS" />
+                <ScalarProperty Name="ACCOUNT_CODE" ColumnName="ACCOUNT_CODE" />
+                <ScalarProperty Name="REP_CODE" ColumnName="REP_CODE" />
+                <ScalarProperty Name="CUSTOMER_CODE" ColumnName="CUSTOMER_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DESTINATIONMFs">
+            <EntityTypeMapping TypeName="Takako_Model.DESTINATIONMF">
+              <MappingFragment StoreEntitySet="DESTINATIONMF">
+                <ScalarProperty Name="DESTINATION_ID" ColumnName="DESTINATION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRICE_CONDITIONMF">
+            <EntityTypeMapping TypeName="Takako_Model.PRICE_CONDITIONMF">
+              <MappingFragment StoreEntitySet="PRICE_CONDITIONMF">
+                <ScalarProperty Name="PRICE_COND" ColumnName="PRICE_COND" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PAYMENT_TERMMF">
+            <EntityTypeMapping TypeName="Takako_Model.PAYMENT_TERMMF">
+              <MappingFragment StoreEntitySet="PAYMENT_TERMMF">
+                <ScalarProperty Name="PAYMENT_ID" ColumnName="PAYMENT_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

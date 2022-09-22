@@ -11,22 +11,25 @@ using System.Collections.Generic;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.Utils;
 using TAKAKO_ERP_3LAYER.DAL;
+using System.Data.SqlClient;
+using static TAKAKO_ERP_3LAYER.Common;
 
 namespace TAKAKO_ERP_3LAYER
 {
     public partial class Form_Search_PO_New : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         SYSTEM_DAL systemDAL;
-        string companyCode;
+        string customerCode;
         string unitCurrency;
+        string companyCode;
         DateTime dateCreateInvoice;
+        private readonly Form_Shipping_Instruction form_Shipping_Instruction;
 
         private GridColumn gridCol_Company_Code = new GridColumn();
         private GridColumn gridCol_Customer_Code = new GridColumn();
         private GridColumn gridCol_ReceiveNo = new GridColumn();
         private GridColumn gridCol_Cus_Item_Code = new GridColumn();
         private GridColumn gridCol_TVC_Item_Code = new GridColumn();        
-        private GridColumn gridCol_Part_Name = new GridColumn();
         private GridColumn gridCol_Item_Name = new GridColumn();
         private GridColumn gridCol_DueDate = new GridColumn();
         private GridColumn gridCol_OrderDate = new GridColumn();
@@ -36,53 +39,131 @@ namespace TAKAKO_ERP_3LAYER
         private GridColumn gridCol_Order_Price = new GridColumn();
         private GridColumn gridCol_Note = new GridColumn();        
 
-        public Form_Search_PO_New(SYSTEM_DAL _systemDAL,string _CompanyCode, string _unitCurrency, DateTime _dateCreateInvoice)
+        public Form_Search_PO_New(SYSTEM_DAL _systemDAL,string _companyCode,string _customerCode, string _unitCurrency, DateTime _dateCreateInvoice, Form_Shipping_Instruction _formShippingIns)
         {
             InitializeComponent();
 
             systemDAL = _systemDAL;
-            companyCode = _CompanyCode;
+            companyCode = _companyCode;
+            customerCode = _customerCode;
             unitCurrency = _unitCurrency;
             dateCreateInvoice = _dateCreateInvoice;
+
+            form_Shipping_Instruction = _formShippingIns;
         }
 
         private void Form_Import_PO_To_Shipping_Excel_Load(object sender, EventArgs e)
         {
             Define_GridView();
 
-            gridControl_Search_PO.DataSource = GetData();
+            GetData();
         }
 
-        private List<TVC_PO_MS> GetData()
+        private void GetData()
         {
-            List<TVC_PO_MS> result = new List<TVC_PO_MS>();
             using(Takako_Entities db = new Takako_Entities())
             {
-                result = db.TVC_PO_MS.Where(x => (x.COMPANY_CODE.Equals(companyCode) 
-                                               && x.UNIT_CURRENCY.Equals(unitCurrency))).ToList();
-            }    
-            return result;
+                object[] xparams = 
+                    {
+                    new SqlParameter("@CompanyCode", companyCode),
+                    new SqlParameter("@CustomerCode", customerCode),
+                    new SqlParameter("@UnitCurrency", unitCurrency)
+                };
+
+                string sqlQuery =
+                    @"SELECT
+                         MS.[COMPANY_CODE]
+		        		,MS.[CUSTOMER_CODE]
+		        		,MS.[RECEIVE_NO]
+		        		,MS.[CUSTOMER_ITEM_CODE]
+		        		,MS.[TVC_ITEM_CODE]				                    AS TVC_ITEM_CODE
+		        		,MS.[ITEM_NAME]				                        AS ITEM_NAME
+		        		,MS.[DUE_DATE]                                      AS DUE_DATE
+		        		,MS.[ORDER_DATE]
+		        		,(MS.[QUANTITY] - ISNULL(MS.[QUANTITY_ORDER], 0))   AS BALANCE
+		        		,ISNULL(P.[BOX_QUANTITY], 0)	                    AS BOX_QUANTITY
+		        		,ISNULL(P.[WEIGHT], 0)			                    AS WEIGHT
+		        		,MS.[CUSTOMER_PO]
+		        		,MS.[THIRD_PARTY_ITEM_CODE]
+		        		,MS.[THIRD_PARTY_PO]
+		        		,CASE
+		        			WHEN MS.UNIT_CURRENCY ='JPY' THEN ISNULL(MS.[PRICE_JPY], 0)
+		        			WHEN MS.UNIT_CURRENCY ='USD' THEN ISNULL(MS.[PRICE_USD], 0)
+		        		 END                                                AS ORDER_PRICE
+		        		,MS.[UNIT_CURRENCY]
+		        		,ISNULL(S.[PRICE], 0)			                    AS PRICE
+		        		,MS.[NOTE]
+		            FROM
+		            		[DBO].[TVC_PO_MS] MS 
+		            LEFT JOIN
+		            		[DBO].[PRODUCTMF] P 
+		            ON      MS.[TVC_ITEM_CODE]	    =	P.[ITEM_CODE]
+		            LEFT JOIN
+		            		(
+		            			SELECT DISTINCT
+                        			 GLB.GLOBAL_CODE
+                        			,PRICE_UNIT
+                        			,PRICE
+                        			,GLB.APPLYDATE
+		            			FROM
+                        			[dbo].[SPRICE_GLOBALMF] GLB
+		            			JOIN
+                        			(
+                        				SELECT
+		            						 GLB.GLOBAL_CODE
+		            						,MAX(GLB.APPLYDATE)     AS  APPLYDATE
+		            					FROM
+		            						[dbo].[SPRICE_GLOBALMF] GLB
+		            					INNER JOIN
+		            						[dbo].[TVC_PO_MS] MS
+		            					ON	MS.CUSTOMER_ITEM_CODE   =   GLB.GLOBAL_CODE   
+		            					AND	MS.UNIT_CURRENCY        =   GLB.PRICE_UNIT
+		            					WHERE
+		            						GLB.APPLYDATE           <=  GETDATE()
+		            					AND GLB.INV_DV              <> '*'
+		            					AND GLB.CUSTOMER_CODE		=	@CustomerCode
+		            					AND	GLB.PRICE_UNIT			=	@UnitCurrency
+		            					GROUP BY
+		            						GLOBAL_CODE
+                        			) GLB_MAX
+		            			ON
+                        			GLB.GLOBAL_CODE		=	GLB_MAX.GLOBAL_CODE
+		            			AND	GLB.APPLYDATE		=	GLB_MAX.APPLYDATE
+		            			AND GLB.INV_DV          <> '*'
+		            		) S 
+		            ON		MS.[CUSTOMER_ITEM_CODE]	    =	S.[GLOBAL_CODE] 
+		            AND     MS.[UNIT_CURRENCY]          =	S.[PRICE_UNIT]
+		            WHERE
+		            		MS.COMPANY_CODE				=	@CompanyCode
+		            AND		MS.CUSTOMER_CODE			=	@CustomerCode
+		            AND		MS.UNIT_CURRENCY			=	@UnitCurrency
+		            AND		(MS.[QUANTITY] - ISNULL(MS.[QUANTITY_ORDER], 0)) > 0
+		            ORDER BY
+		            		MS.[DUE_DATE]";
+                var result = db.Database.SqlQuery<SearchPOInfo>(sqlQuery, xparams).ToList();
+
+                gridControl_Search_PO.DataSource = result;
+            }
         }
 
         private void Define_GridView()
         {
-            View_PO_List.OptionsPrint.AutoWidth = false;
-            View_PO_List.OptionsView.ColumnAutoWidth = false;
-
             // COMPANY_CODE
             gridCol_Company_Code.Name = "gridCol_Company_Code";
-            gridCol_Company_Code.Caption = "COMPANY_CODE";
+            gridCol_Company_Code.Caption = "COMPANY CODE";
             gridCol_Company_Code.FieldName = "COMPANY_CODE";
             gridCol_Company_Code.VisibleIndex = 0;
-            gridCol_Company_Code.Width = 120;
+            gridCol_Company_Code.Width = 90;
+
+            gridCol_Company_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
             // CUSTOMER CODE
             gridCol_Customer_Code.Name = "gridCol_Customer_Code";
-            gridCol_Customer_Code.Caption = "CUSTOMER_CODE";
+            gridCol_Customer_Code.Caption = "CUSTOMER CODE";
             gridCol_Customer_Code.FieldName = "CUSTOMER_CODE";
             gridCol_Customer_Code.VisibleIndex = 0;
-            gridCol_Customer_Code.Width = 120;
-            gridCol_Customer_Code.AppearanceCell.Options.UseTextOptions = true;
+            gridCol_Customer_Code.Width = 100;
+
             gridCol_Customer_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
             // RECEIVE NO
@@ -91,70 +172,74 @@ namespace TAKAKO_ERP_3LAYER
             gridCol_ReceiveNo.FieldName = "RECEIVE_NO";
             gridCol_ReceiveNo.VisibleIndex = 0;
             gridCol_ReceiveNo.Width = 120;
-            gridCol_ReceiveNo.AppearanceCell.Options.UseTextOptions = true;
+
             gridCol_ReceiveNo.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
             // CUSTOMER ITEM CODE
             gridCol_Cus_Item_Code.Name = "gridCol_Cus_Item_Code";
-            gridCol_Cus_Item_Code.Caption = "CUS_ITEM_CODE";
-            gridCol_Cus_Item_Code.FieldName = "CUS_ITEM_CODE";
+            gridCol_Cus_Item_Code.Caption = "CUSTOMER ITEM CODE";
+            gridCol_Cus_Item_Code.FieldName = "CUSTOMER_ITEM_CODE";
             gridCol_Cus_Item_Code.VisibleIndex = 0;
-            gridCol_Cus_Item_Code.Width = 140;
-            gridCol_Cus_Item_Code.AppearanceCell.Options.UseTextOptions = true;
+            gridCol_Cus_Item_Code.Width = 120;
+            
             gridCol_Cus_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
             // TVC ITEM CODE
             gridCol_TVC_Item_Code.Name = "gridCol_TVC_Item_Code";
-            gridCol_TVC_Item_Code.Caption = "TVC_ITEM_CODE";
+            gridCol_TVC_Item_Code.Caption = "TVC ITEM CODE";
             gridCol_TVC_Item_Code.FieldName = "TVC_ITEM_CODE";
             gridCol_TVC_Item_Code.VisibleIndex = 0;
-            gridCol_TVC_Item_Code.Width = 150;
+            gridCol_TVC_Item_Code.Width = 120;
+
+            gridCol_TVC_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
             // CUSTOMER PO
             gridCol_Customer_PO.Name = "gridCol_Customer_PO";
-            gridCol_Customer_PO.Caption = "CUSTOMER_PO";
+            gridCol_Customer_PO.Caption = "CUSTOMER PO";
             gridCol_Customer_PO.FieldName = "CUSTOMER_PO";
             gridCol_Customer_PO.VisibleIndex = 0;
-            gridCol_Customer_PO.Width = 150;
+            gridCol_Customer_PO.Width = 120;
 
-            // PART NAME
-            gridCol_Part_Name.Name = "gridCol_Part_Name";
-            gridCol_Part_Name.Caption = "ITEM NAME";
-            gridCol_Part_Name.FieldName = "PARTS_NAME";
-            gridCol_Part_Name.VisibleIndex = 0;
-            gridCol_Part_Name.Width = 180;
-            gridCol_Part_Name.AppearanceCell.Options.UseTextOptions = true;
-            gridCol_Part_Name.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+            gridCol_Customer_PO.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+            // ITEM NAME
+            gridCol_Item_Name.Name = "gridCol_Item_Name";
+            gridCol_Item_Name.Caption = "ITEM NAME";
+            gridCol_Item_Name.FieldName = "ITEM_NAME";
+            gridCol_Item_Name.VisibleIndex = 0;
+            gridCol_Item_Name.Width = 140;
+
+            gridCol_Item_Name.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
             // DUE DATE
             gridCol_DueDate.Name = "gridCol_DueDate";
             gridCol_DueDate.Caption = "DUE DATE";
             gridCol_DueDate.FieldName = "DUE_DATE";
             gridCol_DueDate.VisibleIndex = 0;
-            gridCol_DueDate.Width = 150;
-            gridCol_DueDate.AppearanceCell.Options.UseTextOptions = true;
-            gridCol_DueDate.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
+            gridCol_DueDate.Width = 110;
             gridCol_DueDate.DisplayFormat.FormatString = "dd/MM/yyyy";
             gridCol_DueDate.DisplayFormat.FormatType = FormatType.DateTime;
 
+            gridCol_DueDate.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
             // ORDER DATE
-            gridCol_OrderDate.Name = "gridCol_Qty_Total";
-            gridCol_OrderDate.Caption = "QTY_TOTAL";
-            gridCol_OrderDate.FieldName = "QTY_TOTAL";
+            gridCol_OrderDate.Name = "gridCol_OrderDate";
+            gridCol_OrderDate.Caption = "ORDER DATE";
+            gridCol_OrderDate.FieldName = "ORDER_DATE";
             gridCol_OrderDate.VisibleIndex = 0;
-            gridCol_OrderDate.Width = 150;
-            gridCol_OrderDate.AppearanceCell.Options.UseTextOptions = true;
-            gridCol_OrderDate.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
+            gridCol_OrderDate.Width = 110;
             gridCol_OrderDate.DisplayFormat.FormatString = "dd/MM/yyyy";
             gridCol_OrderDate.DisplayFormat.FormatType = FormatType.DateTime;
+                
+            gridCol_OrderDate.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
             // UNIT CURRENCY
             gridCol_Unit_Currency.Name = "gridCol_Unit_Currency";
             gridCol_Unit_Currency.Caption = "UNIT CURRENTCY";
             gridCol_Unit_Currency.FieldName = "UNIT_CURRENCY";
             gridCol_Unit_Currency.VisibleIndex = 0;
-            gridCol_Unit_Currency.Width = 150;
-            gridCol_Unit_Currency.AppearanceCell.Options.UseTextOptions = true;
+            gridCol_Unit_Currency.Width = 100;
+
             gridCol_Unit_Currency.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
             // QUANTITY BALANCE
@@ -162,22 +247,22 @@ namespace TAKAKO_ERP_3LAYER
             gridCol_Qty_Balance_Qty.Caption = "QUANTITY BALANCE";
             gridCol_Qty_Balance_Qty.FieldName = "BALANCE";
             gridCol_Qty_Balance_Qty.VisibleIndex = 0;
-            gridCol_Qty_Balance_Qty.Width = 150;
-            gridCol_Qty_Balance_Qty.AppearanceCell.Options.UseTextOptions = true;
-            gridCol_Qty_Balance_Qty.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
+            gridCol_Qty_Balance_Qty.Width = 120;
             gridCol_Qty_Balance_Qty.DisplayFormat.FormatString = "#,##0";
             gridCol_Qty_Balance_Qty.DisplayFormat.FormatType = FormatType.Numeric;
 
+            gridCol_Qty_Balance_Qty.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
+
             // ORDER PRICE
             gridCol_Order_Price.Name = "gridCol_Order_Price";
-            gridCol_Order_Price.Caption = "NET_WEIGHT_TOTAL";
-            gridCol_Order_Price.FieldName = "NET_WEIGHT_TOTAL";
+            gridCol_Order_Price.Caption = "ORDER PRICE";
+            gridCol_Order_Price.FieldName = "ORDER_PRICE";
             gridCol_Order_Price.VisibleIndex = 0;
-            gridCol_Order_Price.Width = 150;
-            gridCol_Order_Price.AppearanceCell.Options.UseTextOptions = true;
-            gridCol_Order_Price.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
+            gridCol_Order_Price.Width = 120;
             gridCol_Order_Price.DisplayFormat.FormatString = "#,##0";
             gridCol_Order_Price.DisplayFormat.FormatType = FormatType.Numeric;
+
+            gridCol_Order_Price.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
             // NOTE
             gridCol_Note.Name = "gridCol_Note";
@@ -186,13 +271,18 @@ namespace TAKAKO_ERP_3LAYER
             gridCol_Note.VisibleIndex = 0;
             gridCol_Note.Width = 150;
 
+            // Not allow edit data gridview
+            View_PO_List.OptionsBehavior.Editable = false;
+            View_PO_List.OptionsPrint.AutoWidth = false;
+            View_PO_List.OptionsView.ColumnAutoWidth = false;
+            View_PO_List.OptionsView.ColumnHeaderAutoHeight = DefaultBoolean.True;
+
             // Add column to gridview
             View_PO_List.Columns.Add(gridCol_Company_Code);
-            View_PO_List.Columns.Add(gridCol_Customer_Code);
             View_PO_List.Columns.Add(gridCol_ReceiveNo);
+            View_PO_List.Columns.Add(gridCol_Customer_Code);
             View_PO_List.Columns.Add(gridCol_Cus_Item_Code);
             View_PO_List.Columns.Add(gridCol_TVC_Item_Code);
-            View_PO_List.Columns.Add(gridCol_Part_Name);
             View_PO_List.Columns.Add(gridCol_Item_Name);
             View_PO_List.Columns.Add(gridCol_DueDate);
             View_PO_List.Columns.Add(gridCol_OrderDate);
@@ -208,10 +298,13 @@ namespace TAKAKO_ERP_3LAYER
                 c.AppearanceHeader.Options.UseFont = true;
                 c.AppearanceHeader.Options.UseForeColor = true;
                 c.AppearanceHeader.Options.UseTextOptions = true;
-                c.AppearanceHeader.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
                 c.AppearanceHeader.ForeColor = Color.Black;
-                c.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
                 c.AppearanceHeader.TextOptions.WordWrap = WordWrap.Wrap;
+                c.AppearanceHeader.TextOptions.HAlignment = HorzAlignment.Center;
+                c.AppearanceHeader.Font = new Font("Segoe UI", 8.25F, FontStyle.Bold, GraphicsUnit.Point, ((byte)(0)));
+
+                c.AppearanceCell.Options.UseBackColor = true;
+                c.AppearanceCell.Options.UseTextOptions = true;
             }
         }
 
@@ -221,6 +314,20 @@ namespace TAKAKO_ERP_3LAYER
         }
 
         private void barBtn_ImportData_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void View_PO_List_DoubleClick(object sender, EventArgs e)
+        {
+            //int balance = Convert.ToInt32(View_PO_List.GetFocusedRowCellValue("BALANCE"));
+            //MessageBox.Show(balance.ToString());
+            SearchPOInfo curSearchPOInfo = (SearchPOInfo)View_PO_List.GetRow(View_PO_List.GetFocusedDataSourceRowIndex());
+            MessageBox.Show(curSearchPOInfo.BALANCE.ToString());
+            form_Shipping_Instruction.RefreshGridView(sender, e);
+        }
+
+        private void gridControl_Search_PO_Click(object sender, EventArgs e)
         {
 
         }

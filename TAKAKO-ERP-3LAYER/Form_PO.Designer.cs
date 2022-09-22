@@ -304,7 +304,6 @@
             this.btnSearch_ShippingNo.TabIndex = 17;
             this.btnSearch_ShippingNo.TabStop = false;
             this.btnSearch_ShippingNo.UseVisualStyleBackColor = true;
-            this.btnSearch_ShippingNo.Click += new System.EventHandler(this.btnSearch_InvoiceNo_Click);
             // 
             // txtShippingNo
             // 
@@ -312,7 +311,6 @@
             this.txtShippingNo.Name = "txtShippingNo";
             this.txtShippingNo.Size = new System.Drawing.Size(160, 22);
             this.txtShippingNo.TabIndex = 15;
-            this.txtShippingNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtInvoiceNo_KeyDown);
             // 
             // label5
             // 

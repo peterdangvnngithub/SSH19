@@ -87,6 +87,28 @@ namespace TAKAKO_ERP_3LAYER
             public DateTime DueDate_PO { set; get; }
         }
 
+        public class SearchPOInfo
+        {
+            public string COMPANY_CODE { set; get; }
+            public string CUSTOMER_CODE { set; get; }
+            public string RECEIVE_NO { set; get; }
+            public string CUSTOMER_ITEM_CODE { set; get; }
+            public string TVC_ITEM_CODE { set; get; }
+            public string ITEM_NAME { set; get; }
+            public DateTime DUE_DATE { set; get; }
+            public DateTime ORDER_DATE { set; get; }
+            public int BALANCE { set; get; }
+            public decimal BOX_QUANTITY { set; get; }
+            public decimal WEIGHT { set; get; }
+            public string CUSTOMER_PO { set; get; }
+            public string THIRD_PARTY_ITEM_CODE { set; get; }
+            public string THIRD_PARTY_PO { set; get; }
+            public string UNIT_CURRENCY { set; get; }
+            public decimal ORDER_PRICE { set; get; }
+            public decimal PRICE { set; get; }
+            public string NOTE { set; get; }
+        }
+
         public static List<ItemCodeInfo> _listItemCodeInfo;
 
         public static List<ShippingInfo> _listShippingInfo;
