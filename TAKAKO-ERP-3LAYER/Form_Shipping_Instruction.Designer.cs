@@ -51,20 +51,6 @@
             this.gridView_PackingList = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.panel27 = new System.Windows.Forms.Panel();
             this.txt_PL_Search_Grid = new System.Windows.Forms.TextBox();
-            this.panel18 = new System.Windows.Forms.Panel();
-            this.btnSort = new System.Windows.Forms.Button();
-            this.btn_CoppyRow = new System.Windows.Forms.Button();
-            this.panel22 = new System.Windows.Forms.Panel();
-            this.btnSumPL = new System.Windows.Forms.Button();
-            this.panel28 = new System.Windows.Forms.Panel();
-            this.label17 = new System.Windows.Forms.Label();
-            this.txtTotal_NetWeight = new System.Windows.Forms.TextBox();
-            this.txtTotal_Qty = new System.Windows.Forms.TextBox();
-            this.txtTotal_QtyCarton = new System.Windows.Forms.TextBox();
-            this.txtTotal_GrossWeight = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
             this.panel_Bottom = new System.Windows.Forms.Panel();
             this.panel23 = new System.Windows.Forms.Panel();
             this.btnExport_Instruction = new System.Windows.Forms.Button();
@@ -76,65 +62,65 @@
             this.panel_HeaderInvoice = new System.Windows.Forms.Panel();
             this.btn_SearchShipping = new System.Windows.Forms.Button();
             this.panel_HeaderRight = new System.Windows.Forms.Panel();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.dtpETA = new System.Windows.Forms.DateTimePicker();
-            this.label16 = new System.Windows.Forms.Label();
-            this.dtpETD = new System.Windows.Forms.DateTimePicker();
-            this.label15 = new System.Windows.Forms.Label();
+            this.dtpRevenue = new System.Windows.Forms.DateTimePicker();
+            this.txtShipVia = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.cb_Freight = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtVessel = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.sLookUp_PortLoading = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.sLookUp_PortLoading_View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.label12 = new System.Windows.Forms.Label();
             this.sLookUp_PortDestination = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.sLookUp_PortDestination_View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.txtVessel = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.cb_Freight = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txtShipVia = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.dtpRevenue = new System.Windows.Forms.DateTimePicker();
-            this.label22 = new System.Windows.Forms.Label();
+            this.dtpETD = new System.Windows.Forms.DateTimePicker();
+            this.label14 = new System.Windows.Forms.Label();
+            this.dtpETA = new System.Windows.Forms.DateTimePicker();
+            this.label15 = new System.Windows.Forms.Label();
+            this.sLookUp_PriceCondition = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.sLookUp_PriceCondition_View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.label16 = new System.Windows.Forms.Label();
+            this.sLookUp_PaymentTerm = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.sLookUp_PaymentTerm_View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
             this.panel_HeaderLeft = new System.Windows.Forms.Panel();
-            this.txtShipTo_TelNo = new DevExpress.XtraEditors.TextEdit();
-            this.txtShipTo_FaxNo = new DevExpress.XtraEditors.TextEdit();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.memo_ShipTo_CompanyAddress = new DevExpress.XtraEditors.MemoEdit();
-            this.txtShipTo_CompanyName = new DevExpress.XtraEditors.TextEdit();
-            this.sLookUp_ShipTo_CompanyCode = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.sLookUp_ShipTo_CompanyCode_View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtIssuedTo_FaxNo = new DevExpress.XtraEditors.TextEdit();
-            this.txtIssuedTo_TelNo = new DevExpress.XtraEditors.TextEdit();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.memo_IssuedTo_CompanyAddress = new DevExpress.XtraEditors.MemoEdit();
+            this.txtInvoiceNo = new DevExpress.XtraEditors.TextEdit();
+            this.radLock = new System.Windows.Forms.RadioButton();
+            this.cb_CompanyCode = new System.Windows.Forms.ComboBox();
+            this.radRevise = new System.Windows.Forms.RadioButton();
+            this.sLookUp_ShippingNo = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.sLookUp_ShippingNo_View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.radNormal = new System.Windows.Forms.RadioButton();
+            this.label26 = new System.Windows.Forms.Label();
+            this.lblStatus = new System.Windows.Forms.Label();
+            this.dtpDateCreateShipping = new System.Windows.Forms.DateTimePicker();
+            this.lblShippingNo = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.txtIssuedTo_CompanyName = new DevExpress.XtraEditors.TextEdit();
+            this.label3 = new System.Windows.Forms.Label();
+            this.memo_IssuedTo_CompanyAddress = new DevExpress.XtraEditors.MemoEdit();
             this.sLookUp_IssuedTo_CompanyCode = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.sLookUp_IssuedTo_CompanyCode_View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.txtIssuedTo_FaxNo = new DevExpress.XtraEditors.TextEdit();
             this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.dtpDateCreateShipping = new System.Windows.Forms.DateTimePicker();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cb_CompanyCode = new System.Windows.Forms.ComboBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.radLock = new System.Windows.Forms.RadioButton();
-            this.radRevise = new System.Windows.Forms.RadioButton();
-            this.radNormal = new System.Windows.Forms.RadioButton();
-            this.lblStatus = new System.Windows.Forms.Label();
+            this.txtShipTo_CompanyName = new DevExpress.XtraEditors.TextEdit();
+            this.txtIssuedTo_TelNo = new DevExpress.XtraEditors.TextEdit();
+            this.memo_ShipTo_CompanyAddress = new DevExpress.XtraEditors.MemoEdit();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtShipTo_TelNo = new DevExpress.XtraEditors.TextEdit();
+            this.label5 = new System.Windows.Forms.Label();
+            this.sLookUp_ShipTo_CompanyCode = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.sLookUp_ShipTo_CompanyCode_View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.txtShipTo_FaxNo = new DevExpress.XtraEditors.TextEdit();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.panelTop = new System.Windows.Forms.Panel();
             this.panel30 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.sLookUp_PriceCondition = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.sLookUp_PriceCondition_View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.sLookUp_PaymentTerm = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.sLookUp_PaymentTerm_View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.lblShippingNo = new System.Windows.Forms.Label();
-            this.sLookUp_ShippingNo = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.sLookUp_ShippingNo_View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.sLookUp_PortLoading_View = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.sLookUp_PortLoading = new DevExpress.XtraEditors.SearchLookUpEdit();
-            this.txtInvoiceNo = new DevExpress.XtraEditors.TextEdit();
             this.panel_Top.SuspendLayout();
             this.panel29.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox_BackToMain)).BeginInit();
@@ -155,37 +141,35 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridControl_PackingList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView_PackingList)).BeginInit();
             this.panel27.SuspendLayout();
-            this.panel18.SuspendLayout();
-            this.panel22.SuspendLayout();
             this.panel_Bottom.SuspendLayout();
             this.panel23.SuspendLayout();
             this.panel_HeaderInvoice.SuspendLayout();
             this.panel_HeaderRight.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortLoading.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortLoading_View)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortDestination.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortDestination_View)).BeginInit();
-            this.panel_HeaderLeft.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_TelNo.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_FaxNo.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memo_ShipTo_CompanyAddress.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_CompanyName.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShipTo_CompanyCode.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShipTo_CompanyCode_View)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtIssuedTo_FaxNo.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtIssuedTo_TelNo.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memo_IssuedTo_CompanyAddress.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtIssuedTo_CompanyName.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_IssuedTo_CompanyCode.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_IssuedTo_CompanyCode_View)).BeginInit();
-            this.panelTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PriceCondition.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PriceCondition_View)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PaymentTerm.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PaymentTerm_View)).BeginInit();
+            this.panel_HeaderLeft.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtInvoiceNo.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShippingNo.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShippingNo_View)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortLoading_View)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortLoading.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtInvoiceNo.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtIssuedTo_CompanyName.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.memo_IssuedTo_CompanyAddress.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_IssuedTo_CompanyCode.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_IssuedTo_CompanyCode_View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtIssuedTo_FaxNo.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_CompanyName.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtIssuedTo_TelNo.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.memo_ShipTo_CompanyAddress.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_TelNo.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShipTo_CompanyCode.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShipTo_CompanyCode_View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_FaxNo.Properties)).BeginInit();
+            this.panelTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel_Top
@@ -365,11 +349,10 @@
             // 
             this.tabPackingList.Controls.Add(this.panel20);
             this.tabPackingList.Controls.Add(this.panel27);
-            this.tabPackingList.Controls.Add(this.panel18);
             this.tabPackingList.Location = new System.Drawing.Point(4, 22);
             this.tabPackingList.Name = "tabPackingList";
             this.tabPackingList.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPackingList.Size = new System.Drawing.Size(1176, 257);
+            this.tabPackingList.Size = new System.Drawing.Size(1176, 302);
             this.tabPackingList.TabIndex = 1;
             this.tabPackingList.Text = "          Packing List        ";
             this.tabPackingList.UseVisualStyleBackColor = true;
@@ -380,7 +363,7 @@
             this.panel20.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel20.Location = new System.Drawing.Point(3, 3);
             this.panel20.Name = "panel20";
-            this.panel20.Size = new System.Drawing.Size(1161, 226);
+            this.panel20.Size = new System.Drawing.Size(1161, 296);
             this.panel20.TabIndex = 8;
             // 
             // gridControl_PackingList
@@ -389,7 +372,7 @@
             this.gridControl_PackingList.Location = new System.Drawing.Point(0, 0);
             this.gridControl_PackingList.MainView = this.gridView_PackingList;
             this.gridControl_PackingList.Name = "gridControl_PackingList";
-            this.gridControl_PackingList.Size = new System.Drawing.Size(1161, 226);
+            this.gridControl_PackingList.Size = new System.Drawing.Size(1161, 296);
             this.gridControl_PackingList.TabIndex = 0;
             this.gridControl_PackingList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView_PackingList});
@@ -405,7 +388,7 @@
             this.panel27.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel27.Location = new System.Drawing.Point(1164, 3);
             this.panel27.Name = "panel27";
-            this.panel27.Size = new System.Drawing.Size(9, 226);
+            this.panel27.Size = new System.Drawing.Size(9, 296);
             this.panel27.TabIndex = 7;
             // 
             // txt_PL_Search_Grid
@@ -417,160 +400,6 @@
             this.txt_PL_Search_Grid.Size = new System.Drawing.Size(93, 22);
             this.txt_PL_Search_Grid.TabIndex = 1;
             this.txt_PL_Search_Grid.Text = "Search Value";
-            // 
-            // panel18
-            // 
-            this.panel18.Controls.Add(this.btnSort);
-            this.panel18.Controls.Add(this.btn_CoppyRow);
-            this.panel18.Controls.Add(this.panel22);
-            this.panel18.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel18.Location = new System.Drawing.Point(3, 229);
-            this.panel18.Name = "panel18";
-            this.panel18.Size = new System.Drawing.Size(1170, 25);
-            this.panel18.TabIndex = 5;
-            // 
-            // btnSort
-            // 
-            this.btnSort.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.btnSort.Location = new System.Drawing.Point(83, 2);
-            this.btnSort.Name = "btnSort";
-            this.btnSort.Size = new System.Drawing.Size(80, 22);
-            this.btnSort.TabIndex = 6;
-            this.btnSort.Text = "&Sort Data";
-            this.btnSort.UseVisualStyleBackColor = true;
-            this.btnSort.Click += new System.EventHandler(this.btnSort_Click);
-            this.btnSort.MouseHover += new System.EventHandler(this.btnSort_MouseHover);
-            // 
-            // btn_CoppyRow
-            // 
-            this.btn_CoppyRow.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.btn_CoppyRow.Location = new System.Drawing.Point(-1, 2);
-            this.btn_CoppyRow.Name = "btn_CoppyRow";
-            this.btn_CoppyRow.Size = new System.Drawing.Size(80, 22);
-            this.btn_CoppyRow.TabIndex = 5;
-            this.btn_CoppyRow.Text = "Coppy &Row";
-            this.btn_CoppyRow.UseVisualStyleBackColor = true;
-            this.btn_CoppyRow.MouseHover += new System.EventHandler(this.btn_CoppyRow_MouseHover);
-            // 
-            // panel22
-            // 
-            this.panel22.Controls.Add(this.btnSumPL);
-            this.panel22.Controls.Add(this.panel28);
-            this.panel22.Controls.Add(this.label17);
-            this.panel22.Controls.Add(this.txtTotal_NetWeight);
-            this.panel22.Controls.Add(this.txtTotal_Qty);
-            this.panel22.Controls.Add(this.txtTotal_QtyCarton);
-            this.panel22.Controls.Add(this.txtTotal_GrossWeight);
-            this.panel22.Controls.Add(this.label24);
-            this.panel22.Controls.Add(this.label23);
-            this.panel22.Controls.Add(this.label21);
-            this.panel22.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel22.Location = new System.Drawing.Point(54, 0);
-            this.panel22.Name = "panel22";
-            this.panel22.Size = new System.Drawing.Size(1116, 25);
-            this.panel22.TabIndex = 0;
-            // 
-            // btnSumPL
-            // 
-            this.btnSumPL.Font = new System.Drawing.Font("Segoe UI", 8.25F);
-            this.btnSumPL.Location = new System.Drawing.Point(300, 2);
-            this.btnSumPL.Name = "btnSumPL";
-            this.btnSumPL.Size = new System.Drawing.Size(99, 22);
-            this.btnSumPL.TabIndex = 23;
-            this.btnSumPL.Text = "Sum &Total";
-            this.btnSumPL.UseVisualStyleBackColor = true;
-            // 
-            // panel28
-            // 
-            this.panel28.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel28.Location = new System.Drawing.Point(1108, 0);
-            this.panel28.Name = "panel28";
-            this.panel28.Size = new System.Drawing.Size(8, 25);
-            this.panel28.TabIndex = 17;
-            // 
-            // label17
-            // 
-            this.label17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label17.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label17.Location = new System.Drawing.Point(579, 3);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(82, 20);
-            this.label17.TabIndex = 16;
-            this.label17.Text = "Total Quantity";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // txtTotal_NetWeight
-            // 
-            this.txtTotal_NetWeight.Enabled = false;
-            this.txtTotal_NetWeight.Font = new System.Drawing.Font("Arial", 8.25F);
-            this.txtTotal_NetWeight.Location = new System.Drawing.Point(853, 3);
-            this.txtTotal_NetWeight.Name = "txtTotal_NetWeight";
-            this.txtTotal_NetWeight.Size = new System.Drawing.Size(93, 20);
-            this.txtTotal_NetWeight.TabIndex = 15;
-            this.txtTotal_NetWeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txtTotal_Qty
-            // 
-            this.txtTotal_Qty.Enabled = false;
-            this.txtTotal_Qty.Font = new System.Drawing.Font("Arial", 8.25F);
-            this.txtTotal_Qty.Location = new System.Drawing.Point(662, 3);
-            this.txtTotal_Qty.Name = "txtTotal_Qty";
-            this.txtTotal_Qty.Size = new System.Drawing.Size(120, 20);
-            this.txtTotal_Qty.TabIndex = 14;
-            this.txtTotal_Qty.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txtTotal_QtyCarton
-            // 
-            this.txtTotal_QtyCarton.Enabled = false;
-            this.txtTotal_QtyCarton.Font = new System.Drawing.Font("Arial", 8.25F);
-            this.txtTotal_QtyCarton.Location = new System.Drawing.Point(480, 3);
-            this.txtTotal_QtyCarton.Name = "txtTotal_QtyCarton";
-            this.txtTotal_QtyCarton.Size = new System.Drawing.Size(93, 20);
-            this.txtTotal_QtyCarton.TabIndex = 13;
-            this.txtTotal_QtyCarton.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // txtTotal_GrossWeight
-            // 
-            this.txtTotal_GrossWeight.Enabled = false;
-            this.txtTotal_GrossWeight.Font = new System.Drawing.Font("Arial", 8.25F);
-            this.txtTotal_GrossWeight.Location = new System.Drawing.Point(1014, 3);
-            this.txtTotal_GrossWeight.Name = "txtTotal_GrossWeight";
-            this.txtTotal_GrossWeight.Size = new System.Drawing.Size(93, 20);
-            this.txtTotal_GrossWeight.TabIndex = 12;
-            this.txtTotal_GrossWeight.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            // 
-            // label24
-            // 
-            this.label24.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label24.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label24.Location = new System.Drawing.Point(788, 3);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(64, 20);
-            this.label24.TabIndex = 11;
-            this.label24.Text = "Total N/W";
-            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label23
-            // 
-            this.label23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label23.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label23.Location = new System.Drawing.Point(405, 3);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(74, 20);
-            this.label23.TabIndex = 10;
-            this.label23.Text = "Total Carton";
-            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label21
-            // 
-            this.label21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label21.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label21.Location = new System.Drawing.Point(952, 3);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(61, 20);
-            this.label21.TabIndex = 9;
-            this.label21.Text = "Total G/W";
-            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // panel_Bottom
             // 
@@ -703,67 +532,97 @@
             this.panel_HeaderRight.Size = new System.Drawing.Size(520, 280);
             this.panel_HeaderRight.TabIndex = 5;
             // 
-            // label25
+            // dtpRevenue
             // 
-            this.label25.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label25.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label25.Location = new System.Drawing.Point(4, 257);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(134, 20);
-            this.label25.TabIndex = 1;
-            this.label25.Text = "PAYMENT TERM";
-            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.dtpRevenue.CustomFormat = "MM/yyyy";
+            this.dtpRevenue.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpRevenue.Location = new System.Drawing.Point(139, 29);
+            this.dtpRevenue.Name = "dtpRevenue";
+            this.dtpRevenue.Size = new System.Drawing.Size(137, 22);
+            this.dtpRevenue.TabIndex = 10;
             // 
-            // label18
+            // txtShipVia
             // 
-            this.label18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label18.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label18.Location = new System.Drawing.Point(4, 232);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(134, 20);
-            this.label18.TabIndex = 5;
-            this.label18.Text = "TRADE CONDITION";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.txtShipVia.Location = new System.Drawing.Point(139, 55);
+            this.txtShipVia.Name = "txtShipVia";
+            this.txtShipVia.Size = new System.Drawing.Size(335, 22);
+            this.txtShipVia.TabIndex = 5;
             // 
-            // dtpETA
+            // label22
             // 
-            this.dtpETA.CustomFormat = "MMMM dd,yyyy";
-            this.dtpETA.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpETA.Location = new System.Drawing.Point(139, 206);
-            this.dtpETA.Name = "dtpETA";
-            this.dtpETA.Size = new System.Drawing.Size(137, 22);
-            this.dtpETA.TabIndex = 10;
+            this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label22.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label22.Location = new System.Drawing.Point(4, 29);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(134, 22);
+            this.label22.TabIndex = 7;
+            this.label22.Text = "REVENUE";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label16
+            // cb_Freight
             // 
-            this.label16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label16.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label16.Location = new System.Drawing.Point(4, 206);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(134, 22);
-            this.label16.TabIndex = 5;
-            this.label16.Text = "ETA";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cb_Freight.FormattingEnabled = true;
+            this.cb_Freight.Location = new System.Drawing.Point(139, 81);
+            this.cb_Freight.Name = "cb_Freight";
+            this.cb_Freight.Size = new System.Drawing.Size(137, 21);
+            this.cb_Freight.TabIndex = 6;
             // 
-            // dtpETD
+            // label10
             // 
-            this.dtpETD.CustomFormat = "MMMM dd,yyyy";
-            this.dtpETD.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpETD.Location = new System.Drawing.Point(139, 180);
-            this.dtpETD.Name = "dtpETD";
-            this.dtpETD.Size = new System.Drawing.Size(137, 22);
-            this.dtpETD.TabIndex = 9;
+            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label10.Location = new System.Drawing.Point(4, 55);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(134, 22);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "SHIP VIA";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label15
+            // txtVessel
             // 
-            this.label15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label15.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label15.Location = new System.Drawing.Point(4, 180);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(134, 22);
-            this.label15.TabIndex = 3;
-            this.label15.Text = "ETD";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.txtVessel.Location = new System.Drawing.Point(139, 106);
+            this.txtVessel.Name = "txtVessel";
+            this.txtVessel.Size = new System.Drawing.Size(335, 22);
+            this.txtVessel.TabIndex = 6;
+            // 
+            // label11
+            // 
+            this.label11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label11.Location = new System.Drawing.Point(4, 81);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(134, 21);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "FREIGHT";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // sLookUp_PortLoading
+            // 
+            this.sLookUp_PortLoading.Location = new System.Drawing.Point(139, 132);
+            this.sLookUp_PortLoading.Name = "sLookUp_PortLoading";
+            this.sLookUp_PortLoading.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.sLookUp_PortLoading.Properties.PopupView = this.sLookUp_PortLoading_View;
+            this.sLookUp_PortLoading.Size = new System.Drawing.Size(335, 20);
+            this.sLookUp_PortLoading.TabIndex = 0;
+            // 
+            // sLookUp_PortLoading_View
+            // 
+            this.sLookUp_PortLoading_View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.sLookUp_PortLoading_View.Name = "sLookUp_PortLoading_View";
+            this.sLookUp_PortLoading_View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.sLookUp_PortLoading_View.OptionsView.ShowGroupPanel = false;
+            // 
+            // label12
+            // 
+            this.label12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label12.Location = new System.Drawing.Point(4, 106);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(134, 22);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "VESSEL";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // sLookUp_PortDestination
             // 
@@ -782,17 +641,6 @@
             this.sLookUp_PortDestination_View.OptionsSelection.EnableAppearanceFocusedCell = false;
             this.sLookUp_PortDestination_View.OptionsView.ShowGroupPanel = false;
             // 
-            // label14
-            // 
-            this.label14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label14.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label14.Location = new System.Drawing.Point(4, 156);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(134, 20);
-            this.label14.TabIndex = 5;
-            this.label14.Text = "PORT OF DESTINATION";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // label13
             // 
             this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -804,80 +652,112 @@
             this.label13.Text = "PORT OF LOADING";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // txtVessel
+            // dtpETD
             // 
-            this.txtVessel.Location = new System.Drawing.Point(139, 106);
-            this.txtVessel.Name = "txtVessel";
-            this.txtVessel.Size = new System.Drawing.Size(335, 22);
-            this.txtVessel.TabIndex = 6;
+            this.dtpETD.CustomFormat = "MMMM dd,yyyy";
+            this.dtpETD.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpETD.Location = new System.Drawing.Point(139, 180);
+            this.dtpETD.Name = "dtpETD";
+            this.dtpETD.Size = new System.Drawing.Size(137, 22);
+            this.dtpETD.TabIndex = 9;
             // 
-            // label12
+            // label14
             // 
-            this.label12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label12.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label12.Location = new System.Drawing.Point(4, 106);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(134, 22);
-            this.label12.TabIndex = 5;
-            this.label12.Text = "VESSEL";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label14.Location = new System.Drawing.Point(4, 156);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(134, 20);
+            this.label14.TabIndex = 5;
+            this.label14.Text = "PORT OF DESTINATION";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // cb_Freight
+            // dtpETA
             // 
-            this.cb_Freight.FormattingEnabled = true;
-            this.cb_Freight.Location = new System.Drawing.Point(139, 81);
-            this.cb_Freight.Name = "cb_Freight";
-            this.cb_Freight.Size = new System.Drawing.Size(137, 21);
-            this.cb_Freight.TabIndex = 6;
+            this.dtpETA.CustomFormat = "MMMM dd,yyyy";
+            this.dtpETA.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpETA.Location = new System.Drawing.Point(139, 206);
+            this.dtpETA.Name = "dtpETA";
+            this.dtpETA.Size = new System.Drawing.Size(137, 22);
+            this.dtpETA.TabIndex = 10;
             // 
-            // label11
+            // label15
             // 
-            this.label11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label11.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label11.Location = new System.Drawing.Point(4, 81);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(134, 21);
-            this.label11.TabIndex = 5;
-            this.label11.Text = "FREIGHT";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label15.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label15.Location = new System.Drawing.Point(4, 180);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(134, 22);
+            this.label15.TabIndex = 3;
+            this.label15.Text = "ETD";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // txtShipVia
+            // sLookUp_PriceCondition
             // 
-            this.txtShipVia.Location = new System.Drawing.Point(139, 55);
-            this.txtShipVia.Name = "txtShipVia";
-            this.txtShipVia.Size = new System.Drawing.Size(335, 22);
-            this.txtShipVia.TabIndex = 5;
+            this.sLookUp_PriceCondition.Location = new System.Drawing.Point(139, 232);
+            this.sLookUp_PriceCondition.Name = "sLookUp_PriceCondition";
+            this.sLookUp_PriceCondition.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.sLookUp_PriceCondition.Properties.PopupView = this.sLookUp_PriceCondition_View;
+            this.sLookUp_PriceCondition.Size = new System.Drawing.Size(335, 20);
+            this.sLookUp_PriceCondition.TabIndex = 0;
             // 
-            // label10
+            // sLookUp_PriceCondition_View
             // 
-            this.label10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label10.Location = new System.Drawing.Point(4, 55);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(134, 22);
-            this.label10.TabIndex = 3;
-            this.label10.Text = "SHIP VIA";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.sLookUp_PriceCondition_View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.sLookUp_PriceCondition_View.Name = "sLookUp_PriceCondition_View";
+            this.sLookUp_PriceCondition_View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.sLookUp_PriceCondition_View.OptionsView.ShowGroupPanel = false;
             // 
-            // dtpRevenue
+            // label16
             // 
-            this.dtpRevenue.CustomFormat = "MM/yyyy";
-            this.dtpRevenue.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpRevenue.Location = new System.Drawing.Point(139, 29);
-            this.dtpRevenue.Name = "dtpRevenue";
-            this.dtpRevenue.Size = new System.Drawing.Size(137, 22);
-            this.dtpRevenue.TabIndex = 10;
+            this.label16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label16.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label16.Location = new System.Drawing.Point(4, 206);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(134, 22);
+            this.label16.TabIndex = 5;
+            this.label16.Text = "ETA";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label22
+            // sLookUp_PaymentTerm
             // 
-            this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label22.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label22.Location = new System.Drawing.Point(4, 29);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(134, 22);
-            this.label22.TabIndex = 7;
-            this.label22.Text = "REVENUE";
-            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.sLookUp_PaymentTerm.Location = new System.Drawing.Point(139, 257);
+            this.sLookUp_PaymentTerm.Name = "sLookUp_PaymentTerm";
+            this.sLookUp_PaymentTerm.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.sLookUp_PaymentTerm.Properties.PopupView = this.sLookUp_PaymentTerm_View;
+            this.sLookUp_PaymentTerm.Size = new System.Drawing.Size(335, 20);
+            this.sLookUp_PaymentTerm.TabIndex = 0;
+            // 
+            // sLookUp_PaymentTerm_View
+            // 
+            this.sLookUp_PaymentTerm_View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.sLookUp_PaymentTerm_View.Name = "sLookUp_PaymentTerm_View";
+            this.sLookUp_PaymentTerm_View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.sLookUp_PaymentTerm_View.OptionsView.ShowGroupPanel = false;
+            // 
+            // label18
+            // 
+            this.label18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label18.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label18.Location = new System.Drawing.Point(4, 232);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(134, 20);
+            this.label18.TabIndex = 5;
+            this.label18.Text = "TRADE CONDITION";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label25
+            // 
+            this.label25.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label25.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label25.Location = new System.Drawing.Point(4, 257);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(134, 20);
+            this.label25.TabIndex = 1;
+            this.label25.Text = "PAYMENT TERM";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panel_HeaderLeft
             // 
@@ -915,6 +795,232 @@
             this.panel_HeaderLeft.Size = new System.Drawing.Size(542, 280);
             this.panel_HeaderLeft.TabIndex = 4;
             // 
+            // txtInvoiceNo
+            // 
+            this.txtInvoiceNo.Location = new System.Drawing.Point(147, 91);
+            this.txtInvoiceNo.Name = "txtInvoiceNo";
+            this.txtInvoiceNo.Size = new System.Drawing.Size(335, 20);
+            this.txtInvoiceNo.TabIndex = 9;
+            // 
+            // radLock
+            // 
+            this.radLock.AutoSize = true;
+            this.radLock.Enabled = false;
+            this.radLock.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radLock.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radLock.Location = new System.Drawing.Point(245, 4);
+            this.radLock.Name = "radLock";
+            this.radLock.Size = new System.Drawing.Size(57, 20);
+            this.radLock.TabIndex = 2;
+            this.radLock.Text = "Lock";
+            this.radLock.UseVisualStyleBackColor = true;
+            this.radLock.CheckedChanged += new System.EventHandler(this.radLock_CheckedChanged);
+            // 
+            // cb_CompanyCode
+            // 
+            this.cb_CompanyCode.FormattingEnabled = true;
+            this.cb_CompanyCode.Location = new System.Drawing.Point(147, 25);
+            this.cb_CompanyCode.Name = "cb_CompanyCode";
+            this.cb_CompanyCode.Size = new System.Drawing.Size(110, 21);
+            this.cb_CompanyCode.TabIndex = 8;
+            // 
+            // radRevise
+            // 
+            this.radRevise.AutoSize = true;
+            this.radRevise.Enabled = false;
+            this.radRevise.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radRevise.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radRevise.Location = new System.Drawing.Point(319, 4);
+            this.radRevise.Name = "radRevise";
+            this.radRevise.Size = new System.Drawing.Size(68, 20);
+            this.radRevise.TabIndex = 1;
+            this.radRevise.Text = "Revise";
+            this.radRevise.UseVisualStyleBackColor = true;
+            this.radRevise.CheckedChanged += new System.EventHandler(this.radRevise_CheckedChanged);
+            // 
+            // sLookUp_ShippingNo
+            // 
+            this.sLookUp_ShippingNo.Location = new System.Drawing.Point(147, 47);
+            this.sLookUp_ShippingNo.Name = "sLookUp_ShippingNo";
+            this.sLookUp_ShippingNo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.sLookUp_ShippingNo.Properties.PopupView = this.sLookUp_ShippingNo_View;
+            this.sLookUp_ShippingNo.Size = new System.Drawing.Size(334, 20);
+            this.sLookUp_ShippingNo.TabIndex = 0;
+            this.sLookUp_ShippingNo.EditValueChanged += new System.EventHandler(this.sLookUp_ShippingNo_EditValueChanged);
+            // 
+            // sLookUp_ShippingNo_View
+            // 
+            this.sLookUp_ShippingNo_View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.sLookUp_ShippingNo_View.Name = "sLookUp_ShippingNo_View";
+            this.sLookUp_ShippingNo_View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.sLookUp_ShippingNo_View.OptionsView.ShowGroupPanel = false;
+            // 
+            // radNormal
+            // 
+            this.radNormal.AutoSize = true;
+            this.radNormal.Checked = true;
+            this.radNormal.Enabled = false;
+            this.radNormal.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.radNormal.Font = new System.Drawing.Font("Segoe UI", 9.25F, System.Drawing.FontStyle.Bold);
+            this.radNormal.Location = new System.Drawing.Point(161, 4);
+            this.radNormal.Name = "radNormal";
+            this.radNormal.Size = new System.Drawing.Size(78, 22);
+            this.radNormal.TabIndex = 0;
+            this.radNormal.TabStop = true;
+            this.radNormal.Text = "Normal";
+            this.radNormal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radNormal.UseVisualStyleBackColor = false;
+            this.radNormal.CheckedChanged += new System.EventHandler(this.radNormal_CheckedChanged);
+            // 
+            // label26
+            // 
+            this.label26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label26.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label26.Location = new System.Drawing.Point(12, 25);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(134, 21);
+            this.label26.TabIndex = 7;
+            this.label26.Text = "COMPANY CODE";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // lblStatus
+            // 
+            this.lblStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblStatus.Location = new System.Drawing.Point(12, 3);
+            this.lblStatus.Name = "lblStatus";
+            this.lblStatus.Size = new System.Drawing.Size(134, 21);
+            this.lblStatus.TabIndex = 0;
+            this.lblStatus.Text = "STATUS";
+            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // dtpDateCreateShipping
+            // 
+            this.dtpDateCreateShipping.CustomFormat = "MMMM dd,yyyy";
+            this.dtpDateCreateShipping.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDateCreateShipping.Location = new System.Drawing.Point(147, 68);
+            this.dtpDateCreateShipping.Name = "dtpDateCreateShipping";
+            this.dtpDateCreateShipping.Size = new System.Drawing.Size(110, 22);
+            this.dtpDateCreateShipping.TabIndex = 1;
+            // 
+            // lblShippingNo
+            // 
+            this.lblShippingNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lblShippingNo.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.lblShippingNo.Location = new System.Drawing.Point(12, 47);
+            this.lblShippingNo.Name = "lblShippingNo";
+            this.lblShippingNo.Size = new System.Drawing.Size(134, 20);
+            this.lblShippingNo.TabIndex = 1;
+            this.lblShippingNo.Text = "SHIPPING NO";
+            this.lblShippingNo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label2
+            // 
+            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label2.Location = new System.Drawing.Point(12, 68);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(134, 22);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "DATE";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtIssuedTo_CompanyName
+            // 
+            this.txtIssuedTo_CompanyName.Location = new System.Drawing.Point(212, 112);
+            this.txtIssuedTo_CompanyName.Name = "txtIssuedTo_CompanyName";
+            this.txtIssuedTo_CompanyName.Size = new System.Drawing.Size(270, 20);
+            this.txtIssuedTo_CompanyName.TabIndex = 2;
+            // 
+            // label3
+            // 
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label3.Location = new System.Drawing.Point(12, 91);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(134, 20);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "INVOICE No.";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // memo_IssuedTo_CompanyAddress
+            // 
+            this.memo_IssuedTo_CompanyAddress.EditValue = "";
+            this.memo_IssuedTo_CompanyAddress.Location = new System.Drawing.Point(147, 133);
+            this.memo_IssuedTo_CompanyAddress.Name = "memo_IssuedTo_CompanyAddress";
+            this.memo_IssuedTo_CompanyAddress.Size = new System.Drawing.Size(335, 40);
+            this.memo_IssuedTo_CompanyAddress.TabIndex = 2;
+            // 
+            // sLookUp_IssuedTo_CompanyCode
+            // 
+            this.sLookUp_IssuedTo_CompanyCode.Location = new System.Drawing.Point(147, 112);
+            this.sLookUp_IssuedTo_CompanyCode.Name = "sLookUp_IssuedTo_CompanyCode";
+            this.sLookUp_IssuedTo_CompanyCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.sLookUp_IssuedTo_CompanyCode.Properties.PopupView = this.sLookUp_IssuedTo_CompanyCode_View;
+            this.sLookUp_IssuedTo_CompanyCode.Properties.EditValueChanged += new System.EventHandler(this.sLookUp_IssuedTo_CompanyCode_EditValueChanged);
+            this.sLookUp_IssuedTo_CompanyCode.Size = new System.Drawing.Size(64, 20);
+            this.sLookUp_IssuedTo_CompanyCode.TabIndex = 4;
+            // 
+            // sLookUp_IssuedTo_CompanyCode_View
+            // 
+            this.sLookUp_IssuedTo_CompanyCode_View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.sLookUp_IssuedTo_CompanyCode_View.Name = "sLookUp_IssuedTo_CompanyCode_View";
+            this.sLookUp_IssuedTo_CompanyCode_View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.sLookUp_IssuedTo_CompanyCode_View.OptionsView.ShowGroupPanel = false;
+            // 
+            // txtIssuedTo_FaxNo
+            // 
+            this.txtIssuedTo_FaxNo.Location = new System.Drawing.Point(362, 174);
+            this.txtIssuedTo_FaxNo.Name = "txtIssuedTo_FaxNo";
+            this.txtIssuedTo_FaxNo.Size = new System.Drawing.Size(120, 20);
+            this.txtIssuedTo_FaxNo.TabIndex = 2;
+            // 
+            // label4
+            // 
+            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label4.Location = new System.Drawing.Point(12, 112);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(134, 20);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "ISSUED TO";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // txtShipTo_CompanyName
+            // 
+            this.txtShipTo_CompanyName.Location = new System.Drawing.Point(212, 195);
+            this.txtShipTo_CompanyName.Name = "txtShipTo_CompanyName";
+            this.txtShipTo_CompanyName.Size = new System.Drawing.Size(270, 20);
+            this.txtShipTo_CompanyName.TabIndex = 2;
+            // 
+            // txtIssuedTo_TelNo
+            // 
+            this.txtIssuedTo_TelNo.Location = new System.Drawing.Point(183, 174);
+            this.txtIssuedTo_TelNo.Name = "txtIssuedTo_TelNo";
+            this.txtIssuedTo_TelNo.Size = new System.Drawing.Size(120, 20);
+            this.txtIssuedTo_TelNo.TabIndex = 2;
+            // 
+            // memo_ShipTo_CompanyAddress
+            // 
+            this.memo_ShipTo_CompanyAddress.EditValue = "";
+            this.memo_ShipTo_CompanyAddress.Location = new System.Drawing.Point(147, 216);
+            this.memo_ShipTo_CompanyAddress.Name = "memo_ShipTo_CompanyAddress";
+            this.memo_ShipTo_CompanyAddress.Size = new System.Drawing.Size(335, 40);
+            this.memo_ShipTo_CompanyAddress.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label6.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(326, 174);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 20);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "FAX:";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // txtShipTo_TelNo
             // 
             this.txtShipTo_TelNo.Location = new System.Drawing.Point(183, 257);
@@ -922,12 +1028,53 @@
             this.txtShipTo_TelNo.Size = new System.Drawing.Size(120, 20);
             this.txtShipTo_TelNo.TabIndex = 2;
             // 
+            // label5
+            // 
+            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label5.Location = new System.Drawing.Point(147, 174);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 20);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "TEL:";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // sLookUp_ShipTo_CompanyCode
+            // 
+            this.sLookUp_ShipTo_CompanyCode.Location = new System.Drawing.Point(147, 195);
+            this.sLookUp_ShipTo_CompanyCode.Name = "sLookUp_ShipTo_CompanyCode";
+            this.sLookUp_ShipTo_CompanyCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.sLookUp_ShipTo_CompanyCode.Properties.PopupView = this.sLookUp_ShipTo_CompanyCode_View;
+            this.sLookUp_ShipTo_CompanyCode.Properties.EditValueChanged += new System.EventHandler(this.sLookUp_ShipTo_CompanyCode_EditValueChanged);
+            this.sLookUp_ShipTo_CompanyCode.Size = new System.Drawing.Size(64, 20);
+            this.sLookUp_ShipTo_CompanyCode.TabIndex = 4;
+            this.sLookUp_ShipTo_CompanyCode.EditValueChanged += new System.EventHandler(this.sLookUp_ShipTo_CompanyCode_EditValueChanged);
+            // 
+            // sLookUp_ShipTo_CompanyCode_View
+            // 
+            this.sLookUp_ShipTo_CompanyCode_View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.sLookUp_ShipTo_CompanyCode_View.Name = "sLookUp_ShipTo_CompanyCode_View";
+            this.sLookUp_ShipTo_CompanyCode_View.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.sLookUp_ShipTo_CompanyCode_View.OptionsView.ShowGroupPanel = false;
+            // 
             // txtShipTo_FaxNo
             // 
             this.txtShipTo_FaxNo.Location = new System.Drawing.Point(362, 257);
             this.txtShipTo_FaxNo.Name = "txtShipTo_FaxNo";
             this.txtShipTo_FaxNo.Size = new System.Drawing.Size(120, 20);
             this.txtShipTo_FaxNo.TabIndex = 2;
+            // 
+            // label7
+            // 
+            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
+            this.label7.Location = new System.Drawing.Point(12, 195);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(134, 20);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "SHIP TO";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // label8
             // 
@@ -950,237 +1097,6 @@
             this.label9.TabIndex = 5;
             this.label9.Text = "TEL:";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // memo_ShipTo_CompanyAddress
-            // 
-            this.memo_ShipTo_CompanyAddress.EditValue = "";
-            this.memo_ShipTo_CompanyAddress.Location = new System.Drawing.Point(147, 216);
-            this.memo_ShipTo_CompanyAddress.Name = "memo_ShipTo_CompanyAddress";
-            this.memo_ShipTo_CompanyAddress.Size = new System.Drawing.Size(335, 40);
-            this.memo_ShipTo_CompanyAddress.TabIndex = 2;
-            // 
-            // txtShipTo_CompanyName
-            // 
-            this.txtShipTo_CompanyName.Location = new System.Drawing.Point(212, 195);
-            this.txtShipTo_CompanyName.Name = "txtShipTo_CompanyName";
-            this.txtShipTo_CompanyName.Size = new System.Drawing.Size(270, 20);
-            this.txtShipTo_CompanyName.TabIndex = 2;
-            // 
-            // sLookUp_ShipTo_CompanyCode
-            // 
-            this.sLookUp_ShipTo_CompanyCode.Location = new System.Drawing.Point(147, 195);
-            this.sLookUp_ShipTo_CompanyCode.Name = "sLookUp_ShipTo_CompanyCode";
-            this.sLookUp_ShipTo_CompanyCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.sLookUp_ShipTo_CompanyCode.Properties.PopupView = this.sLookUp_ShipTo_CompanyCode_View;
-            this.sLookUp_ShipTo_CompanyCode.Properties.EditValueChanged += new System.EventHandler(this.sLookUp_IssuedTo_CompanyCode_Properties_EditValueChanged);
-            this.sLookUp_ShipTo_CompanyCode.Size = new System.Drawing.Size(64, 20);
-            this.sLookUp_ShipTo_CompanyCode.TabIndex = 4;
-            this.sLookUp_ShipTo_CompanyCode.EditValueChanged += new System.EventHandler(this.sLookUp_ShipTo_CompanyCode_EditValueChanged);
-            // 
-            // sLookUp_ShipTo_CompanyCode_View
-            // 
-            this.sLookUp_ShipTo_CompanyCode_View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.sLookUp_ShipTo_CompanyCode_View.Name = "sLookUp_ShipTo_CompanyCode_View";
-            this.sLookUp_ShipTo_CompanyCode_View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.sLookUp_ShipTo_CompanyCode_View.OptionsView.ShowGroupPanel = false;
-            // 
-            // label7
-            // 
-            this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label7.Location = new System.Drawing.Point(12, 195);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(134, 20);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "SHIP TO";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // txtIssuedTo_FaxNo
-            // 
-            this.txtIssuedTo_FaxNo.Location = new System.Drawing.Point(362, 174);
-            this.txtIssuedTo_FaxNo.Name = "txtIssuedTo_FaxNo";
-            this.txtIssuedTo_FaxNo.Size = new System.Drawing.Size(120, 20);
-            this.txtIssuedTo_FaxNo.TabIndex = 2;
-            // 
-            // txtIssuedTo_TelNo
-            // 
-            this.txtIssuedTo_TelNo.Location = new System.Drawing.Point(183, 174);
-            this.txtIssuedTo_TelNo.Name = "txtIssuedTo_TelNo";
-            this.txtIssuedTo_TelNo.Size = new System.Drawing.Size(120, 20);
-            this.txtIssuedTo_TelNo.TabIndex = 2;
-            // 
-            // label6
-            // 
-            this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(326, 174);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 20);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "FAX:";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label5
-            // 
-            this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label5.Location = new System.Drawing.Point(147, 174);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 20);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "TEL:";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // memo_IssuedTo_CompanyAddress
-            // 
-            this.memo_IssuedTo_CompanyAddress.EditValue = "";
-            this.memo_IssuedTo_CompanyAddress.Location = new System.Drawing.Point(147, 133);
-            this.memo_IssuedTo_CompanyAddress.Name = "memo_IssuedTo_CompanyAddress";
-            this.memo_IssuedTo_CompanyAddress.Size = new System.Drawing.Size(335, 40);
-            this.memo_IssuedTo_CompanyAddress.TabIndex = 2;
-            // 
-            // txtIssuedTo_CompanyName
-            // 
-            this.txtIssuedTo_CompanyName.Location = new System.Drawing.Point(212, 112);
-            this.txtIssuedTo_CompanyName.Name = "txtIssuedTo_CompanyName";
-            this.txtIssuedTo_CompanyName.Size = new System.Drawing.Size(270, 20);
-            this.txtIssuedTo_CompanyName.TabIndex = 2;
-            // 
-            // sLookUp_IssuedTo_CompanyCode
-            // 
-            this.sLookUp_IssuedTo_CompanyCode.Location = new System.Drawing.Point(147, 112);
-            this.sLookUp_IssuedTo_CompanyCode.Name = "sLookUp_IssuedTo_CompanyCode";
-            this.sLookUp_IssuedTo_CompanyCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.sLookUp_IssuedTo_CompanyCode.Properties.PopupView = this.sLookUp_IssuedTo_CompanyCode_View;
-            this.sLookUp_IssuedTo_CompanyCode.Properties.EditValueChanged += new System.EventHandler(this.sLookUp_IssuedTo_CompanyCode_Properties_EditValueChanged);
-            this.sLookUp_IssuedTo_CompanyCode.Size = new System.Drawing.Size(64, 20);
-            this.sLookUp_IssuedTo_CompanyCode.TabIndex = 4;
-            // 
-            // sLookUp_IssuedTo_CompanyCode_View
-            // 
-            this.sLookUp_IssuedTo_CompanyCode_View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.sLookUp_IssuedTo_CompanyCode_View.Name = "sLookUp_IssuedTo_CompanyCode_View";
-            this.sLookUp_IssuedTo_CompanyCode_View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.sLookUp_IssuedTo_CompanyCode_View.OptionsView.ShowGroupPanel = false;
-            // 
-            // label4
-            // 
-            this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label4.Location = new System.Drawing.Point(12, 112);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(134, 20);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "ISSUED TO";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label3
-            // 
-            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(12, 91);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(134, 20);
-            this.label3.TabIndex = 1;
-            this.label3.Text = "INVOICE No.";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // dtpDateCreateShipping
-            // 
-            this.dtpDateCreateShipping.CustomFormat = "MMMM dd,yyyy";
-            this.dtpDateCreateShipping.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDateCreateShipping.Location = new System.Drawing.Point(147, 68);
-            this.dtpDateCreateShipping.Name = "dtpDateCreateShipping";
-            this.dtpDateCreateShipping.Size = new System.Drawing.Size(110, 22);
-            this.dtpDateCreateShipping.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(12, 68);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(134, 22);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "DATE";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // cb_CompanyCode
-            // 
-            this.cb_CompanyCode.FormattingEnabled = true;
-            this.cb_CompanyCode.Location = new System.Drawing.Point(147, 25);
-            this.cb_CompanyCode.Name = "cb_CompanyCode";
-            this.cb_CompanyCode.Size = new System.Drawing.Size(110, 21);
-            this.cb_CompanyCode.TabIndex = 8;
-            // 
-            // label26
-            // 
-            this.label26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label26.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label26.Location = new System.Drawing.Point(12, 25);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(134, 21);
-            this.label26.TabIndex = 7;
-            this.label26.Text = "COMPANY CODE";
-            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // radLock
-            // 
-            this.radLock.AutoSize = true;
-            this.radLock.Enabled = false;
-            this.radLock.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.radLock.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radLock.Location = new System.Drawing.Point(245, 4);
-            this.radLock.Name = "radLock";
-            this.radLock.Size = new System.Drawing.Size(57, 20);
-            this.radLock.TabIndex = 2;
-            this.radLock.Text = "Lock";
-            this.radLock.UseVisualStyleBackColor = true;
-            this.radLock.CheckedChanged += new System.EventHandler(this.radLock_CheckedChanged);
-            // 
-            // radRevise
-            // 
-            this.radRevise.AutoSize = true;
-            this.radRevise.Enabled = false;
-            this.radRevise.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.radRevise.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radRevise.Location = new System.Drawing.Point(319, 4);
-            this.radRevise.Name = "radRevise";
-            this.radRevise.Size = new System.Drawing.Size(68, 20);
-            this.radRevise.TabIndex = 1;
-            this.radRevise.Text = "Revise";
-            this.radRevise.UseVisualStyleBackColor = true;
-            this.radRevise.CheckedChanged += new System.EventHandler(this.radRevise_CheckedChanged);
-            // 
-            // radNormal
-            // 
-            this.radNormal.AutoSize = true;
-            this.radNormal.Checked = true;
-            this.radNormal.Enabled = false;
-            this.radNormal.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.radNormal.Font = new System.Drawing.Font("Segoe UI", 9.25F, System.Drawing.FontStyle.Bold);
-            this.radNormal.Location = new System.Drawing.Point(161, 4);
-            this.radNormal.Name = "radNormal";
-            this.radNormal.Size = new System.Drawing.Size(78, 22);
-            this.radNormal.TabIndex = 0;
-            this.radNormal.TabStop = true;
-            this.radNormal.Text = "Normal";
-            this.radNormal.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radNormal.UseVisualStyleBackColor = false;
-            this.radNormal.CheckedChanged += new System.EventHandler(this.radNormal_CheckedChanged);
-            // 
-            // lblStatus
-            // 
-            this.lblStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblStatus.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblStatus.Location = new System.Drawing.Point(12, 3);
-            this.lblStatus.Name = "lblStatus";
-            this.lblStatus.Size = new System.Drawing.Size(134, 21);
-            this.lblStatus.TabIndex = 0;
-            this.lblStatus.Text = "STATUS";
-            this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // panelTop
             // 
@@ -1211,93 +1127,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "SHIPPING INSTRUCTION";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // sLookUp_PriceCondition
-            // 
-            this.sLookUp_PriceCondition.Location = new System.Drawing.Point(139, 232);
-            this.sLookUp_PriceCondition.Name = "sLookUp_PriceCondition";
-            this.sLookUp_PriceCondition.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.sLookUp_PriceCondition.Properties.PopupView = this.sLookUp_PriceCondition_View;
-            this.sLookUp_PriceCondition.Size = new System.Drawing.Size(335, 20);
-            this.sLookUp_PriceCondition.TabIndex = 0;
-            // 
-            // sLookUp_PriceCondition_View
-            // 
-            this.sLookUp_PriceCondition_View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.sLookUp_PriceCondition_View.Name = "sLookUp_PriceCondition_View";
-            this.sLookUp_PriceCondition_View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.sLookUp_PriceCondition_View.OptionsView.ShowGroupPanel = false;
-            // 
-            // sLookUp_PaymentTerm
-            // 
-            this.sLookUp_PaymentTerm.Location = new System.Drawing.Point(139, 257);
-            this.sLookUp_PaymentTerm.Name = "sLookUp_PaymentTerm";
-            this.sLookUp_PaymentTerm.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.sLookUp_PaymentTerm.Properties.PopupView = this.sLookUp_PaymentTerm_View;
-            this.sLookUp_PaymentTerm.Size = new System.Drawing.Size(335, 20);
-            this.sLookUp_PaymentTerm.TabIndex = 0;
-            // 
-            // sLookUp_PaymentTerm_View
-            // 
-            this.sLookUp_PaymentTerm_View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.sLookUp_PaymentTerm_View.Name = "sLookUp_PaymentTerm_View";
-            this.sLookUp_PaymentTerm_View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.sLookUp_PaymentTerm_View.OptionsView.ShowGroupPanel = false;
-            // 
-            // lblShippingNo
-            // 
-            this.lblShippingNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lblShippingNo.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.lblShippingNo.Location = new System.Drawing.Point(12, 47);
-            this.lblShippingNo.Name = "lblShippingNo";
-            this.lblShippingNo.Size = new System.Drawing.Size(134, 20);
-            this.lblShippingNo.TabIndex = 1;
-            this.lblShippingNo.Text = "SHIPPING NO";
-            this.lblShippingNo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // sLookUp_ShippingNo
-            // 
-            this.sLookUp_ShippingNo.Location = new System.Drawing.Point(147, 47);
-            this.sLookUp_ShippingNo.Name = "sLookUp_ShippingNo";
-            this.sLookUp_ShippingNo.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.sLookUp_ShippingNo.Properties.PopupView = this.sLookUp_ShippingNo_View;
-            this.sLookUp_ShippingNo.Size = new System.Drawing.Size(334, 20);
-            this.sLookUp_ShippingNo.TabIndex = 0;
-            this.sLookUp_ShippingNo.EditValueChanged += new System.EventHandler(this.sLookUp_ShippingNo_EditValueChanged);
-            // 
-            // sLookUp_ShippingNo_View
-            // 
-            this.sLookUp_ShippingNo_View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.sLookUp_ShippingNo_View.Name = "sLookUp_ShippingNo_View";
-            this.sLookUp_ShippingNo_View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.sLookUp_ShippingNo_View.OptionsView.ShowGroupPanel = false;
-            // 
-            // sLookUp_PortLoading_View
-            // 
-            this.sLookUp_PortLoading_View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.sLookUp_PortLoading_View.Name = "sLookUp_PortLoading_View";
-            this.sLookUp_PortLoading_View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.sLookUp_PortLoading_View.OptionsView.ShowGroupPanel = false;
-            // 
-            // sLookUp_PortLoading
-            // 
-            this.sLookUp_PortLoading.Location = new System.Drawing.Point(139, 132);
-            this.sLookUp_PortLoading.Name = "sLookUp_PortLoading";
-            this.sLookUp_PortLoading.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.sLookUp_PortLoading.Properties.PopupView = this.sLookUp_PortLoading_View;
-            this.sLookUp_PortLoading.Size = new System.Drawing.Size(335, 20);
-            this.sLookUp_PortLoading.TabIndex = 0;
-            // 
-            // txtInvoiceNo
-            // 
-            this.txtInvoiceNo.Location = new System.Drawing.Point(147, 91);
-            this.txtInvoiceNo.Name = "txtInvoiceNo";
-            this.txtInvoiceNo.Size = new System.Drawing.Size(335, 20);
-            this.txtInvoiceNo.TabIndex = 9;
             // 
             // Form_Shipping_Instruction
             // 
@@ -1333,40 +1162,37 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView_PackingList)).EndInit();
             this.panel27.ResumeLayout(false);
             this.panel27.PerformLayout();
-            this.panel18.ResumeLayout(false);
-            this.panel22.ResumeLayout(false);
-            this.panel22.PerformLayout();
             this.panel_Bottom.ResumeLayout(false);
             this.panel23.ResumeLayout(false);
             this.panel_HeaderInvoice.ResumeLayout(false);
             this.panel_HeaderRight.ResumeLayout(false);
             this.panel_HeaderRight.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortLoading.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortLoading_View)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortDestination.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortDestination_View)).EndInit();
-            this.panel_HeaderLeft.ResumeLayout(false);
-            this.panel_HeaderLeft.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_TelNo.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_FaxNo.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memo_ShipTo_CompanyAddress.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_CompanyName.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShipTo_CompanyCode.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShipTo_CompanyCode_View)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtIssuedTo_FaxNo.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtIssuedTo_TelNo.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.memo_IssuedTo_CompanyAddress.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtIssuedTo_CompanyName.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_IssuedTo_CompanyCode.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_IssuedTo_CompanyCode_View)).EndInit();
-            this.panelTop.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PriceCondition.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PriceCondition_View)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PaymentTerm.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PaymentTerm_View)).EndInit();
+            this.panel_HeaderLeft.ResumeLayout(false);
+            this.panel_HeaderLeft.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtInvoiceNo.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShippingNo.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShippingNo_View)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortLoading_View)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortLoading.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtInvoiceNo.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtIssuedTo_CompanyName.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.memo_IssuedTo_CompanyAddress.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_IssuedTo_CompanyCode.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_IssuedTo_CompanyCode_View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtIssuedTo_FaxNo.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_CompanyName.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtIssuedTo_TelNo.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.memo_ShipTo_CompanyAddress.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_TelNo.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShipTo_CompanyCode.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShipTo_CompanyCode_View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_FaxNo.Properties)).EndInit();
+            this.panelTop.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1409,36 +1235,23 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DateTimePicker dtpDateCreateShipping;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Panel panel18;
-        private System.Windows.Forms.Panel panel22;
-        private System.Windows.Forms.TextBox txtTotal_NetWeight;
-        private System.Windows.Forms.TextBox txtTotal_Qty;
-        private System.Windows.Forms.TextBox txtTotal_QtyCarton;
-        private System.Windows.Forms.TextBox txtTotal_GrossWeight;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Panel panel23;
         private System.Windows.Forms.Button btnSave_Data;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Panel panel_GridView;
         private System.Windows.Forms.Panel panel26;
         private System.Windows.Forms.Panel panel20;
         private System.Windows.Forms.Panel panel27;
-        private System.Windows.Forms.Panel panel28;
         private System.Windows.Forms.Panel panel29;
         private System.Windows.Forms.PictureBox picBox_BackToMain;
         private System.Windows.Forms.PictureBox picBox_Min;
         private System.Windows.Forms.PictureBox picBox_Max;
         private System.Windows.Forms.PictureBox picBox_Close;
         private System.Windows.Forms.Button btn_ClearData;
-        private System.Windows.Forms.Button btnSumPL;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.RadioButton radRevise;
         private System.Windows.Forms.RadioButton radNormal;
         private System.Windows.Forms.Button btnLockData;
         private System.Windows.Forms.Button btn_SearchShipping;
-        private System.Windows.Forms.Button btn_CoppyRow;
         private System.Windows.Forms.Panel panel30;
         private System.Windows.Forms.Button btnExport_Instruction;
         private System.Windows.Forms.RadioButton radLock;
@@ -1449,7 +1262,6 @@
         private System.Windows.Forms.ComboBox cb_CompanyCode;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.DateTimePicker dtpRevenue;
-        private System.Windows.Forms.Button btnSort;
         private DevExpress.XtraGrid.GridControl gridControl_Invoice;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView_Invoice;
         private DevExpress.XtraGrid.GridControl gridControl_PackingList;

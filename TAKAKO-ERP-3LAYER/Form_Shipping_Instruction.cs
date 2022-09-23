@@ -4,19 +4,17 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using TAKAKO_ERP_3LAYER.DAL;
-using TAKAKO_ERP_3LAYER.DAO;
-using System.ComponentModel;
-using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Views.Grid;
-using static TAKAKO_ERP_3LAYER.Common;
-using DevExpress.XtraGrid.Columns;
+using DevExpress.Data;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Columns;
+using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraEditors.Repository;
-using System.Data.SqlClient;
+using TAKAKO_ERP_3LAYER.DAL;
+using TAKAKO_ERP_3LAYER.DAO;
 using static TAKAKO_ERP_3LAYER.Model;
-using DevExpress.Data;
+using static TAKAKO_ERP_3LAYER.Common;
+
 
 namespace TAKAKO_ERP_3LAYER
 {
@@ -48,13 +46,6 @@ namespace TAKAKO_ERP_3LAYER
             ,Revise
         };
 
-        public enum Number
-        {
-             Zero = 0
-            ,One = 1
-            ,Two = 2
-        };
-
         public Form_Shipping_Instruction(SYSTEM_DAL _formMainSystemDAL)
         {
             InitializeComponent();
@@ -79,11 +70,14 @@ namespace TAKAKO_ERP_3LAYER
             cb_Freight.SelectedValue = 99;
 
             //Define column Gridview
-            DefineGridView(gridView_Invoice);
-            DefineGridView(gridView_PackingList);
-
-            //Setting enable item
-            SettingInitGridView();
+            Define_GridView(gridView_Invoice);
+            Define_GridView(gridView_PackingList);
+            Define_SearchLookUp_View(sLookUp_ShippingNo);
+            Define_SearchLookUp_View(sLookUp_IssuedTo_CompanyCode);
+            Define_SearchLookUp_View(sLookUp_ShipTo_CompanyCode);
+            Define_SearchLookUp_View(sLookUp_PortLoading);
+            Define_SearchLookUp_View(sLookUp_PortDestination);
+            Define_SearchLookUp_View(sLookUp_PriceCondition);
 
             //Setting init date Renueve
             dtpRevenue.Value = DateTime.Now;
@@ -107,14 +101,6 @@ namespace TAKAKO_ERP_3LAYER
             //
             AddColumnDataSet();
 
-            Define_SearchLookUp_View(sLookUp_ShippingNo);
-            Define_SearchLookUp_View(sLookUp_IssuedTo_CompanyCode);
-            Define_SearchLookUp_View(sLookUp_ShipTo_CompanyCode);
-            Define_SearchLookUp_View(sLookUp_PortLoading);
-            Define_SearchLookUp_View(sLookUp_PortDestination);
-            Define_SearchLookUp_View(sLookUp_PriceCondition);
-            Define_SearchLookUp_View(sLookUp_PaymentTerm);
-
             // Setting init value sLookUpEdit
             GetInfo_Shipping();
             GetInfo_Customer(sLookUp_IssuedTo_CompanyCode);
@@ -123,6 +109,9 @@ namespace TAKAKO_ERP_3LAYER
             GetInfoDestination(sLookUp_PortDestination);
             GetInfoPriceCondition(sLookUp_PriceCondition);
             GetInfoPaymentTerm(sLookUp_PaymentTerm);
+
+            //Setting enable item
+            //SettingInitGridView();
         }
 
         #region Setting Init
@@ -269,7 +258,8 @@ namespace TAKAKO_ERP_3LAYER
                     c.AppearanceCell.Options.UseTextOptions = true;
                     c.AppearanceCell.Options.UseBackColor = true;
                 }
-            } else if (_sLookUpItem.Name.Equals(sLookUp_IssuedTo_CompanyCode.Name))
+            } 
+            else if (_sLookUpItem.Name.Equals(sLookUp_IssuedTo_CompanyCode.Name))
             {
                 GridColumn gridCol_CustomerCode = new GridColumn();
                 GridColumn gridCol_CustomerName1 = new GridColumn();
@@ -656,104 +646,6 @@ namespace TAKAKO_ERP_3LAYER
         }
         #endregion
 
-        public void GetSelectedItem(List<ItemCodeInfo> _listValue)
-        {
-            //decimal quantity = 0;
-            //decimal price = 0;
-            if (_listValue != null)
-            {
-                foreach (ItemCodeInfo item in _listValue)
-                {
-                    ////Binding for Invoice
-                    //int n = GridView_Invoice.Rows.Add();
-                    //GridView_Invoice.Rows[n].Cells["Customer_Code"].Value = item.CustomerCode;
-                    //GridView_Invoice.Rows[n].Cells["Cus_ItemCode"].Value = item.Customer_ItemCode;
-                    //GridView_Invoice.Rows[n].Cells["Tvc_ItemCode"].Value = item.TVC_ItemCode;
-                    //GridView_Invoice.Rows[n].Cells["Part_Description"].Value = item.Item_Name;
-                    //GridView_Invoice.Rows[n].Cells["Customer_PO"].Value = item.CustomerPO;
-                    //GridView_Invoice.Rows[n].Cells["ThirdParty_PO"].Value = item.ThirdPartyPO;
-                    //GridView_Invoice.Rows[n].Cells["Order_Date"].Value = item.Order_Date.ToString("dd/MM/yyyy");
-                    //GridView_Invoice.Rows[n].Cells["DueDate_PO"].Value = item.DueDate_PO.ToString("dd/MM/yyyy");
-                    //GridView_Invoice.Rows[n].Cells["Quantity"].Value = item.Balance;
-                    //GridView_Invoice.Rows[n].Cells["Quantity_Revise"].Value = item.Balance;
-                    //GridView_Invoice.Rows[n].Cells["Balance"].Value = item.Balance;
-                    //GridView_Invoice.Rows[n].Cells["Unit_Currency"].Value = item.OrderUnitCurrency;
-                    //GridView_Invoice.Rows[n].Cells["USD_Rate"].Value = 0;
-                    //GridView_Invoice.Rows[n].Cells["Order_Price"].Value = item.OrderPrice;
-                    //GridView_Invoice.Rows[n].Cells["Order_Price_Revise"].Value = item.OrderPrice;
-                    //GridView_Invoice.Rows[n].Cells["Global_Price"].Value = item.CustomerPrice;
-                    //GridView_Invoice.Rows[n].Cells["Amount_JPY"].Value = 0;
-                    //////
-                    ////if (item.OrderUnitCurrency == "USD")
-                    ////{
-                    ////    GridView_Invoice.Rows[n].Cells["USD_Rate"].ReadOnly = false;
-                    ////}
-
-                    //if (!item.OrderPrice.Equals(null) && !item.CustomerPrice.Equals(null))
-                    //{
-                    //    if (Convert.ToDecimal(item.OrderPrice) != Convert.ToDecimal(item.CustomerPrice))
-                    //    {
-                    //        GridView_Invoice.Rows[n].Cells["Order_Price"].Style.BackColor = Color.Red;
-                    //        GridView_Invoice.Rows[n].Cells["Global_Price"].Style.BackColor = Color.Red;
-                    //    }
-                    //}
-                    //else if (item.OrderPrice.Equals(null))
-                    //{
-                    //    GridView_Invoice.Rows[n].Cells["Order_Price"].Style.BackColor = Color.Red;
-                    //}
-                    //else
-                    //{
-                    //    GridView_Invoice.Rows[n].Cells[6].Style.BackColor = Color.Red;
-                    //}
-
-                    //if (GridView_Invoice.Rows[n].Cells["Quantity"].Value != null
-                    //    || GridView_Invoice.Rows[n].Cells["Order_Price"].Value != null)
-                    //{
-                    //    if (decimal.TryParse(GridView_Invoice.Rows[n].Cells["Quantity"].Value.ToString(), out quantity)
-                    //     && decimal.TryParse(GridView_Invoice.Rows[n].Cells["Order_Price"].Value.ToString(), out price))
-                    //    {
-                    //        decimal amount = quantity * price;
-                    //        if (item.OrderUnitCurrency.ToUpper() == "JPY")
-                    //        {
-                    //            GridView_Invoice.Rows[n].Cells["Amount_Jpy"].Value = Math.Round(amount, 0, MidpointRounding.AwayFromZero);
-                    //        }
-                    //        else if (item.OrderUnitCurrency.ToUpper() == "USD")
-                    //        {
-                    //            GridView_Invoice.Rows[n].Cells["Amount_Jpy"].Value = Math.Round(amount, 2, MidpointRounding.AwayFromZero);
-                    //        }
-                    //    }
-                    //}
-
-                    //if (Convert.ToDecimal(GridView_Invoice.Rows[n].Cells["Quantity"].Value) == 0)
-                    //{
-                    //    GridView_Invoice.Rows[n].Cells["Quantity"].Style.BackColor = Color.Tomato;
-                    //}
-
-                    ////Binding for Packing List
-                    //int m = GridView_PackingList.Rows.Add();
-                    //GridView_PackingList.Rows[m].Cells["Customer_Code"].Value = item.CustomerCode;
-                    //GridView_PackingList.Rows[m].Cells["Packages_No"].Value = "1";
-                    //if (!String.IsNullOrEmpty(item.ThirdPartyItemCode))
-                    //{ 
-                    //    GridView_PackingList.Rows[m].Cells["Customer_ItemCode"].Value = item.ThirdPartyItemCode + "\n" + "(" + item.Customer_ItemCode + ")";
-                    //} else
-                    //{
-                    //    GridView_PackingList.Rows[m].Cells["Customer_ItemCode"].Value = item.Customer_ItemCode;
-                    //}
-                    //GridView_PackingList.Rows[m].Cells["TVC_ItemCode"].Value = item.TVC_ItemCode;
-                    //GridView_PackingList.Rows[m].Cells["Customer_PO"].Value = item.CustomerPO;
-                    //GridView_PackingList.Rows[m].Cells["Qty_Carton"].Value = 0;
-                    //GridView_PackingList.Rows[m].Cells["Qty_Per_Carton"].Value = 0;
-                    //GridView_PackingList.Rows[m].Cells["Qty_Total"].Value = item.Balance;
-                    //GridView_PackingList.Rows[m].Cells["Qty_Total_Revise"].Value = item.Balance;
-                    //GridView_PackingList.Rows[m].Cells["Net_Weight"].Value = item.Weight;
-                    //GridView_PackingList.Rows[m].Cells["Net_Weight_Total"].Value = item.Weight * item.Balance;
-                    //GridView_PackingList.Rows[m].Cells["Gross_Weight"].Value = 0;
-                    //GridView_PackingList.Rows[m].Cells["Lot_No"].Value = "NONE-LOT-NO.";
-                }
-            }
-        }
-
         private void btn_ClearData_Click(object sender, EventArgs e)
         {
             ClearData();
@@ -778,19 +670,14 @@ namespace TAKAKO_ERP_3LAYER
 
             func(Controls);
 
-            txtTotal_QtyCarton.Text = "0";
-            txtTotal_Qty.Text = "0";
-            txtTotal_NetWeight.Text = "0";
-            txtTotal_GrossWeight.Text = "0";
-
             //
             sLookUp_ShippingNo.Enabled = true;
 
-            ////Clear Gridview Invoice
-            //GridView_Invoice.Rows.Clear();
+            //Clear Gridview Invoice
+            gridControl_Invoice.DataSource = null;
 
-            ////Clear Gridview PL
-            //GridView_PackingList.Rows.Clear();
+            //Clear Gridview PL
+            gridControl_PackingList.DataSource = null;
 
             //
             tabControl.SelectedIndex = 0;
@@ -810,102 +697,6 @@ namespace TAKAKO_ERP_3LAYER
             //
             sLookUp_ShippingNo.Focus();
         }
-
-        private string Sum_Total(DataGridView _datagridviewSum, string _cellName)
-        {
-            string Sum = "";
-            Sum = (from
-                        DataGridViewRow row in _datagridviewSum.Rows
-                   where
-                        row.Cells[_cellName].FormattedValue.ToString() != String.Empty
-                   select
-                        Convert.ToDecimal(row.Cells[_cellName].FormattedValue)).Sum().ToString();
-            return Sum;
-        }
-
-        //private void btnSumInvoice_Click(object sender, EventArgs e)
-        //{
-        //    if (radNormal.Checked == true || radLock.Checked == true)
-        //    { 
-        //        //Sum quantity
-        //        txtTotalQuantity.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_Invoice, "Quantity")));
-        //    } else if (radRevise.Checked == true)
-        //    {
-        //        //Sum quantity
-        //        txtTotalQuantity.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_Invoice, "Quantity_Revise")));
-        //    }
-
-        //    //Sum amount
-        //    txtTotalAmount.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_Invoice, "Amount_Jpy")));
-        //}
-
-        public string FormatCommas(decimal tempValue)
-        {
-            return string.Format("{0:#,##0.##}", tempValue);
-        }
-
-        //private void btnSumPL_Click(object sender, EventArgs e)
-        //{
-        //    //Sum total carton
-        //    txtTotal_QtyCarton.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Qty_Carton")));
-
-        //    if (radNormal.Checked == true || radLock.Checked == true)
-        //    {
-        //        //Sum total quantity
-        //        txtTotal_Qty.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Qty_Total")));
-        //    } else if(radRevise.Checked == true || radLock.Checked == true)
-        //    {
-        //        //Sum total quantity revise
-        //        txtTotal_Qty.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Qty_Total_Revise")));
-        //    }
-
-        //    //Sum total Net Weight
-        //    txtTotal_NetWeight.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Net_Weight_Total")));
-
-        //    //Sum total Grosss Weight
-        //    txtTotal_GrossWeight.Text = FormatCommas(Convert.ToDecimal(Sum_Total(GridView_PackingList, "Gross_Weight")));
-        //}
-
-        #region Search
-        private void btnSearch_ShippingNo_Click(object sender, EventArgs e)
-        {
-            //Form_Search _formSearchShippingNo = new Form_Search("btnSearch_ShippingNo",this.Name);
-            //_formSearchShippingNo.StartPosition = FormStartPosition.CenterParent;
-            //_formSearchShippingNo.ShowDialog();
-
-            //if (!String.IsNullOrEmpty(_formSearchShippingNo._shippingInfo.ShippingNo))
-            //{
-            //    ClearData();
-            //    string Lock_Status = "";
-
-            //    //txtShippingNo.Text = _formSearchShippingNo._shippingInfo.ShippingNo;
-            //    Lock_Status = _formSearchShippingNo._shippingInfo.Lock_Status;
-
-            //    if (Lock_Status.ToLower() == "normal")
-            //    {
-            //        radNormal.Checked = true;
-            //    }
-            //    else if (Lock_Status.ToLower() == "lock")
-            //    {
-            //        radLock.Checked = true;
-            //    }
-            //    else if (Lock_Status.ToLower() == "revise")
-            //    {
-            //        radRevise.Checked = true;
-            //    }
-
-            //    //Load Invoice
-            //    btn_SearchShipping_Click(sender, e);
-
-            //    //Setting enable item
-            //    SettingInitGridView();
-            //}
-            //else
-            //{
-            //    sLookUp_ShippingNo.Focus();
-            //}
-        }
-        #endregion
 
         #region Moveable
         bool mouseDown = false;
@@ -1071,7 +862,7 @@ namespace TAKAKO_ERP_3LAYER
         #endregion
 
         #region GridView
-        public void DefineGridView(GridView _dataGridView)
+        public void Define_GridView(GridView _dataGridView)
         {
             if (_dataGridView.Name == "gridView_Invoice")
             {
@@ -1170,7 +961,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Third_Party_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
                 //THIRD PARTY PO
-                gridCol_Third_Party_PO.Name = "gridCol_Third_Party_PO_col";
+                gridCol_Third_Party_PO.Name = "gridCol_Third_Party_PO";
                 gridCol_Third_Party_PO.Caption = "THIRD PARTY PO";
                 gridCol_Third_Party_PO.FieldName = "THIRD_PARTY_PO";
                 gridCol_Third_Party_Item_Code.VisibleIndex = 7;
@@ -1328,7 +1119,6 @@ namespace TAKAKO_ERP_3LAYER
                 gridView_Invoice.OptionsView.ColumnAutoWidth = false;
                 gridView_Invoice.OptionsView.ShowFooter = true;
                 gridView_Invoice.OptionsView.ColumnHeaderAutoHeight = DefaultBoolean.True;
-                gridView_Invoice.FooterPanelHeight = 5;
                 gridView_Invoice.HorzScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
 
                 // Set common attribute
@@ -1380,7 +1170,7 @@ namespace TAKAKO_ERP_3LAYER
                 // CUSTOMER ITEM CODE
                 gridCol_Cus_Item_Code.Name = "gridCol_Cus_Item_Code";
                 gridCol_Cus_Item_Code.Caption = "CUSTOMER ITEM CODE";
-                gridCol_Cus_Item_Code.FieldName = "CUSTOMER_ITEM_CODE";
+                gridCol_Cus_Item_Code.FieldName = "CUS_ITEM_CODE";
                 gridCol_Cus_Item_Code.VisibleIndex = 0;
                 gridCol_Cus_Item_Code.Width = 120;
 
@@ -1420,6 +1210,8 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Qty_Carton.Width = 90;
                 gridCol_Qty_Carton.DisplayFormat.FormatString = "#,##0.##";
                 gridCol_Qty_Carton.DisplayFormat.FormatType = FormatType.Numeric;
+                gridCol_Qty_Carton.SummaryItem.SummaryType = SummaryItemType.Sum;
+                gridCol_Qty_Carton.SummaryItem.DisplayFormat = "{0:#,##0.####}";
 
                 //QTY PER CARTON
                 gridCol_Qty_Per_Carton.Name = "gridCol_Qty_Per_Carton";
@@ -1438,11 +1230,13 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Qty_Total.Width = 90;
                 gridCol_Qty_Total.DisplayFormat.FormatString = "#,##0.##";
                 gridCol_Qty_Total.DisplayFormat.FormatType = FormatType.Numeric;
+                gridCol_Qty_Total.SummaryItem.SummaryType = SummaryItemType.Sum;
+                gridCol_Qty_Total.SummaryItem.DisplayFormat = "{0:#,##0.####}";
 
                 gridCol_Gross_Weight.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
                 //QTY TOTAL REVISE
-                gridCol_Qty_Total_Revise.Name = "gridCol_Net_Weight";
+                gridCol_Qty_Total_Revise.Name = "gridCol_Qty_Total_Revise";
                 gridCol_Qty_Total_Revise.Caption = "QTY TOTAL REVISE (PCS)";
                 gridCol_Qty_Total_Revise.FieldName = "QTY_TOTAL_REVISE";
                 gridCol_Qty_Total_Revise.VisibleIndex = 0;
@@ -1460,6 +1254,8 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Net_Weight.Width = 90;
                 gridCol_Net_Weight.DisplayFormat.FormatString = "#,##0.##";
                 gridCol_Net_Weight.DisplayFormat.FormatType = FormatType.Numeric;
+                gridCol_Net_Weight.SummaryItem.SummaryType = SummaryItemType.Sum;
+                gridCol_Net_Weight.SummaryItem.DisplayFormat = "{0:#,##0.####}";
 
                 gridCol_Gross_Weight.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
@@ -1482,6 +1278,8 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Gross_Weight.Width = 90;
                 gridCol_Gross_Weight.DisplayFormat.FormatString = "#,##0.##";
                 gridCol_Gross_Weight.DisplayFormat.FormatType = FormatType.Numeric;
+                gridCol_Gross_Weight.SummaryItem.SummaryType = SummaryItemType.Sum;
+                gridCol_Gross_Weight.SummaryItem.DisplayFormat = "{0:#,##0.####}";
 
                 gridCol_Gross_Weight.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
@@ -1509,6 +1307,13 @@ namespace TAKAKO_ERP_3LAYER
                 gridView_PackingList.Columns.Add(gridCol_Gross_Weight);
                 gridView_PackingList.Columns.Add(gridCol_LotNo);
 
+                // Setting GridView
+                gridView_PackingList.OptionsNavigation.AutoFocusNewRow = true;
+                gridView_PackingList.OptionsView.ColumnAutoWidth = false;
+                gridView_PackingList.OptionsView.ShowFooter = true;
+                gridView_PackingList.OptionsView.ColumnHeaderAutoHeight = DefaultBoolean.True;
+                gridView_PackingList.HorzScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
+
                 // Set common attribute
                 foreach (GridColumn c in gridView_PackingList.Columns)
                 {
@@ -1535,109 +1340,102 @@ namespace TAKAKO_ERP_3LAYER
             if (radNormal.Checked == true)
             {
                 //--------------------- Header ---------------------//
-                cb_CompanyCode.Enabled = true;
-                dtpETA.Enabled = true;
-                dtpETD.Enabled = true;
-                dtpDateCreateShipping.Enabled = true;
-                txtInvoiceNo.ReadOnly = false;
-                sLookUp_IssuedTo_CompanyCode.ReadOnly = false;
-                txtIssuedTo_CompanyName.ReadOnly = false;
-                memo_IssuedTo_CompanyAddress.ReadOnly = false;
-                txtIssuedTo_TelNo.ReadOnly = false;
-                txtIssuedTo_FaxNo.ReadOnly = false;
+                cb_CompanyCode.Enabled                  = true;
+                dtpETA.Enabled                          = true;
+                dtpETD.Enabled                          = true;
+                dtpDateCreateShipping.Enabled           = true;
+                txtInvoiceNo.ReadOnly                   = false;
+                sLookUp_IssuedTo_CompanyCode.ReadOnly   = false;
+                txtIssuedTo_CompanyName.ReadOnly        = false;
+                memo_IssuedTo_CompanyAddress.ReadOnly   = false;
+                txtIssuedTo_TelNo.ReadOnly              = false;
+                txtIssuedTo_FaxNo.ReadOnly              = false;
 
-                sLookUp_ShipTo_CompanyCode.ReadOnly = false;
-                txtShipTo_CompanyName.ReadOnly = false;
-                memo_ShipTo_CompanyAddress.ReadOnly = false;
-                txtShipTo_TelNo.ReadOnly = false;
-                txtShipTo_FaxNo.ReadOnly = false;
+                sLookUp_ShipTo_CompanyCode.ReadOnly     = false;
+                txtShipTo_CompanyName.ReadOnly          = false;
+                memo_ShipTo_CompanyAddress.ReadOnly     = false;
+                txtShipTo_TelNo.ReadOnly                = false;
+                txtShipTo_FaxNo.ReadOnly                = false;
 
-                txtShipVia.ReadOnly = false;
-                dtpRevenue.Enabled = true;
-                cb_Freight.Enabled = true;
-                txtVessel.ReadOnly = false;
-                sLookUp_PortLoading.ReadOnly = false;
-                sLookUp_PortDestination.ReadOnly = false;
+                txtShipVia.ReadOnly                     = false;
+                dtpRevenue.Enabled                      = true;
+                cb_Freight.Enabled                      = true;
+                txtVessel.ReadOnly                      = false;
+                sLookUp_PortLoading.ReadOnly            = false;
+                sLookUp_PortDestination.ReadOnly        = false;
 
-                sLookUp_PriceCondition.ReadOnly = false;
-                sLookUp_PaymentTerm.ReadOnly = false;
+                sLookUp_PriceCondition.ReadOnly         = false;
+                sLookUp_PaymentTerm.ReadOnly            = false;
 
                 //Button Lock, Unlock & Revise Data
-                btnLockData.Enabled = true;
-                btnUnlockData.Enabled = false;
+                btnLockData.Enabled                     = true;
+                btnUnlockData.Enabled                   = false;
 
                 //
-                btnSave_Data.Enabled = true;
+                btnSave_Data.Enabled                    = true;
 
                 gridView_Invoice.OptionsBehavior.AllowDeleteRows = DefaultBoolean.True;
                 gridView_PackingList.OptionsBehavior.AllowDeleteRows = DefaultBoolean.True;
 
-                ////---------------- Gridview Invoice ----------------//
-                ////------ Disable------//
-                //GridView_Invoice.Columns["Quantity_Revise"].Visible = false;
-                //GridView_Invoice.Columns["Quantity_Revise"].ReadOnly = true;
-                //GridView_Invoice.Columns["Quantity_Revise"].DefaultCellStyle.BackColor = Color.Gray;
-                //GridView_Invoice.Columns["Order_Price_Revise"].Visible = false;
-                //GridView_Invoice.Columns["Order_Price_Revise"].ReadOnly = true;
-                //GridView_Invoice.Columns["Order_Price_Revise"].DefaultCellStyle.BackColor = Color.Gray;
+                //---------------- Gridview Invoice ----------------//
+                //---- Enable ----//
+                gridView_Invoice.Columns["gridCol_Customer_Code"].OptionsColumn.ReadOnly = true;
+                gridView_Invoice.Columns["gridCol_Customer_Code"].AppearanceCell.BackColor = Color.Gray;
 
-                ////------------ Gridview PackingLisst ---------------//
-                ////------ Disable------//
-                //GridView_PackingList.Columns["Qty_Total_Revise"].Visible = false;
-                //GridView_PackingList.Columns["Qty_Total_Revise"].ReadOnly = true;
-                //GridView_PackingList.Columns["Qty_Total_Revise"].DefaultCellStyle.BackColor = Color.Gray;
+                gridView_Invoice.Columns["gridCol_Item_Name"].OptionsColumn.ReadOnly  = false;
+                gridView_Invoice.Columns["gridCol_Item_Name"].AppearanceCell.BackColor = Color.White;
 
-                //foreach (DataGridViewRow dtRow in GridView_Invoice.Rows)
-                //{
-                //    if (!dtRow.IsNewRow)
-                //    { 
-                //        //---- Enable ----//
-                //        dtRow.Cells["Customer_Code"].ReadOnly = true;
-                //        dtRow.Cells["Customer_Code"].Style.BackColor = Color.Gray;
+                gridView_Invoice.Columns["gridCol_Cus_Item_Code"].OptionsColumn.ReadOnly  = true;
+                gridView_Invoice.Columns["gridCol_Cus_Item_Code"].AppearanceCell.BackColor = Color.Gray;
 
-                //        dtRow.Cells["Part_Description"].ReadOnly = false;
-                //        dtRow.Cells["Part_Description"].Style.BackColor = Color.White;
+                gridView_Invoice.Columns["gridCol_TVC_Item_Code"].OptionsColumn.ReadOnly  = true;
+                gridView_Invoice.Columns["gridCol_TVC_Item_Code"].AppearanceCell.BackColor = Color.Gray;
 
-                //        dtRow.Cells["Cus_ItemCode"].ReadOnly = true;
-                //        dtRow.Cells["Cus_ItemCode"].Style.BackColor = Color.Gray;
+                gridView_Invoice.Columns["gridCol_Customer_PO"].OptionsColumn.ReadOnly  = false;
+                gridView_Invoice.Columns["gridCol_Customer_PO"].AppearanceCell.BackColor = Color.White;
 
-                //        dtRow.Cells["Tvc_ItemCode"].ReadOnly = true;
-                //        dtRow.Cells["Tvc_ItemCode"].Style.BackColor = Color.Gray;
+                gridView_Invoice.Columns["gridCol_Third_Party_PO"].OptionsColumn.ReadOnly  = true;
+                gridView_Invoice.Columns["gridCol_Third_Party_PO"].AppearanceCell.BackColor = Color.Gray;
 
-                //        dtRow.Cells["Customer_PO"].ReadOnly = false;
-                //        dtRow.Cells["Customer_PO"].Style.BackColor = Color.White;
+                gridView_Invoice.Columns["gridCol_OrderDate"].OptionsColumn.ReadOnly  = true;
+                gridView_Invoice.Columns["gridCol_OrderDate"].AppearanceCell.BackColor = Color.Gray;
 
-                //        dtRow.Cells["ThirdParty_PO"].ReadOnly = true;
-                //        dtRow.Cells["ThirdParty_PO"].Style.BackColor = Color.Gray;
+                gridView_Invoice.Columns["gridCol_Due_Date_PO"].OptionsColumn.ReadOnly  = true;
+                gridView_Invoice.Columns["gridCol_Due_Date_PO"].AppearanceCell.BackColor = Color.Gray;
 
-                //        dtRow.Cells["Order_Date"].ReadOnly = true;
-                //        dtRow.Cells["Order_Date"].Style.BackColor = Color.Gray;
+                gridView_Invoice.Columns["gridCol_Qty"].OptionsColumn.ReadOnly  = false;
+                gridView_Invoice.Columns["gridCol_Qty"].AppearanceCell.BackColor = Color.White;
 
-                //        dtRow.Cells["DueDate_PO"].ReadOnly = true;
-                //        dtRow.Cells["DueDate_PO"].Style.BackColor = Color.Gray;
+                gridView_Invoice.Columns["gridCol_Balance"].OptionsColumn.ReadOnly  = true;
+                gridView_Invoice.Columns["gridCol_Balance"].AppearanceCell.BackColor = Color.Gray;
 
-                //        dtRow.Cells["Quantity"].ReadOnly = false;
-                //        dtRow.Cells["Quantity"].Style.BackColor = Color.White;
+                gridView_Invoice.Columns["gridCol_Unit_Currency"].OptionsColumn.ReadOnly  = true;
+                gridView_Invoice.Columns["gridCol_Unit_Currency"].AppearanceCell.BackColor = Color.Gray;
 
-                //        dtRow.Cells["Balance"].ReadOnly = true;
-                //        dtRow.Cells["Balance"].Style.BackColor = Color.Gray;
+                gridView_Invoice.Columns["gridCol_InvEx_Rate"].OptionsColumn.ReadOnly  = false;
+                gridView_Invoice.Columns["gridCol_InvEx_Rate"].AppearanceCell.BackColor = Color.White;
 
-                //        dtRow.Cells["Unit_Currency"].ReadOnly = true;
-                //        dtRow.Cells["Unit_Currency"].Style.BackColor = Color.Gray;
+                gridView_Invoice.Columns["gridCol_Order_Price"].OptionsColumn.ReadOnly  = false;
+                gridView_Invoice.Columns["gridCol_Order_Price"].AppearanceCell.BackColor = Color.White;
 
-                //        dtRow.Cells["USD_Rate"].ReadOnly = false;
-                //        dtRow.Cells["USD_Rate"].Style.BackColor = Color.White;
+                gridView_Invoice.Columns["gridCol_Global_Price"].OptionsColumn.ReadOnly  = true;
+                gridView_Invoice.Columns["gridCol_Global_Price"].AppearanceCell.BackColor = Color.Gray;
 
-                //        dtRow.Cells["Order_Price"].ReadOnly = false;
-                //        dtRow.Cells["Order_Price"].Style.BackColor = Color.White;
+                gridView_Invoice.Columns["gridCol_Amount_Total"].OptionsColumn.ReadOnly  = true;
+                gridView_Invoice.Columns["gridCol_Amount_Total"].AppearanceCell.BackColor = Color.Gray;
 
-                //        dtRow.Cells["Global_Price"].ReadOnly = true;
-                //        dtRow.Cells["Global_Price"].Style.BackColor = Color.Gray;
+                //------ Disable------//
+                gridView_Invoice.Columns["gridCol_Qty_Revise"].Visible = false;
+                gridView_Invoice.Columns["gridCol_Qty_Revise"].AppearanceCell.BackColor = Color.Gray;
 
-                //        dtRow.Cells["Amount_Jpy"].ReadOnly = true;
-                //        dtRow.Cells["Amount_Jpy"].Style.BackColor = Color.Gray;
-                //    }
-                //}
+                gridView_Invoice.Columns["gridCol_Order_Price_Revise"].Visible = false;
+                gridView_Invoice.Columns["gridCol_Order_Price_Revise"].AppearanceCell.BackColor = Color.Gray;
+
+                //------------ Gridview PackingLisst ---------------//
+                //------ Disable------//
+                gridView_PackingList.Columns["gridCol_Qty_Total_Revise"].Visible = false;
+                gridView_PackingList.Columns["gridCol_Qty_Total_Revise"].OptionsColumn.ReadOnly = true;
+                gridView_PackingList.Columns["gridCol_Qty_Total_Revise"].AppearanceCell.BackColor = Color.Gray;
 
                 ////---------------- Gridview PackingList ----------------//
                 ////---- Enable ----//
@@ -1728,15 +1526,13 @@ namespace TAKAKO_ERP_3LAYER
                 gridView_Invoice.OptionsBehavior.AllowDeleteRows = DefaultBoolean.False;
                 gridView_PackingList.OptionsBehavior.AllowDeleteRows = DefaultBoolean.False;
 
-                ////---------------- Gridview Invoice ----------------//
-                ////---- Disable ----//
-                //GridView_Invoice.Columns["Quantity_Revise"].Visible = false;
-                //GridView_Invoice.Columns["Quantity_Revise"].ReadOnly = true;
-                //GridView_Invoice.Columns["Quantity_Revise"].DefaultCellStyle.BackColor = Color.Gray;
-                ////
-                //GridView_Invoice.Columns["Order_Price_Revise"].Visible = false;
-                //GridView_Invoice.Columns["Order_Price_Revise"].ReadOnly = true;
-                //GridView_Invoice.Columns["Order_Price_Revise"].DefaultCellStyle.BackColor = Color.Gray;
+                //---------------- Gridview Invoice ----------------//
+                //---- Disable ----//
+                gridView_Invoice.Columns["gridCol_Qty_Revise"].Visible = false;
+                gridView_Invoice.Columns["gridCol_Qty_Revise"].AppearanceCell.BackColor = Color.Gray;
+
+                gridView_Invoice.Columns["gridCol_Order_Price_Revise"].Visible = false;
+                gridView_Invoice.Columns["gridCol_Order_Price_Revise"].AppearanceCell.BackColor = Color.Gray;
 
                 ////---- Disable ----//
                 //foreach (DataGridViewRow dtRow in GridView_Invoice.Rows)
@@ -1871,19 +1667,20 @@ namespace TAKAKO_ERP_3LAYER
                 gridView_Invoice.OptionsBehavior.AllowDeleteRows = DefaultBoolean.False;
                 gridView_PackingList.OptionsBehavior.AllowDeleteRows = DefaultBoolean.False;
 
-                ////---- Enable ----//
-                ////Gridview Invoice
-                //GridView_Invoice.Columns["Quantity_Revise"].Visible = true;
-                //GridView_Invoice.Columns["Quantity_Revise"].ReadOnly = false;
-                //GridView_Invoice.Columns["Quantity_Revise"].DefaultCellStyle.BackColor = Color.White;
-                ////
-                //GridView_Invoice.Columns["Order_Price_Revise"].Visible = true;
-                //GridView_Invoice.Columns["Order_Price_Revise"].ReadOnly = false;
-                //GridView_Invoice.Columns["Order_Price_Revise"].DefaultCellStyle.BackColor = Color.White;
-                ////Gridview PackingList
-                //GridView_PackingList.Columns["Qty_Total_Revise"].Visible = true;
-                //GridView_PackingList.Columns["Qty_Total_Revise"].ReadOnly = false;
-                //GridView_PackingList.Columns["Qty_Total_Revise"].DefaultCellStyle.BackColor = Color.White;
+                //---- Enable ----//
+                //Gridview Invoice
+                gridView_Invoice.Columns["gridCol_Qty_Revise"].Visible = true;
+                gridView_Invoice.Columns["gridCol_Qty_Revise"].OptionsColumn.ReadOnly = false;
+                gridView_Invoice.Columns["gridCol_Qty_Revise"].AppearanceCell.BackColor = Color.White;
+                //
+                gridView_Invoice.Columns["gridCol_Order_Price_Revise"].Visible = true;
+                gridView_Invoice.Columns["gridCol_Order_Price_Revise"].OptionsColumn.ReadOnly = false;
+                gridView_Invoice.Columns["gridCol_Order_Price_Revise"].AppearanceCell.BackColor = Color.White;
+
+                //Gridview PackingList
+                gridView_PackingList.Columns["gridCol_Qty_Total_Revise"].Visible = true;
+                gridView_PackingList.Columns["gridCol_Qty_Total_Revise"].OptionsColumn.ReadOnly = false;
+                gridView_PackingList.Columns["gridCol_Qty_Total_Revise"].AppearanceCell.BackColor = Color.White;
 
                 ////---- Disable ----//
                 //foreach(DataGridViewRow dtRow in GridView_Invoice.Rows)
@@ -2313,48 +2110,13 @@ namespace TAKAKO_ERP_3LAYER
 
         private void GridView_PackingList_KeyDown(object sender, KeyEventArgs e)
         {
-            //int _RowIndex = 0;
-            //int _ColumnIndex = 0;
-
             if (e.KeyCode == Keys.Tab)
             {
                 e.Handled = true;
                 this.SelectNextControl((Control)sender, true, true, true, true);
             }
 
-            //if (e.Control && e.KeyCode == Keys.C)
-            //{
-            //    if (GridView_PackingList.SelectedCells.Count == 1
-            //        && (GridView_PackingList.CurrentCell.Value != null))
-            //    {
-            //        _RowIndex = GridView_PackingList.CurrentCell.RowIndex;
-            //        _ColumnIndex = GridView_PackingList.CurrentCell.ColumnIndex;
-            //        Clipboard.SetText(GridView_PackingList.Rows[_RowIndex].Cells[_ColumnIndex].Value.ToString());
-            //    }
-            //}
-
-            //if (e.Control && e.KeyCode == Keys.V)
-            //{
-            //    if (GridView_PackingList.SelectedCells.Count == 1)
-            //    {
-            //        _RowIndex = GridView_PackingList.CurrentCell.RowIndex;
-            //        _ColumnIndex = GridView_PackingList.CurrentCell.ColumnIndex;
-            //        GridView_PackingList.Rows[_RowIndex].Cells[_ColumnIndex].Value = Clipboard.GetText();
-            //    }
-            //}
-
-            //if (e.KeyCode == Keys.Delete)
-            //{
-            //    //string exitMessageText = "Can't remove data in tab 「Packing List」";
-            //    //string exitCaption = "Information";
-            //    //MessageBoxButtons button = MessageBoxButtons.OK;
-            //    //DialogResult res = MessageBox.Show(exitMessageText, exitCaption, button, MessageBoxIcon.Exclamation);
-            //    //e.Handled = true;
-            //}
         }
-        #endregion
-
-        #region KeyDown_Event
         #endregion
 
         #region Event
@@ -2975,7 +2737,7 @@ namespace TAKAKO_ERP_3LAYER
             //txtShippingNo.Text = shippingNo;
 
             //Load Invoice
-            btn_SearchShipping_Click(sender, e);
+            //btn_SearchShipping_Click(sender, e);
 
             //Setting enable item
             SettingInitGridView();
@@ -3118,7 +2880,7 @@ namespace TAKAKO_ERP_3LAYER
                                     //
                                     //txtShippingNo.Text = _shippingNo;
                                     //Reload Shipping Instruction
-                                    btn_SearchShipping_Click(sender, e);
+                                    //btn_SearchShipping_Click(sender, e);
                                     radRevise.Checked = true;
                                     SettingInitGridView();
                                 }
@@ -3310,36 +3072,7 @@ namespace TAKAKO_ERP_3LAYER
                 MessageBox.Show(ex.Message);
             }
         }
-
-        private void Binding_Grid_PackingList(DataTable _tempDataTable)
-        {
-
-        }
         #endregion
-
-        private void btn_NewRow_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtShippingNo_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                //Load_InvoiceSearch();
-                this.SelectNextControl((Control)sender, true, true, true, true);
-            }
-            else if (e.KeyCode == Keys.F5)
-            {
-                //btnSearch_Inv_Click(sender, e);
-                btnSearch_ShippingNo_Click(sender, e);
-            }
-        }
-
-        private void btnSort_Click(object sender, EventArgs e)
-        {
-            //GridView_PackingList.Sort(GridView_PackingList.Columns["Packages_No"], ListSortDirection.Ascending);
-        }
 
         private void picBox_BackToMain_Click(object sender, EventArgs e)
         {
@@ -3354,18 +3087,6 @@ namespace TAKAKO_ERP_3LAYER
                 _formMain.StartPosition = FormStartPosition.CenterScreen;
                 _formMain.Show();
             }
-        }
-
-        private void btnSort_MouseHover(object sender, EventArgs e)
-        {
-            ToolTip tt = new ToolTip();
-            tt.SetToolTip(btnSort, "Sort dữ liệu tăng dần theo Packages_No");
-        }
-
-        private void btn_CoppyRow_MouseHover(object sender, EventArgs e)
-        {
-            ToolTip tt = new ToolTip();
-            tt.SetToolTip(btn_CoppyRow, "Coppy dòng hiện tại thành 1 dòng mới ngay phía dưới.");
         }
 
         public Boolean CheckError()
@@ -3445,16 +3166,6 @@ namespace TAKAKO_ERP_3LAYER
             //{
             //    this.GridView_PackingList.Columns["Customer_PO"].Visible = false;
             //}
-        }
-
-        private void GridView_Invoice_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-        {
-            //btnSumInvoice_Click(sender, e);
-        }
-
-        private void GridView_PackingList_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-        {
-            //btnSumPL_Click(sender, e);
         }
 
         private void GetInfo_Shipping()
@@ -3602,20 +3313,23 @@ namespace TAKAKO_ERP_3LAYER
             }
         }
 
-        private void sLookUp_IssuedTo_CompanyCode_Properties_EditValueChanged(object sender, EventArgs e)
+        private void sLookUp_IssuedTo_CompanyCode_EditValueChanged(object sender, EventArgs e)
         {
             GridView view = sLookUp_IssuedTo_CompanyCode_View;
             int index = sLookUp_IssuedTo_CompanyCode.Properties.GetIndexByKeyValue(this.sLookUp_IssuedTo_CompanyCode.EditValue);
 
-            string _customerName = Convert.ToString(view.GetRowCellValue(index, view.Columns["CUSTOMER_NAME1"]));
-            string _customerAddress = Convert.ToString(view.GetRowCellValue(index, view.Columns["ADDRESS"]));
-            string _customerTelNo = Convert.ToString(view.GetRowCellValue(index, view.Columns["TEL_NO"]));
-            string _customerFaxNo = Convert.ToString(view.GetRowCellValue(index, view.Columns["FAX_NO"]));
+            if (index != 0)
+            {
+                string _customerName = Convert.ToString(view.GetRowCellValue(index, view.Columns["CUSTOMER_NAME1"]));
+                string _customerAddress = Convert.ToString(view.GetRowCellValue(index, view.Columns["ADDRESS"]));
+                string _customerTelNo = Convert.ToString(view.GetRowCellValue(index, view.Columns["TEL_NO"]));
+                string _customerFaxNo = Convert.ToString(view.GetRowCellValue(index, view.Columns["FAX_NO"]));
 
-            txtIssuedTo_CompanyName.EditValue = _customerName;
-            memo_IssuedTo_CompanyAddress.EditValue = _customerAddress;
-            txtIssuedTo_TelNo.EditValue = _customerTelNo;
-            txtIssuedTo_FaxNo.EditValue = _customerFaxNo;
+                txtIssuedTo_CompanyName.EditValue = _customerName;
+                memo_IssuedTo_CompanyAddress.EditValue = _customerAddress;
+                txtIssuedTo_TelNo.EditValue = _customerTelNo;
+                txtIssuedTo_FaxNo.EditValue = _customerFaxNo;
+            }
         }
 
         private void sLookUp_ShipTo_CompanyCode_EditValueChanged(object sender, EventArgs e)
@@ -3628,10 +3342,10 @@ namespace TAKAKO_ERP_3LAYER
             string _customerTelNo   = Convert.ToString(view.GetRowCellValue(index, view.Columns["TEL_NO"]));
             string _customerFaxNo   = Convert.ToString(view.GetRowCellValue(index, view.Columns["FAX_NO"]));
 
-            txtShipTo_CompanyName.EditValue         = _customerName;
-            memo_ShipTo_CompanyAddress.EditValue    = _customerAddress;
-            txtShipTo_TelNo.EditValue               = _customerTelNo;
-            txtShipTo_FaxNo.EditValue               = _customerFaxNo;
+            txtShipTo_CompanyName.EditValue         = _customerName     != null ? _customerName     : null;
+            memo_ShipTo_CompanyAddress.EditValue    = _customerAddress  != null ? _customerAddress  : null;
+            txtShipTo_TelNo.EditValue               = _customerTelNo    != null ? _customerTelNo    : null;
+            txtShipTo_FaxNo.EditValue               = _customerFaxNo    != null ? _customerFaxNo    : null;
         }
 
         private void sLookUp_ShippingNo_EditValueChanged(object sender, EventArgs e)
