@@ -62,7 +62,6 @@
             this.panel_HeaderInvoice = new System.Windows.Forms.Panel();
             this.btn_SearchShipping = new System.Windows.Forms.Button();
             this.panel_HeaderRight = new System.Windows.Forms.Panel();
-            this.dtpRevenue = new System.Windows.Forms.DateTimePicker();
             this.txtShipVia = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.cb_Freight = new System.Windows.Forms.ComboBox();
@@ -75,9 +74,7 @@
             this.sLookUp_PortDestination = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.sLookUp_PortDestination_View = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.label13 = new System.Windows.Forms.Label();
-            this.dtpETD = new System.Windows.Forms.DateTimePicker();
             this.label14 = new System.Windows.Forms.Label();
-            this.dtpETA = new System.Windows.Forms.DateTimePicker();
             this.label15 = new System.Windows.Forms.Label();
             this.sLookUp_PriceCondition = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.sLookUp_PriceCondition_View = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -96,7 +93,6 @@
             this.radNormal = new System.Windows.Forms.RadioButton();
             this.label26 = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
-            this.dtpDateCreateShipping = new System.Windows.Forms.DateTimePicker();
             this.lblShippingNo = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtIssuedTo_CompanyName = new DevExpress.XtraEditors.TextEdit();
@@ -121,6 +117,10 @@
             this.panelTop = new System.Windows.Forms.Panel();
             this.panel30 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.dateEdit_DateCreateShipping = new DevExpress.XtraEditors.DateEdit();
+            this.dateEdit_Revenue = new DevExpress.XtraEditors.DateEdit();
+            this.dateEdit_ETD = new DevExpress.XtraEditors.DateEdit();
+            this.dateEdit_ETA = new DevExpress.XtraEditors.DateEdit();
             this.panel_Top.SuspendLayout();
             this.panel29.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picBox_BackToMain)).BeginInit();
@@ -170,6 +170,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShipTo_CompanyCode_View)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_FaxNo.Properties)).BeginInit();
             this.panelTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_DateCreateShipping.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_DateCreateShipping.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_Revenue.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_Revenue.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_ETD.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_ETD.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_ETA.Properties.CalendarTimeProperties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_ETA.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // panel_Top
@@ -266,9 +274,9 @@
             this.panel_DetailInvoice.Controls.Add(this.panel_TabControl);
             this.panel_DetailInvoice.Controls.Add(this.panel_Bottom);
             this.panel_DetailInvoice.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel_DetailInvoice.Location = new System.Drawing.Point(0, 313);
+            this.panel_DetailInvoice.Location = new System.Drawing.Point(0, 311);
             this.panel_DetailInvoice.Name = "panel_DetailInvoice";
-            this.panel_DetailInvoice.Size = new System.Drawing.Size(1184, 363);
+            this.panel_DetailInvoice.Size = new System.Drawing.Size(1184, 365);
             this.panel_DetailInvoice.TabIndex = 1;
             // 
             // panel_TabControl
@@ -277,7 +285,7 @@
             this.panel_TabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_TabControl.Location = new System.Drawing.Point(0, 0);
             this.panel_TabControl.Name = "panel_TabControl";
-            this.panel_TabControl.Size = new System.Drawing.Size(1184, 328);
+            this.panel_TabControl.Size = new System.Drawing.Size(1184, 330);
             this.panel_TabControl.TabIndex = 0;
             // 
             // tabControl
@@ -289,7 +297,7 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1184, 328);
+            this.tabControl.Size = new System.Drawing.Size(1184, 330);
             this.tabControl.TabIndex = 0;
             // 
             // tabInvoice
@@ -299,7 +307,7 @@
             this.tabInvoice.Location = new System.Drawing.Point(4, 22);
             this.tabInvoice.Name = "tabInvoice";
             this.tabInvoice.Padding = new System.Windows.Forms.Padding(3);
-            this.tabInvoice.Size = new System.Drawing.Size(1176, 302);
+            this.tabInvoice.Size = new System.Drawing.Size(1176, 304);
             this.tabInvoice.TabIndex = 0;
             this.tabInvoice.Text = "            Invoice           ";
             this.tabInvoice.UseVisualStyleBackColor = true;
@@ -311,7 +319,7 @@
             this.panel_GridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_GridView.Location = new System.Drawing.Point(3, 3);
             this.panel_GridView.Name = "panel_GridView";
-            this.panel_GridView.Size = new System.Drawing.Size(1161, 296);
+            this.panel_GridView.Size = new System.Drawing.Size(1161, 298);
             this.panel_GridView.TabIndex = 0;
             // 
             // gridControl_Invoice
@@ -320,7 +328,7 @@
             this.gridControl_Invoice.Location = new System.Drawing.Point(0, 0);
             this.gridControl_Invoice.MainView = this.gridView_Invoice;
             this.gridControl_Invoice.Name = "gridControl_Invoice";
-            this.gridControl_Invoice.Size = new System.Drawing.Size(1161, 296);
+            this.gridControl_Invoice.Size = new System.Drawing.Size(1161, 298);
             this.gridControl_Invoice.TabIndex = 1;
             this.gridControl_Invoice.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView_Invoice});
@@ -342,7 +350,7 @@
             this.panel25.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel25.Location = new System.Drawing.Point(1164, 3);
             this.panel25.Name = "panel25";
-            this.panel25.Size = new System.Drawing.Size(9, 296);
+            this.panel25.Size = new System.Drawing.Size(9, 298);
             this.panel25.TabIndex = 0;
             // 
             // tabPackingList
@@ -405,7 +413,7 @@
             // 
             this.panel_Bottom.Controls.Add(this.panel23);
             this.panel_Bottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel_Bottom.Location = new System.Drawing.Point(0, 328);
+            this.panel_Bottom.Location = new System.Drawing.Point(0, 330);
             this.panel_Bottom.Name = "panel_Bottom";
             this.panel_Bottom.Size = new System.Drawing.Size(1184, 35);
             this.panel_Bottom.TabIndex = 1;
@@ -490,13 +498,13 @@
             this.panel_HeaderInvoice.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel_HeaderInvoice.Location = new System.Drawing.Point(0, 33);
             this.panel_HeaderInvoice.Name = "panel_HeaderInvoice";
-            this.panel_HeaderInvoice.Size = new System.Drawing.Size(1184, 280);
+            this.panel_HeaderInvoice.Size = new System.Drawing.Size(1184, 278);
             this.panel_HeaderInvoice.TabIndex = 0;
             // 
             // btn_SearchShipping
             // 
             this.btn_SearchShipping.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_SearchShipping.Location = new System.Drawing.Point(1068, 254);
+            this.btn_SearchShipping.Location = new System.Drawing.Point(1068, 252);
             this.btn_SearchShipping.Name = "btn_SearchShipping";
             this.btn_SearchShipping.Size = new System.Drawing.Size(94, 23);
             this.btn_SearchShipping.TabIndex = 24;
@@ -506,7 +514,9 @@
             // 
             // panel_HeaderRight
             // 
-            this.panel_HeaderRight.Controls.Add(this.dtpRevenue);
+            this.panel_HeaderRight.Controls.Add(this.dateEdit_ETA);
+            this.panel_HeaderRight.Controls.Add(this.dateEdit_ETD);
+            this.panel_HeaderRight.Controls.Add(this.dateEdit_Revenue);
             this.panel_HeaderRight.Controls.Add(this.txtShipVia);
             this.panel_HeaderRight.Controls.Add(this.label22);
             this.panel_HeaderRight.Controls.Add(this.cb_Freight);
@@ -517,9 +527,7 @@
             this.panel_HeaderRight.Controls.Add(this.label12);
             this.panel_HeaderRight.Controls.Add(this.sLookUp_PortDestination);
             this.panel_HeaderRight.Controls.Add(this.label13);
-            this.panel_HeaderRight.Controls.Add(this.dtpETD);
             this.panel_HeaderRight.Controls.Add(this.label14);
-            this.panel_HeaderRight.Controls.Add(this.dtpETA);
             this.panel_HeaderRight.Controls.Add(this.label15);
             this.panel_HeaderRight.Controls.Add(this.sLookUp_PriceCondition);
             this.panel_HeaderRight.Controls.Add(this.label16);
@@ -529,21 +537,12 @@
             this.panel_HeaderRight.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel_HeaderRight.Location = new System.Drawing.Point(542, 0);
             this.panel_HeaderRight.Name = "panel_HeaderRight";
-            this.panel_HeaderRight.Size = new System.Drawing.Size(520, 280);
+            this.panel_HeaderRight.Size = new System.Drawing.Size(520, 278);
             this.panel_HeaderRight.TabIndex = 5;
-            // 
-            // dtpRevenue
-            // 
-            this.dtpRevenue.CustomFormat = "MM/yyyy";
-            this.dtpRevenue.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpRevenue.Location = new System.Drawing.Point(139, 29);
-            this.dtpRevenue.Name = "dtpRevenue";
-            this.dtpRevenue.Size = new System.Drawing.Size(137, 22);
-            this.dtpRevenue.TabIndex = 10;
             // 
             // txtShipVia
             // 
-            this.txtShipVia.Location = new System.Drawing.Point(139, 55);
+            this.txtShipVia.Location = new System.Drawing.Point(139, 50);
             this.txtShipVia.Name = "txtShipVia";
             this.txtShipVia.Size = new System.Drawing.Size(335, 22);
             this.txtShipVia.TabIndex = 5;
@@ -552,9 +551,9 @@
             // 
             this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label22.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label22.Location = new System.Drawing.Point(4, 29);
+            this.label22.Location = new System.Drawing.Point(4, 25);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(134, 22);
+            this.label22.Size = new System.Drawing.Size(134, 20);
             this.label22.TabIndex = 7;
             this.label22.Text = "REVENUE";
             this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -562,7 +561,7 @@
             // cb_Freight
             // 
             this.cb_Freight.FormattingEnabled = true;
-            this.cb_Freight.Location = new System.Drawing.Point(139, 81);
+            this.cb_Freight.Location = new System.Drawing.Point(139, 77);
             this.cb_Freight.Name = "cb_Freight";
             this.cb_Freight.Size = new System.Drawing.Size(137, 21);
             this.cb_Freight.TabIndex = 6;
@@ -571,7 +570,7 @@
             // 
             this.label10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label10.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label10.Location = new System.Drawing.Point(4, 55);
+            this.label10.Location = new System.Drawing.Point(4, 50);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(134, 22);
             this.label10.TabIndex = 3;
@@ -580,7 +579,7 @@
             // 
             // txtVessel
             // 
-            this.txtVessel.Location = new System.Drawing.Point(139, 106);
+            this.txtVessel.Location = new System.Drawing.Point(139, 103);
             this.txtVessel.Name = "txtVessel";
             this.txtVessel.Size = new System.Drawing.Size(335, 22);
             this.txtVessel.TabIndex = 6;
@@ -589,7 +588,7 @@
             // 
             this.label11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label11.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label11.Location = new System.Drawing.Point(4, 81);
+            this.label11.Location = new System.Drawing.Point(4, 77);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(134, 21);
             this.label11.TabIndex = 5;
@@ -598,7 +597,7 @@
             // 
             // sLookUp_PortLoading
             // 
-            this.sLookUp_PortLoading.Location = new System.Drawing.Point(139, 132);
+            this.sLookUp_PortLoading.Location = new System.Drawing.Point(139, 130);
             this.sLookUp_PortLoading.Name = "sLookUp_PortLoading";
             this.sLookUp_PortLoading.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -617,7 +616,7 @@
             // 
             this.label12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label12.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label12.Location = new System.Drawing.Point(4, 106);
+            this.label12.Location = new System.Drawing.Point(4, 103);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(134, 22);
             this.label12.TabIndex = 5;
@@ -626,7 +625,7 @@
             // 
             // sLookUp_PortDestination
             // 
-            this.sLookUp_PortDestination.Location = new System.Drawing.Point(139, 156);
+            this.sLookUp_PortDestination.Location = new System.Drawing.Point(139, 155);
             this.sLookUp_PortDestination.Name = "sLookUp_PortDestination";
             this.sLookUp_PortDestination.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -645,41 +644,23 @@
             // 
             this.label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label13.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label13.Location = new System.Drawing.Point(4, 132);
+            this.label13.Location = new System.Drawing.Point(4, 130);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(134, 20);
             this.label13.TabIndex = 2;
             this.label13.Text = "PORT OF LOADING";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // dtpETD
-            // 
-            this.dtpETD.CustomFormat = "MMMM dd,yyyy";
-            this.dtpETD.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpETD.Location = new System.Drawing.Point(139, 180);
-            this.dtpETD.Name = "dtpETD";
-            this.dtpETD.Size = new System.Drawing.Size(137, 22);
-            this.dtpETD.TabIndex = 9;
-            // 
             // label14
             // 
             this.label14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label14.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label14.Location = new System.Drawing.Point(4, 156);
+            this.label14.Location = new System.Drawing.Point(4, 155);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(134, 20);
             this.label14.TabIndex = 5;
             this.label14.Text = "PORT OF DESTINATION";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // dtpETA
-            // 
-            this.dtpETA.CustomFormat = "MMMM dd,yyyy";
-            this.dtpETA.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpETA.Location = new System.Drawing.Point(139, 206);
-            this.dtpETA.Name = "dtpETA";
-            this.dtpETA.Size = new System.Drawing.Size(137, 22);
-            this.dtpETA.TabIndex = 10;
             // 
             // label15
             // 
@@ -687,14 +668,14 @@
             this.label15.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.label15.Location = new System.Drawing.Point(4, 180);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(134, 22);
+            this.label15.Size = new System.Drawing.Size(134, 20);
             this.label15.TabIndex = 3;
             this.label15.Text = "ETD";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // sLookUp_PriceCondition
             // 
-            this.sLookUp_PriceCondition.Location = new System.Drawing.Point(139, 232);
+            this.sLookUp_PriceCondition.Location = new System.Drawing.Point(139, 230);
             this.sLookUp_PriceCondition.Name = "sLookUp_PriceCondition";
             this.sLookUp_PriceCondition.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -713,16 +694,16 @@
             // 
             this.label16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label16.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label16.Location = new System.Drawing.Point(4, 206);
+            this.label16.Location = new System.Drawing.Point(4, 205);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(134, 22);
+            this.label16.Size = new System.Drawing.Size(134, 20);
             this.label16.TabIndex = 5;
             this.label16.Text = "ETA";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // sLookUp_PaymentTerm
             // 
-            this.sLookUp_PaymentTerm.Location = new System.Drawing.Point(139, 257);
+            this.sLookUp_PaymentTerm.Location = new System.Drawing.Point(139, 255);
             this.sLookUp_PaymentTerm.Name = "sLookUp_PaymentTerm";
             this.sLookUp_PaymentTerm.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -741,7 +722,7 @@
             // 
             this.label18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label18.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label18.Location = new System.Drawing.Point(4, 232);
+            this.label18.Location = new System.Drawing.Point(4, 230);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(134, 20);
             this.label18.TabIndex = 5;
@@ -752,7 +733,7 @@
             // 
             this.label25.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label25.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label25.Location = new System.Drawing.Point(4, 257);
+            this.label25.Location = new System.Drawing.Point(4, 255);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(134, 20);
             this.label25.TabIndex = 1;
@@ -761,6 +742,7 @@
             // 
             // panel_HeaderLeft
             // 
+            this.panel_HeaderLeft.Controls.Add(this.dateEdit_DateCreateShipping);
             this.panel_HeaderLeft.Controls.Add(this.txtInvoiceNo);
             this.panel_HeaderLeft.Controls.Add(this.radLock);
             this.panel_HeaderLeft.Controls.Add(this.cb_CompanyCode);
@@ -769,7 +751,6 @@
             this.panel_HeaderLeft.Controls.Add(this.radNormal);
             this.panel_HeaderLeft.Controls.Add(this.label26);
             this.panel_HeaderLeft.Controls.Add(this.lblStatus);
-            this.panel_HeaderLeft.Controls.Add(this.dtpDateCreateShipping);
             this.panel_HeaderLeft.Controls.Add(this.lblShippingNo);
             this.panel_HeaderLeft.Controls.Add(this.label2);
             this.panel_HeaderLeft.Controls.Add(this.txtIssuedTo_CompanyName);
@@ -792,12 +773,12 @@
             this.panel_HeaderLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel_HeaderLeft.Location = new System.Drawing.Point(0, 0);
             this.panel_HeaderLeft.Name = "panel_HeaderLeft";
-            this.panel_HeaderLeft.Size = new System.Drawing.Size(542, 280);
+            this.panel_HeaderLeft.Size = new System.Drawing.Size(542, 278);
             this.panel_HeaderLeft.TabIndex = 4;
             // 
             // txtInvoiceNo
             // 
-            this.txtInvoiceNo.Location = new System.Drawing.Point(147, 91);
+            this.txtInvoiceNo.Location = new System.Drawing.Point(147, 89);
             this.txtInvoiceNo.Name = "txtInvoiceNo";
             this.txtInvoiceNo.Size = new System.Drawing.Size(335, 20);
             this.txtInvoiceNo.TabIndex = 9;
@@ -895,15 +876,6 @@
             this.lblStatus.Text = "STATUS";
             this.lblStatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // dtpDateCreateShipping
-            // 
-            this.dtpDateCreateShipping.CustomFormat = "MMMM dd,yyyy";
-            this.dtpDateCreateShipping.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpDateCreateShipping.Location = new System.Drawing.Point(147, 68);
-            this.dtpDateCreateShipping.Name = "dtpDateCreateShipping";
-            this.dtpDateCreateShipping.Size = new System.Drawing.Size(110, 22);
-            this.dtpDateCreateShipping.TabIndex = 1;
-            // 
             // lblShippingNo
             // 
             this.lblShippingNo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -921,14 +893,14 @@
             this.label2.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
             this.label2.Location = new System.Drawing.Point(12, 68);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(134, 22);
+            this.label2.Size = new System.Drawing.Size(134, 20);
             this.label2.TabIndex = 0;
             this.label2.Text = "DATE";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtIssuedTo_CompanyName
             // 
-            this.txtIssuedTo_CompanyName.Location = new System.Drawing.Point(212, 112);
+            this.txtIssuedTo_CompanyName.Location = new System.Drawing.Point(212, 110);
             this.txtIssuedTo_CompanyName.Name = "txtIssuedTo_CompanyName";
             this.txtIssuedTo_CompanyName.Size = new System.Drawing.Size(270, 20);
             this.txtIssuedTo_CompanyName.TabIndex = 2;
@@ -937,7 +909,7 @@
             // 
             this.label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label3.Location = new System.Drawing.Point(12, 91);
+            this.label3.Location = new System.Drawing.Point(12, 89);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(134, 20);
             this.label3.TabIndex = 1;
@@ -947,14 +919,14 @@
             // memo_IssuedTo_CompanyAddress
             // 
             this.memo_IssuedTo_CompanyAddress.EditValue = "";
-            this.memo_IssuedTo_CompanyAddress.Location = new System.Drawing.Point(147, 133);
+            this.memo_IssuedTo_CompanyAddress.Location = new System.Drawing.Point(147, 131);
             this.memo_IssuedTo_CompanyAddress.Name = "memo_IssuedTo_CompanyAddress";
             this.memo_IssuedTo_CompanyAddress.Size = new System.Drawing.Size(335, 40);
             this.memo_IssuedTo_CompanyAddress.TabIndex = 2;
             // 
             // sLookUp_IssuedTo_CompanyCode
             // 
-            this.sLookUp_IssuedTo_CompanyCode.Location = new System.Drawing.Point(147, 112);
+            this.sLookUp_IssuedTo_CompanyCode.Location = new System.Drawing.Point(147, 110);
             this.sLookUp_IssuedTo_CompanyCode.Name = "sLookUp_IssuedTo_CompanyCode";
             this.sLookUp_IssuedTo_CompanyCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -972,7 +944,7 @@
             // 
             // txtIssuedTo_FaxNo
             // 
-            this.txtIssuedTo_FaxNo.Location = new System.Drawing.Point(362, 174);
+            this.txtIssuedTo_FaxNo.Location = new System.Drawing.Point(362, 172);
             this.txtIssuedTo_FaxNo.Name = "txtIssuedTo_FaxNo";
             this.txtIssuedTo_FaxNo.Size = new System.Drawing.Size(120, 20);
             this.txtIssuedTo_FaxNo.TabIndex = 2;
@@ -981,7 +953,7 @@
             // 
             this.label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label4.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label4.Location = new System.Drawing.Point(12, 112);
+            this.label4.Location = new System.Drawing.Point(12, 110);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(134, 20);
             this.label4.TabIndex = 2;
@@ -990,14 +962,14 @@
             // 
             // txtShipTo_CompanyName
             // 
-            this.txtShipTo_CompanyName.Location = new System.Drawing.Point(212, 195);
+            this.txtShipTo_CompanyName.Location = new System.Drawing.Point(212, 193);
             this.txtShipTo_CompanyName.Name = "txtShipTo_CompanyName";
             this.txtShipTo_CompanyName.Size = new System.Drawing.Size(270, 20);
             this.txtShipTo_CompanyName.TabIndex = 2;
             // 
             // txtIssuedTo_TelNo
             // 
-            this.txtIssuedTo_TelNo.Location = new System.Drawing.Point(183, 174);
+            this.txtIssuedTo_TelNo.Location = new System.Drawing.Point(183, 172);
             this.txtIssuedTo_TelNo.Name = "txtIssuedTo_TelNo";
             this.txtIssuedTo_TelNo.Size = new System.Drawing.Size(120, 20);
             this.txtIssuedTo_TelNo.TabIndex = 2;
@@ -1005,7 +977,7 @@
             // memo_ShipTo_CompanyAddress
             // 
             this.memo_ShipTo_CompanyAddress.EditValue = "";
-            this.memo_ShipTo_CompanyAddress.Location = new System.Drawing.Point(147, 216);
+            this.memo_ShipTo_CompanyAddress.Location = new System.Drawing.Point(147, 214);
             this.memo_ShipTo_CompanyAddress.Name = "memo_ShipTo_CompanyAddress";
             this.memo_ShipTo_CompanyAddress.Size = new System.Drawing.Size(335, 40);
             this.memo_ShipTo_CompanyAddress.TabIndex = 2;
@@ -1014,7 +986,7 @@
             // 
             this.label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label6.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(326, 174);
+            this.label6.Location = new System.Drawing.Point(326, 172);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(35, 20);
             this.label6.TabIndex = 6;
@@ -1023,7 +995,7 @@
             // 
             // txtShipTo_TelNo
             // 
-            this.txtShipTo_TelNo.Location = new System.Drawing.Point(183, 257);
+            this.txtShipTo_TelNo.Location = new System.Drawing.Point(183, 255);
             this.txtShipTo_TelNo.Name = "txtShipTo_TelNo";
             this.txtShipTo_TelNo.Size = new System.Drawing.Size(120, 20);
             this.txtShipTo_TelNo.TabIndex = 2;
@@ -1032,7 +1004,7 @@
             // 
             this.label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label5.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label5.Location = new System.Drawing.Point(147, 174);
+            this.label5.Location = new System.Drawing.Point(147, 172);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(35, 20);
             this.label5.TabIndex = 5;
@@ -1041,7 +1013,7 @@
             // 
             // sLookUp_ShipTo_CompanyCode
             // 
-            this.sLookUp_ShipTo_CompanyCode.Location = new System.Drawing.Point(147, 195);
+            this.sLookUp_ShipTo_CompanyCode.Location = new System.Drawing.Point(147, 193);
             this.sLookUp_ShipTo_CompanyCode.Name = "sLookUp_ShipTo_CompanyCode";
             this.sLookUp_ShipTo_CompanyCode.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
@@ -1060,7 +1032,7 @@
             // 
             // txtShipTo_FaxNo
             // 
-            this.txtShipTo_FaxNo.Location = new System.Drawing.Point(362, 257);
+            this.txtShipTo_FaxNo.Location = new System.Drawing.Point(362, 255);
             this.txtShipTo_FaxNo.Name = "txtShipTo_FaxNo";
             this.txtShipTo_FaxNo.Size = new System.Drawing.Size(120, 20);
             this.txtShipTo_FaxNo.TabIndex = 2;
@@ -1069,7 +1041,7 @@
             // 
             this.label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label7.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label7.Location = new System.Drawing.Point(12, 195);
+            this.label7.Location = new System.Drawing.Point(12, 193);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(134, 20);
             this.label7.TabIndex = 4;
@@ -1080,7 +1052,7 @@
             // 
             this.label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label8.Location = new System.Drawing.Point(326, 257);
+            this.label8.Location = new System.Drawing.Point(326, 255);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(35, 20);
             this.label8.TabIndex = 6;
@@ -1091,7 +1063,7 @@
             // 
             this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold);
-            this.label9.Location = new System.Drawing.Point(147, 257);
+            this.label9.Location = new System.Drawing.Point(147, 255);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(35, 20);
             this.label9.TabIndex = 5;
@@ -1127,6 +1099,54 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "SHIPPING INSTRUCTION";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // dateEdit_DateCreateShipping
+            // 
+            this.dateEdit_DateCreateShipping.EditValue = null;
+            this.dateEdit_DateCreateShipping.Location = new System.Drawing.Point(147, 68);
+            this.dateEdit_DateCreateShipping.Name = "dateEdit_DateCreateShipping";
+            this.dateEdit_DateCreateShipping.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dateEdit_DateCreateShipping.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dateEdit_DateCreateShipping.Size = new System.Drawing.Size(110, 20);
+            this.dateEdit_DateCreateShipping.TabIndex = 10;
+            // 
+            // dateEdit_Revenue
+            // 
+            this.dateEdit_Revenue.EditValue = null;
+            this.dateEdit_Revenue.Location = new System.Drawing.Point(139, 25);
+            this.dateEdit_Revenue.Name = "dateEdit_Revenue";
+            this.dateEdit_Revenue.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dateEdit_Revenue.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dateEdit_Revenue.Size = new System.Drawing.Size(110, 20);
+            this.dateEdit_Revenue.TabIndex = 10;
+            // 
+            // dateEdit_ETD
+            // 
+            this.dateEdit_ETD.EditValue = null;
+            this.dateEdit_ETD.Location = new System.Drawing.Point(139, 180);
+            this.dateEdit_ETD.Name = "dateEdit_ETD";
+            this.dateEdit_ETD.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dateEdit_ETD.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dateEdit_ETD.Size = new System.Drawing.Size(110, 20);
+            this.dateEdit_ETD.TabIndex = 10;
+            // 
+            // dateEdit_ETA
+            // 
+            this.dateEdit_ETA.EditValue = null;
+            this.dateEdit_ETA.Location = new System.Drawing.Point(139, 205);
+            this.dateEdit_ETA.Name = "dateEdit_ETA";
+            this.dateEdit_ETA.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dateEdit_ETA.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.dateEdit_ETA.Size = new System.Drawing.Size(110, 20);
+            this.dateEdit_ETA.TabIndex = 10;
             // 
             // Form_Shipping_Instruction
             // 
@@ -1193,6 +1213,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_ShipTo_CompanyCode_View)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtShipTo_FaxNo.Properties)).EndInit();
             this.panelTop.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_DateCreateShipping.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_DateCreateShipping.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_Revenue.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_Revenue.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_ETD.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_ETD.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_ETA.Properties.CalendarTimeProperties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dateEdit_ETA.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1213,9 +1241,7 @@
         private System.Windows.Forms.Panel panel_HeaderRight;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.DateTimePicker dtpETA;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.DateTimePicker dtpETD;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
@@ -1233,7 +1259,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker dtpDateCreateShipping;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel23;
         private System.Windows.Forms.Button btnSave_Data;
@@ -1261,7 +1286,6 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.ComboBox cb_CompanyCode;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.DateTimePicker dtpRevenue;
         private DevExpress.XtraGrid.GridControl gridControl_Invoice;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView_Invoice;
         private DevExpress.XtraGrid.GridControl gridControl_PackingList;
@@ -1291,5 +1315,9 @@
         private DevExpress.XtraEditors.SearchLookUpEdit sLookUp_PortLoading;
         private DevExpress.XtraGrid.Views.Grid.GridView sLookUp_PortLoading_View;
         private DevExpress.XtraEditors.TextEdit txtInvoiceNo;
+        private DevExpress.XtraEditors.DateEdit dateEdit_DateCreateShipping;
+        private DevExpress.XtraEditors.DateEdit dateEdit_ETA;
+        private DevExpress.XtraEditors.DateEdit dateEdit_ETD;
+        private DevExpress.XtraEditors.DateEdit dateEdit_Revenue;
     }
 }

@@ -81,6 +81,46 @@ namespace TAKAKO_ERP_3LAYER.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
+        public static DevExpress.Utils.Svg.SvgImage bo_security_permission {
+            get {
+                object obj = ResourceManager.GetObject("bo_security_permission", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
+        public static DevExpress.Utils.Svg.SvgImage clearpivottable {
+            get {
+                object obj = ResourceManager.GetObject("clearpivottable", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap clearpivottable_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("clearpivottable_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap clearpivottable_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("clearpivottable_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap Close_window {
@@ -153,9 +193,29 @@ namespace TAKAKO_ERP_3LAYER.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap exporttoxlsx_16x161 {
+            get {
+                object obj = ResourceManager.GetObject("exporttoxlsx_16x161", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap exporttoxlsx_32x32 {
             get {
                 object obj = ResourceManager.GetObject("exporttoxlsx_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap exporttoxlsx_32x321 {
+            get {
+                object obj = ResourceManager.GetObject("exporttoxlsx_32x321", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -361,6 +421,16 @@ namespace TAKAKO_ERP_3LAYER.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
+        public static DevExpress.Utils.Svg.SvgImage insertgroupfooter {
+            get {
+                object obj = ResourceManager.GetObject("insertgroupfooter", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap Invoice_icon {
@@ -461,11 +531,41 @@ namespace TAKAKO_ERP_3LAYER.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
+        public static DevExpress.Utils.Svg.SvgImage saveas {
+            get {
+                object obj = ResourceManager.GetObject("saveas", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap Shipping {
             get {
                 object obj = ResourceManager.GetObject("Shipping", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap unprotectdocument_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("unprotectdocument_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap unprotectdocument_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("unprotectdocument_32x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -221,6 +221,12 @@
     <Compile Include="Form_Select_Company.Designer.cs">
       <DependentUpon>Form_Select_Company.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_Shipping_Instruction_New.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Shipping_Instruction_New.Designer.cs">
+      <DependentUpon>Form_Shipping_Instruction_New.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_Shipping_Output_PackingList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -326,6 +332,9 @@
     <EmbeddedResource Include="Form_Select_Company.resx">
       <DependentUpon>Form_Select_Company.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Form_Shipping_Instruction_New.resx">
+      <DependentUpon>Form_Shipping_Instruction_New.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form_Shipping_Output_PackingList.resx">
       <DependentUpon>Form_Shipping_Output_PackingList.cs</DependentUpon>
     </EmbeddedResource>
@@ -382,6 +391,16 @@
     <None Include="Resources\exporttoxlsx_32x32.png" />
     <None Include="Resources\exporttoxlsx_16x16.png" />
     <None Include="Resources\removesheet.svg" />
+    <None Include="Resources\clearpivottable_32x32.png" />
+    <None Include="Resources\clearpivottable_16x16.png" />
+    <None Include="Resources\clearpivottable.svg" />
+    <None Include="Resources\saveas.svg" />
+    <None Include="Resources\exporttoxlsx_32x321.png" />
+    <None Include="Resources\exporttoxlsx_16x161.png" />
+    <None Include="Resources\unprotectdocument_32x32.png" />
+    <None Include="Resources\unprotectdocument_16x16.png" />
+    <None Include="Resources\bo_security_permission.svg" />
+    <None Include="Resources\insertgroupfooter.svg" />
     <Content Include="Takako_Entites.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Takako_Entites.edmx</DependentUpon>

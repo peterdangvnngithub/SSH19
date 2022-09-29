@@ -121,8 +121,8 @@
   <data name="Maximize-window" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Maximize-window.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-cancel-18" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-cancel-18.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="exporttoxlsx_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\exporttoxlsx_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-cancel-20" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-cancel-20.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -136,6 +136,9 @@
   <data name="eye_gray_plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\eye_gray_plus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icons8-cancel-18" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-cancel-18.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="img_customer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_customer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -147,6 +150,9 @@
   </data>
   <data name="Logo_TAKAKO" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Logo_TAKAKO.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="clearpivottable_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clearpivottable_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Minimize-window" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Minimize-window.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -163,11 +169,17 @@
   <data name="outbox_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\outbox_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="removesheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\removesheet.svg;DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="Background_Takako" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Background_Takako.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_eye_gray" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_eye_gray.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="exporttoxlsx_32x321" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\exporttoxlsx_32x321.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="img_user" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_user.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -196,17 +208,35 @@
   <data name="Zoom-full" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Zoom-full1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="clearpivottable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clearpivottable.svg;DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
+  <data name="bo_security_permission" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\bo_security_permission.svg;DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  </data>
   <data name="Menu_List" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Menu_List.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="saveas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\saveas.svg;DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
   <data name="delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="exporttoxlsx_16x161" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\exporttoxlsx_16x161.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Icon_search" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Icon_search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="clearpivottable_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\clearpivottable_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="img_454673" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_454673.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="unprotectdocument_32x32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\unprotectdocument_32x32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icons8-cancel-201" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-cancel-201.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -223,9 +253,6 @@
   <data name="Close-window" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Close-window.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="exporttoxlsx_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\exporttoxlsx_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="icons8-cancel-22" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-cancel-22.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -238,10 +265,13 @@
   <data name="Logo_TAKAKO_PTS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Logo_TAKAKO_PTS.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="unprotectdocument_16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\unprotectdocument_16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icons8-cancel-16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-cancel-16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="removesheet" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\removesheet.svg;DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
+  <data name="insertgroupfooter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\insertgroupfooter.svg;DevExpress.Utils.Svg.SvgImage, DevExpress.Data.v21.2, Version=21.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a</value>
   </data>
 </root>

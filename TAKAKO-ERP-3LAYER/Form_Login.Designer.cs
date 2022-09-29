@@ -224,6 +224,7 @@
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(255, 25);
             this.txtUserName.TabIndex = 0;
+            this.txtUserName.Text = "ADMIN";
             this.txtUserName.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtUserName_KeyUp);
             // 
             // btnLogin
@@ -246,6 +247,7 @@
             this.txtPassWord.PasswordChar = '*';
             this.txtPassWord.Size = new System.Drawing.Size(255, 25);
             this.txtPassWord.TabIndex = 1;
+            this.txtPassWord.Text = "ADMIN";
             this.txtPassWord.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtPassWord_KeyUp);
             // 
             // Form_Login

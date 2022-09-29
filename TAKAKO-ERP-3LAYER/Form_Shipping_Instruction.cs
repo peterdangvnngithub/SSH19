@@ -80,7 +80,7 @@ namespace TAKAKO_ERP_3LAYER
             Define_SearchLookUp_View(sLookUp_PriceCondition);
 
             //Setting init date Renueve
-            dtpRevenue.Value = DateTime.Now;
+            dateEdit_Revenue.EditValue = DateTime.Now;
 
             //Define combobox Company
             SetInit_CbCompanyCode();           
@@ -686,7 +686,7 @@ namespace TAKAKO_ERP_3LAYER
             cb_CompanyCode.SelectedIndex = 0;
 
             //
-            dtpRevenue.Value = DateTime.Now;
+            dateEdit_Revenue.EditValue = DateTime.Now;
 
             //
             btnUnlockData.Enabled = false;
@@ -866,11 +866,17 @@ namespace TAKAKO_ERP_3LAYER
         {
             if (_dataGridView.Name == "gridView_Invoice")
             {
+                // Setting GridView
+                gridView_Invoice.OptionsNavigation.AutoFocusNewRow = true;
+                gridView_Invoice.OptionsView.ColumnAutoWidth = false;
+                gridView_Invoice.OptionsView.ShowFooter = true;
+                gridView_Invoice.OptionsView.ColumnHeaderAutoHeight = DefaultBoolean.True;
+                gridView_Invoice.HorzScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
+
                 GridColumn gridCol_Customer_Code = new GridColumn();
                 GridColumn gridCol_Item_Name = new GridColumn();
                 GridColumn gridCol_Cus_Item_Code = new GridColumn();
                 GridColumn gridCol_TVC_Item_Code = new GridColumn();
-                GridColumn gridCol_Btn_Search_PO = new GridColumn();
                 GridColumn gridCol_Customer_PO = new GridColumn();
                 GridColumn gridCol_Third_Party_Item_Code = new GridColumn();
                 GridColumn gridCol_Third_Party_PO = new GridColumn();
@@ -885,8 +891,6 @@ namespace TAKAKO_ERP_3LAYER
                 GridColumn gridCol_Order_Price_Revise = new GridColumn();
                 GridColumn gridCol_Global_Price = new GridColumn();
                 GridColumn gridCol_Amount_Total = new GridColumn();
-
-                RepositoryItemButtonEdit repo_Btn_Search_PO = new RepositoryItemButtonEdit();
 
                 //CUSTOMER CODE
                 gridCol_Customer_Code.Name = "gridCol_Customer_Code";
@@ -924,38 +928,20 @@ namespace TAKAKO_ERP_3LAYER
 
                 gridCol_TVC_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
-                // BUTTON SEARCH
-                gridCol_Btn_Search_PO.Name = "gridCol_Btn_Search_PO";
-                gridCol_Btn_Search_PO.ColumnEdit = repo_Btn_Search_PO;
-                gridCol_Btn_Search_PO.VisibleIndex = 4;
-                gridCol_Btn_Search_PO.Width = 40;
-
-                // REPOSITORY BUTTON SEARCH PO
-                repo_Btn_Search_PO.AutoHeight = false;
-                repo_Btn_Search_PO.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {new DevExpress.XtraEditors.Controls.EditorButton()});
-                repo_Btn_Search_PO.Name = "repo_Btn_Search_PO";
-                repo_Btn_Search_PO.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
-
                 // CUSTOMER PO
                 gridCol_Customer_PO.Name = "gridCol_Customer_PO";
                 gridCol_Customer_PO.Caption = "CUSTOMER PO";
                 gridCol_Customer_PO.FieldName = "CUSTOMER_PO";
-                gridCol_Customer_PO.VisibleIndex = 5;
+                gridCol_Customer_PO.VisibleIndex = 4;
                 gridCol_Customer_PO.Width = 120;
 
                 gridCol_Customer_PO.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
-
-                ////BUTTON SEARCH ITEM CODE
-                //InvButtonSearch_col.HeaderText = "";
-                //InvButtonSearch_col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-                //InvButtonSearch_col.Name = "BtnSearch_ItemCode";
-                //InvButtonSearch_col.Width = 30;
 
                 //THIRD PARTY ITEM CODE
                 gridCol_Third_Party_Item_Code.Name = "gridCol_Third_Party_Item_Code";
                 gridCol_Third_Party_Item_Code.Caption = "THIRD PARTY CODE";
                 gridCol_Third_Party_Item_Code.FieldName = "THIRD_PARTY_ITEM_CODE";
-                gridCol_Third_Party_Item_Code.VisibleIndex = 6;
+                gridCol_Third_Party_Item_Code.VisibleIndex = 5;
                 gridCol_Third_Party_Item_Code.Width = 120;
 
                 gridCol_Third_Party_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
@@ -964,7 +950,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Third_Party_PO.Name = "gridCol_Third_Party_PO";
                 gridCol_Third_Party_PO.Caption = "THIRD PARTY PO";
                 gridCol_Third_Party_PO.FieldName = "THIRD_PARTY_PO";
-                gridCol_Third_Party_Item_Code.VisibleIndex = 7;
+                gridCol_Third_Party_Item_Code.VisibleIndex = 6;
                 gridCol_Third_Party_PO.Width = 100;
 
                 gridCol_Third_Party_PO.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
@@ -973,7 +959,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_OrderDate.Name = "gridCol_OrderDate";
                 gridCol_OrderDate.Caption = "ORDER DATE PO";
                 gridCol_OrderDate.FieldName = "ORDER_DATE";
-                gridCol_OrderDate.VisibleIndex = 8;
+                gridCol_OrderDate.VisibleIndex = 7;
                 gridCol_OrderDate.Width = 110;
                 gridCol_OrderDate.DisplayFormat.FormatString = "dd/MM/yyyy";
                 gridCol_OrderDate.DisplayFormat.FormatType = FormatType.DateTime;
@@ -984,7 +970,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Due_Date_PO.Name = "gridCol_Due_Date_PO";
                 gridCol_Due_Date_PO.Caption = "DUE DATE PO";
                 gridCol_Due_Date_PO.FieldName = "DUE_DATE_PO";
-                gridCol_Due_Date_PO.VisibleIndex = 9;
+                gridCol_Due_Date_PO.VisibleIndex = 8;
                 gridCol_Due_Date_PO.Width = 120;
                 gridCol_Due_Date_PO.DisplayFormat.FormatString = "dd/MM/yyyy";
                 gridCol_Due_Date_PO.DisplayFormat.FormatType = FormatType.DateTime;
@@ -995,7 +981,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Qty.Name = "gridCol_Qty";
                 gridCol_Qty.Caption = "QUANTITY";
                 gridCol_Qty.FieldName = "QUANTITY";
-                gridCol_Qty.VisibleIndex = 10;
+                gridCol_Qty.VisibleIndex = 9;
                 gridCol_Qty.Width = 120;
                 gridCol_Qty.DisplayFormat.FormatString = "#,##0";
                 gridCol_Qty.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1008,7 +994,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Qty_Revise.Name = "gridCol_Qty_Revise";
                 gridCol_Qty_Revise.Caption = "QUANTITY REVISE";
                 gridCol_Qty_Revise.FieldName = "QUANTITY_REVISE";
-                gridCol_Qty_Revise.VisibleIndex = 11;
+                gridCol_Qty_Revise.VisibleIndex = 10;
                 gridCol_Qty_Revise.Width = 120;
                 gridCol_Qty_Revise.DisplayFormat.FormatString = "#,##0";
                 gridCol_Qty_Revise.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1020,7 +1006,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Balance.Name = "gridCol_Balance";
                 gridCol_Balance.Caption = "BALANCE";
                 gridCol_Balance.FieldName = "INV_BALANCE";
-                gridCol_Balance.VisibleIndex = 12;
+                gridCol_Balance.VisibleIndex = 11;
                 gridCol_Balance.Width = 120;
                 gridCol_Balance.DisplayFormat.FormatString = "#,##0";
                 gridCol_Balance.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1031,7 +1017,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Unit_Currency.Name = "gridCol_Unit_Currency";
                 gridCol_Unit_Currency.Caption = "UNIT CURRENTCY";
                 gridCol_Unit_Currency.FieldName = "UNIT_CURRENCY";
-                gridCol_Unit_Currency.VisibleIndex = 13;
+                gridCol_Unit_Currency.VisibleIndex = 12;
                 gridCol_Unit_Currency.Width = 100;
 
                 gridCol_Unit_Currency.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
@@ -1040,7 +1026,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_InvEx_Rate.Name = "gridCol_InvEx_Rate";
                 gridCol_InvEx_Rate.Caption = "Ex. RATE";
                 gridCol_InvEx_Rate.FieldName = "USD_RATE";
-                gridCol_InvEx_Rate.VisibleIndex = 14;
+                gridCol_InvEx_Rate.VisibleIndex = 13;
                 gridCol_InvEx_Rate.Width = 100;
                 gridCol_InvEx_Rate.DisplayFormat.FormatString = "#,##0.####";
                 gridCol_InvEx_Rate.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1051,7 +1037,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Order_Price.Name = "gridCol_Order_Price";
                 gridCol_Order_Price.Caption = "ORDER PRICE";
                 gridCol_Order_Price.FieldName = "ORDER_PRICE";
-                gridCol_Order_Price.VisibleIndex = 15;
+                gridCol_Order_Price.VisibleIndex = 14;
                 gridCol_Order_Price.Width = 120;
                 gridCol_Order_Price.DisplayFormat.FormatString = "#,##0.####";
                 gridCol_Order_Price.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1062,7 +1048,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Order_Price_Revise.Name = "gridCol_Order_Price_Revise";
                 gridCol_Order_Price_Revise.Caption = "ORDER PRICE REVISE";
                 gridCol_Order_Price_Revise.FieldName = "ORDER_PRICE_REVISE";
-                gridCol_Order_Price_Revise.VisibleIndex = 16;
+                gridCol_Order_Price_Revise.VisibleIndex = 15;
                 gridCol_Order_Price_Revise.Width = 130;
                 gridCol_Order_Price_Revise.DisplayFormat.FormatString = "#,##0.####";
                 gridCol_Order_Price_Revise.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1074,7 +1060,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Global_Price.Name = "gridCol_Global_Price";
                 gridCol_Global_Price.Caption = "GLOBAL PRICE";
                 gridCol_Global_Price.FieldName = "PRICE";
-                gridCol_Global_Price.VisibleIndex = 17;
+                gridCol_Global_Price.VisibleIndex = 16;
                 gridCol_Global_Price.Width = 130;
                 gridCol_Global_Price.DisplayFormat.FormatString = "#,##0.####";
                 gridCol_Global_Price.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1085,7 +1071,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Amount_Total.Name = "gridCol_Amount_Total";
                 gridCol_Amount_Total.Caption = "AMOUNT TOTAL";
                 gridCol_Amount_Total.FieldName = "AMOUNT_JPY";
-                gridCol_Amount_Total.VisibleIndex = 18;
+                gridCol_Amount_Total.VisibleIndex = 17;
                 gridCol_Amount_Total.Width = 120;
                 gridCol_Amount_Total.DisplayFormat.FormatString = "#,##0.####";
                 gridCol_Amount_Total.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1098,7 +1084,6 @@ namespace TAKAKO_ERP_3LAYER
                 gridView_Invoice.Columns.Add(gridCol_Item_Name);
                 gridView_Invoice.Columns.Add(gridCol_Cus_Item_Code);
                 gridView_Invoice.Columns.Add(gridCol_TVC_Item_Code);
-                gridView_Invoice.Columns.Add(gridCol_Btn_Search_PO);
                 gridView_Invoice.Columns.Add(gridCol_Customer_PO);
                 gridView_Invoice.Columns.Add(gridCol_Third_Party_Item_Code);
                 gridView_Invoice.Columns.Add(gridCol_Third_Party_PO);
@@ -1113,13 +1098,6 @@ namespace TAKAKO_ERP_3LAYER
                 gridView_Invoice.Columns.Add(gridCol_Order_Price_Revise);
                 gridView_Invoice.Columns.Add(gridCol_Global_Price);
                 gridView_Invoice.Columns.Add(gridCol_Amount_Total);
-
-                // Setting GridView
-                gridView_Invoice.OptionsNavigation.AutoFocusNewRow = true;
-                gridView_Invoice.OptionsView.ColumnAutoWidth = false;
-                gridView_Invoice.OptionsView.ShowFooter = true;
-                gridView_Invoice.OptionsView.ColumnHeaderAutoHeight = DefaultBoolean.True;
-                gridView_Invoice.HorzScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
 
                 // Set common attribute
                 foreach (GridColumn c in gridView_Invoice.Columns)
@@ -1341,9 +1319,9 @@ namespace TAKAKO_ERP_3LAYER
             {
                 //--------------------- Header ---------------------//
                 cb_CompanyCode.Enabled                  = true;
-                dtpETA.Enabled                          = true;
-                dtpETD.Enabled                          = true;
-                dtpDateCreateShipping.Enabled           = true;
+                dateEdit_ETA.Enabled                    = true;
+                dateEdit_ETD.Enabled                    = true;
+                dateEdit_DateCreateShipping.Enabled     = true;
                 txtInvoiceNo.ReadOnly                   = false;
                 sLookUp_IssuedTo_CompanyCode.ReadOnly   = false;
                 txtIssuedTo_CompanyName.ReadOnly        = false;
@@ -1358,7 +1336,7 @@ namespace TAKAKO_ERP_3LAYER
                 txtShipTo_FaxNo.ReadOnly                = false;
 
                 txtShipVia.ReadOnly                     = false;
-                dtpRevenue.Enabled                      = true;
+                dateEdit_Revenue.Enabled                      = true;
                 cb_Freight.Enabled                      = true;
                 txtVessel.ReadOnly                      = false;
                 sLookUp_PortLoading.ReadOnly            = false;
@@ -1486,9 +1464,9 @@ namespace TAKAKO_ERP_3LAYER
                 //--------------------- Header ---------------------//
                 //---- Disable ----//
                 cb_CompanyCode.Enabled = false;
-                dtpETA.Enabled = false;
-                dtpETD.Enabled = false;
-                dtpDateCreateShipping.Enabled = false;
+                dateEdit_ETA.Enabled = false;
+                dateEdit_ETD.Enabled  = false;
+                dateEdit_DateCreateShipping.Enabled = false;
                 txtInvoiceNo.ReadOnly = true;
                 sLookUp_IssuedTo_CompanyCode.ReadOnly = true;
                 txtIssuedTo_CompanyName.ReadOnly = true;
@@ -1503,7 +1481,7 @@ namespace TAKAKO_ERP_3LAYER
                 txtShipTo_FaxNo.ReadOnly = true;
 
                 txtShipVia.ReadOnly = true;
-                dtpRevenue.Enabled = false;
+                dateEdit_Revenue.Enabled = false;
                 cb_Freight.Enabled = false;
                 txtVessel.ReadOnly = true;
                 sLookUp_PortLoading.ReadOnly = true;
@@ -1527,7 +1505,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridView_PackingList.OptionsBehavior.AllowDeleteRows = DefaultBoolean.False;
 
                 //---------------- Gridview Invoice ----------------//
-                //---- Disable ----//
+                //---- Disable ----// 
                 gridView_Invoice.Columns["gridCol_Qty_Revise"].Visible = false;
                 gridView_Invoice.Columns["gridCol_Qty_Revise"].AppearanceCell.BackColor = Color.Gray;
 
@@ -1634,9 +1612,9 @@ namespace TAKAKO_ERP_3LAYER
             {
                 //--------------------- Header ---------------------//
                 cb_CompanyCode.Enabled = false;
-                dtpETA.Enabled = false;
-                dtpETD.Enabled = false;
-                dtpDateCreateShipping.Enabled = false;
+                dateEdit_ETA.Enabled = false;
+                dateEdit_ETD.Enabled  = false;
+                dateEdit_DateCreateShipping.Enabled = false;
                 txtInvoiceNo.ReadOnly = true;
                 sLookUp_IssuedTo_CompanyCode.ReadOnly = true;
                 txtIssuedTo_CompanyName.ReadOnly = true;
@@ -1651,7 +1629,7 @@ namespace TAKAKO_ERP_3LAYER
                 txtShipTo_FaxNo.ReadOnly = true;
 
                 txtShipVia.ReadOnly = true;
-                dtpRevenue.Enabled = false;
+                dateEdit_Revenue.Enabled = false;
                 cb_Freight.Enabled = false;
                 txtVessel.ReadOnly = true;
                 sLookUp_PortLoading.ReadOnly = true;
@@ -1785,7 +1763,7 @@ namespace TAKAKO_ERP_3LAYER
             int columnIndex = 0;
             int rowIndex = 0;
             String _unitCurrency = "";
-            DateTime _dateCreateInvoice = dtpDateCreateShipping.Value;
+            DateTime _dateCreateInvoice = Convert.ToDateTime(dateEdit_DateCreateShipping.EditValue);
 
             if (e.RowIndex >= 0)
             {
@@ -2363,7 +2341,7 @@ namespace TAKAKO_ERP_3LAYER
                     invoiceMS["ShippingNo"] = _shippingNo;
                     invoiceMS["InvoiceNo"] = _invoiceNo;
                     invoiceMS["InvoiceNo"] = "";
-                    invoiceMS["DateCreate"] = dtpDateCreateShipping.Value;
+                    invoiceMS["DateCreate"] = dateEdit_DateCreateShipping.EditValue;
                     invoiceMS["IssuedToCode"] = Convert.ToString(sLookUp_IssuedTo_CompanyCode.EditValue).Trim();
                     invoiceMS["IssuedToName"] = txtIssuedTo_CompanyName.Text.Trim();
                     invoiceMS["IssuedToAddress"] = Convert.ToString(memo_IssuedTo_CompanyAddress.EditValue).Trim();
@@ -2374,14 +2352,14 @@ namespace TAKAKO_ERP_3LAYER
                     invoiceMS["ShipToAddress"] = Convert.ToString(memo_ShipTo_CompanyAddress.EditValue).Trim();
                     invoiceMS["ShipToTelNo"] = txtShipTo_TelNo.Text.Trim();
                     invoiceMS["ShipToFaxNo"] = txtShipTo_FaxNo.Text.Trim();
-                    invoiceMS["Revenue"] = dtpRevenue.Value.ToString("MM/yyyy");
+                    invoiceMS["Revenue"] = Convert.ToString(dateEdit_Revenue.EditValue);
                     invoiceMS["ShipVia"] = txtShipVia.Text.Trim();
                     invoiceMS["Freight"] = Convert.ToInt32(cb_Freight.SelectedValue);
                     invoiceMS["Vessel"] = txtVessel.Text.Trim();
                     invoiceMS["PortLoading"] = Convert.ToString(sLookUp_PortLoading.EditValue).Trim();
                     invoiceMS["PortDestination"] = Convert.ToString(sLookUp_PortDestination).Trim();
-                    invoiceMS["ETD"] = dtpETD.Value;
-                    invoiceMS["ETA"] = dtpETA.Value;
+                    invoiceMS["ETD"] = dateEdit_ETD.EditValue;
+                    invoiceMS["ETA"] = dateEdit_ETA.EditValue;
                     invoiceMS["TradeCondition"] = Convert.ToString(sLookUp_PriceCondition.EditValue).Trim();
                     invoiceMS["PaymentTerm"] = Convert.ToString(sLookUp_PaymentTerm.EditValue).Trim();
                     invoiceMS["CreateBy"] = _systemDAL.UserName;
@@ -2919,7 +2897,7 @@ namespace TAKAKO_ERP_3LAYER
                         cb_CompanyCode.SelectedValue = Convert.ToString(row["COMPANY_CODE"]);
 
                         //DATE CREATE SHIPPING
-                        dtpDateCreateShipping.Value = Convert.ToDateTime(row["DATE_CREATE"]);
+                        dateEdit_DateCreateShipping.EditValue = Convert.ToDateTime(row["DATE_CREATE"]);
 
                         ////SHIPPING NO
                         //txtShippingNo.Text = row["SHIPPING_NO"].ToString();
@@ -2953,12 +2931,12 @@ namespace TAKAKO_ERP_3LAYER
                         if (!String.IsNullOrEmpty(Convert.ToString(row["REVENUE"])))
                         {
                             //REVENUE
-                            dtpRevenue.Value = Convert.ToDateTime(row["REVENUE"]);
+                            dateEdit_Revenue.EditValue = Convert.ToDateTime(row["REVENUE"]);
                         }
                         else
                         {
                             //REVENUE
-                            dtpRevenue.Value = DateTime.MinValue;
+                            dateEdit_Revenue.EditValue = DateTime.MinValue;
                         }
 
                         //SHIP VIA
@@ -2977,10 +2955,10 @@ namespace TAKAKO_ERP_3LAYER
                         sLookUp_PortDestination.EditValue = Convert.ToString(row["PORT_OF_DESTINATION"]);
 
                         //ETD
-                        dtpETD.Value = Convert.ToDateTime(row["ETD"]);
+                        dateEdit_ETD.EditValue = Convert.ToDateTime(row["ETD"]);
 
                         //ETA
-                        dtpETA.Value = Convert.ToDateTime(row["ETA"]);
+                        dateEdit_ETA.EditValue = Convert.ToDateTime(row["ETA"]);
 
                         //TRADE CONDITION
                         sLookUp_PriceCondition.Text = Convert.ToString(row["TRADE_CONDITION"]);
@@ -3099,12 +3077,12 @@ namespace TAKAKO_ERP_3LAYER
                 return false;
             }
 
-            //if (String.IsNullOrEmpty(txtShippingNo.Text.Trim()))
-            //{
-            //    MessageBox.Show("Xin hãy nhập 「Shipping No」!");
-            //    txtShippingNo.Focus();
-            //    return false;
-            //}
+            if (String.IsNullOrEmpty(Convert.ToString(sLookUp_ShippingNo.EditValue)))
+            {
+                MessageBox.Show("Xin hãy nhập 「Shipping No」!");
+                sLookUp_ShippingNo.Focus();
+                return false;
+            }
 
             if (String.IsNullOrEmpty(txtIssuedTo_CompanyName.Text.Trim()))
             {
@@ -3119,10 +3097,10 @@ namespace TAKAKO_ERP_3LAYER
                 return false;
             }
 
-            if (dtpRevenue.Value == DateTime.MinValue)
+            if (Convert.ToDateTime(dateEdit_Revenue.EditValue) == DateTime.MinValue)
             {
                 MessageBox.Show("Xin hãy chọn「Revenue」!\nShipping thuộc doanh thu của tháng nào!");
-                dtpRevenue.Focus();
+                dateEdit_Revenue.Focus();
                 return false;
             }
 
@@ -3369,7 +3347,7 @@ namespace TAKAKO_ERP_3LAYER
                 cb_CompanyCode.SelectedValue            = _headerShipping.COMPANY_CODE;
 
                 //DATE CREATE SHIPPING
-                dtpDateCreateShipping.Value             = _headerShipping.DATE_CREATE;
+                dateEdit_DateCreateShipping.EditValue   = _headerShipping.DATE_CREATE;
 
                 //INVOICE NO
                 txtInvoiceNo.Text                       = _headerShipping.INVOICE_NO;
@@ -3399,12 +3377,12 @@ namespace TAKAKO_ERP_3LAYER
                 if (!String.IsNullOrEmpty(_headerShipping.REVENUE))
                 {
                     //REVENUE
-                    dtpRevenue.Value = Convert.ToDateTime(_headerShipping.REVENUE);
+                    dateEdit_Revenue.EditValue = Convert.ToDateTime(_headerShipping.REVENUE);
                 }
                 else
                 {
                     //REVENUE
-                    dtpRevenue.Value = DateTime.MinValue;
+                    dateEdit_Revenue.EditValue = Convert.ToDateTime(DateTime.MinValue);
                 }
 
                 //SHIP VIA
@@ -3423,10 +3401,10 @@ namespace TAKAKO_ERP_3LAYER
                 sLookUp_PortDestination.EditValue       = _headerShipping.PORT_OF_DESTINATION;
 
                 //ETD
-                dtpETD.Value                            = _headerShipping.ETD;
+                dateEdit_ETD.EditValue                  = _headerShipping.ETD;
 
                 //ETA
-                dtpETA.Value                            = _headerShipping.ETA;
+                dateEdit_ETD.EditValue                  = _headerShipping.ETA;
 
                 //TRADE CONDITION
                 sLookUp_PriceCondition.Text             = _headerShipping.TRADE_CONDITION;
