@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Search_PO_New));
             this.ribbon = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.barBtn_ImportData = new DevExpress.XtraBars.BarButtonItem();
-            this.barBtn_SaveData = new DevExpress.XtraBars.BarButtonItem();
+            this.barBtn_Output_Data_Excel = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -49,7 +49,7 @@
             this.ribbon.ExpandCollapseItem,
             this.ribbon.SearchEditItem,
             this.barBtn_ImportData,
-            this.barBtn_SaveData});
+            this.barBtn_Output_Data_Excel});
             this.ribbon.Location = new System.Drawing.Point(0, 0);
             this.ribbon.MaxItemId = 3;
             this.ribbon.Name = "ribbon";
@@ -60,21 +60,21 @@
             // 
             // barBtn_ImportData
             // 
-            this.barBtn_ImportData.Caption = "Import Data Excel";
+            this.barBtn_ImportData.Caption = "&Import Data Excel";
             this.barBtn_ImportData.Id = 1;
             this.barBtn_ImportData.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barBtn_ImportData.ImageOptions.Image")));
             this.barBtn_ImportData.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barBtn_ImportData.ImageOptions.LargeImage")));
             this.barBtn_ImportData.Name = "barBtn_ImportData";
             this.barBtn_ImportData.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barBtn_ImportData_ItemClick);
             // 
-            // barBtn_SaveData
+            // barBtn_Output_Data_Excel
             // 
-            this.barBtn_SaveData.Caption = "Save Data";
-            this.barBtn_SaveData.Id = 2;
-            this.barBtn_SaveData.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barBtn_SaveData.ImageOptions.Image")));
-            this.barBtn_SaveData.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barBtn_SaveData.ImageOptions.LargeImage")));
-            this.barBtn_SaveData.Name = "barBtn_SaveData";
-            this.barBtn_SaveData.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barBtn_SaveData_ItemClick);
+            this.barBtn_Output_Data_Excel.Caption = "&Output Data Excel";
+            this.barBtn_Output_Data_Excel.Id = 2;
+            this.barBtn_Output_Data_Excel.ImageOptions.Image = global::TAKAKO_ERP_3LAYER.Properties.Resources.exporttoxlsx_16x162;
+            this.barBtn_Output_Data_Excel.ImageOptions.LargeImage = global::TAKAKO_ERP_3LAYER.Properties.Resources.exporttoxlsx_32x322;
+            this.barBtn_Output_Data_Excel.Name = "barBtn_Output_Data_Excel";
+            this.barBtn_Output_Data_Excel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barBtn_SaveData_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -85,7 +85,7 @@
             // ribbonPageGroup1
             // 
             this.ribbonPageGroup1.ItemLinks.Add(this.barBtn_ImportData);
-            this.ribbonPageGroup1.ItemLinks.Add(this.barBtn_SaveData);
+            this.ribbonPageGroup1.ItemLinks.Add(this.barBtn_Output_Data_Excel);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             // 
             // ribbonStatusBar
@@ -143,7 +143,7 @@
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraBars.Ribbon.RibbonStatusBar ribbonStatusBar;
         private DevExpress.XtraBars.BarButtonItem barBtn_ImportData;
-        private DevExpress.XtraBars.BarButtonItem barBtn_SaveData;
+        private DevExpress.XtraBars.BarButtonItem barBtn_Output_Data_Excel;
         private DevExpress.XtraGrid.GridControl gridControl_Search_PO;
         private DevExpress.XtraGrid.Views.Grid.GridView View_PO_List;
     }

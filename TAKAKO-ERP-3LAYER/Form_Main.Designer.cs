@@ -607,6 +607,7 @@
             this.tab_MainMenu.SelectedIndex = 0;
             this.tab_MainMenu.Size = new System.Drawing.Size(984, 595);
             this.tab_MainMenu.TabIndex = 1;
+            this.tab_MainMenu.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tab_MainMenu_KeyDown);
             // 
             // tabMain
             // 
@@ -902,7 +903,7 @@
             this.lbl_Shipping.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.lbl_Shipping.Size = new System.Drawing.Size(154, 54);
             this.lbl_Shipping.TabIndex = 0;
-            this.lbl_Shipping.Text = "Shipping Instruction";
+            this.lbl_Shipping.Text = "&Shipping Instruction";
             this.lbl_Shipping.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.lbl_Shipping.Click += new System.EventHandler(this.lbl_ShippingNo_Click);
             this.lbl_Shipping.MouseEnter += new System.EventHandler(this.lbl_ShippingNo_MouseEnter);

@@ -401,6 +401,8 @@
     <None Include="Resources\unprotectdocument_16x16.png" />
     <None Include="Resources\bo_security_permission.svg" />
     <None Include="Resources\insertgroupfooter.svg" />
+    <None Include="Resources\prev.svg" />
+    <None Include="Resources\icons8-undo-52.png" />
     <Content Include="Takako_Entites.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Takako_Entites.edmx</DependentUpon>

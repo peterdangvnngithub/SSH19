@@ -491,26 +491,26 @@ namespace TAKAKO_ERP_3LAYER
                 {
                     GridView_Search.DataSource = _searchDAO.GetInfoPO(_searchValue);
                 }
-                else if (_caseSearch == "btnSearch_ShippingNo")
-                {
-                    GridView_Search.DataSource = _searchDAO.GetInfoShipping(_searchValue,filter1);
-                    //
-                    foreach (DataGridViewRow row in GridView_Search.Rows)
-                    {
-                        if (row.Cells["Lock_Status"].Value.ToString() == "0")
-                        {
-                            row.Cells["Lock_Status"].Value = "NORMAL";
-                        }
-                        else if (row.Cells["Lock_Status"].Value.ToString() == "1")
-                        {
-                            row.Cells["Lock_Status"].Value = "LOCK";
-                        }
-                        else if (row.Cells["Lock_Status"].Value.ToString() == "2")
-                        {
-                            row.Cells["Lock_Status"].Value = "REVISE";
-                        }
-                    }
-                }
+                //else if (_caseSearch == "btnSearch_ShippingNo")
+                //{
+                //    GridView_Search.DataSource = _searchDAO.GetInfoShipping(_searchValue,filter1);
+                //    //
+                //    foreach (DataGridViewRow row in GridView_Search.Rows)
+                //    {
+                //        if (row.Cells["Lock_Status"].Value.ToString() == "0")
+                //        {
+                //            row.Cells["Lock_Status"].Value = "NORMAL";
+                //        }
+                //        else if (row.Cells["Lock_Status"].Value.ToString() == "1")
+                //        {
+                //            row.Cells["Lock_Status"].Value = "LOCK";
+                //        }
+                //        else if (row.Cells["Lock_Status"].Value.ToString() == "2")
+                //        {
+                //            row.Cells["Lock_Status"].Value = "REVISE";
+                //        }
+                //    }
+                //}
                 else if (_caseSearch == "btnSearch_Inv")
                 {
                     GridView_Search.DataSource = _searchDAO.GetInfoInvoice(_searchValue);

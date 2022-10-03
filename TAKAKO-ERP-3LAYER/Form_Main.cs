@@ -102,7 +102,11 @@ namespace TAKAKO_ERP_3LAYER
         {
             this.Hide();
 
-            Form_Shipping_Instruction _formInv_PL = new Form_Shipping_Instruction(_systemDAL);
+            //Form_Shipping_Instruction _formInv_PL = new Form_Shipping_Instruction(_systemDAL);
+            //_formInv_PL.StartPosition = FormStartPosition.CenterScreen;
+            //_formInv_PL.Show();
+
+            Form_Shipping_Instruction_New _formInv_PL = new Form_Shipping_Instruction_New(_systemDAL);
             _formInv_PL.StartPosition = FormStartPosition.CenterScreen;
             _formInv_PL.Show();
         }
@@ -389,7 +393,8 @@ namespace TAKAKO_ERP_3LAYER
                         if (row["TYPE"].ToString().ToUpper() == "NEW")
                         {
                             lbl_NewLog.Text = row["COUNT_BY_TYPE"].ToString();
-                        } else if (row["TYPE"].ToString().ToUpper() == "EDIT")
+                        }
+                        else if (row["TYPE"].ToString().ToUpper() == "EDIT")
                         {
                             lbl_EditLog.Text = row["COUNT_BY_TYPE"].ToString();
                         }
@@ -407,6 +412,25 @@ namespace TAKAKO_ERP_3LAYER
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void tab_MainMenu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Alt && e.KeyCode == Keys.S)
+            {
+                lbl_ShippingNo_Click(sender, e);
+            } else if (e.Alt && e.KeyCode == Keys.P)
+            {
+                lbl_PO_Click(sender, e);
+            }
+            else if (e.Alt && e.KeyCode == Keys.I)
+            {
+                lbl_Invoice_Click(sender, e);
+            }
+            else if (e.Alt && e.KeyCode == Keys.E)
+            {
+                lbl_Excel_Click(sender, e);
             }
         }
     }

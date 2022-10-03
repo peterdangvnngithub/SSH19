@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Data;
 using System.Linq;
-using System.Text;
 using System.Drawing;
 using DevExpress.XtraBars;
 using System.Windows.Forms;
-using System.ComponentModel;
-using System.Threading.Tasks;
-using System.Collections.Generic;
 using DevExpress.XtraGrid.Columns;
 using DevExpress.Utils;
 using TAKAKO_ERP_3LAYER.DAL;
@@ -22,7 +17,6 @@ namespace TAKAKO_ERP_3LAYER
         string customerCode;
         string unitCurrency;
         string companyCode;
-        DateTime dateCreateInvoice;
         private readonly Form_Shipping_Instruction form_Shipping_Instruction;
 
         private GridColumn gridCol_Company_Code = new GridColumn();
@@ -39,7 +33,12 @@ namespace TAKAKO_ERP_3LAYER
         private GridColumn gridCol_Order_Price = new GridColumn();
         private GridColumn gridCol_Note = new GridColumn();        
 
-        public Form_Search_PO_New(SYSTEM_DAL _systemDAL,string _companyCode,string _customerCode, string _unitCurrency, DateTime _dateCreateInvoice, Form_Shipping_Instruction _formShippingIns)
+        public Form_Search_PO_New(
+            SYSTEM_DAL _systemDAL,
+            string _companyCode,
+            string _customerCode,
+            string _unitCurrency,
+            Form_Shipping_Instruction _formShippingIns)
         {
             InitializeComponent();
 
@@ -47,7 +46,6 @@ namespace TAKAKO_ERP_3LAYER
             companyCode = _companyCode;
             customerCode = _customerCode;
             unitCurrency = _unitCurrency;
-            dateCreateInvoice = _dateCreateInvoice;
 
             form_Shipping_Instruction = _formShippingIns;
         }
@@ -134,10 +132,13 @@ namespace TAKAKO_ERP_3LAYER
 		            ON		MS.[CUSTOMER_ITEM_CODE]	    =	S.[GLOBAL_CODE] 
 		            AND     MS.[UNIT_CURRENCY]          =	S.[PRICE_UNIT]
 		            WHERE
-		            		MS.COMPANY_CODE				=	@CompanyCode
-		            AND		MS.CUSTOMER_CODE			=	@CustomerCode
-		            AND		MS.UNIT_CURRENCY			=	@UnitCurrency
+                    		MS.COMPANY_CODE				=	@CompanyCode
+                    AND		MS.CUSTOMER_CODE			=	@CustomerCode
 		            AND		(MS.[QUANTITY] - ISNULL(MS.[QUANTITY_ORDER], 0)) > 0
+                    AND		(
+                                @UnitCurrency IS NULL 
+                                    OR MS.UNIT_CURRENCY =	@UnitCurrency
+                            )
 		            ORDER BY
 		            		MS.[DUE_DATE]";
                 var result = db.Database.SqlQuery<SearchPOInfo>(sqlQuery, xparams).ToList();

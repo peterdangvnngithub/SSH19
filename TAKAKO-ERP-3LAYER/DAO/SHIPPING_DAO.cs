@@ -98,74 +98,84 @@ namespace TAKAKO_ERP_3LAYER.DAO
         /// </summary>
         /// <param name="_shippingNo"></param>
         /// <returns></returns>
-        public DataTable GetDetail_ShipInv(string _shippingNo)
+        public List<TVC_SHIPPING_INV_DETAIL> GetDetail_ShipInv(string _shippingNo)
         {
             string StrQuery = "";
-
-            StrQuery = @"SELECT 
-                                     INV.[SHIPPING_NO]                      AS  INV_SHIPPING_NO
-                                    ,INV.[CUSTOMER_CODE]                    AS  INV_CUSTOMER_CODE
-                                    ,INV.[PART_DESCRIPTION]                 AS  INV_ITEM_NAME
-                                    ,INV.[CUS_ITEM_CODE]                    AS  INV_CUS_ITEM_CODE
-                                    ,INV.[TVC_ITEM_CODE]                    AS  INV_ITEM_CODE
-                                    ,INV.[CUSTOMER_PO]                      AS  INV_REF_PO_NO
-                                    ,INV.[THIRD_PARTY_PO]                   AS  THIRD_PARTY_PO
-                                    ,INV.[ORDER_DATE]                       AS  ORDER_DATE
-                                    ,INV.[DUE_DATE_PO]                      AS  DUE_DATE_PO
-                                    ,ISNULL(INV.[QUANTITY],0)               AS  INV_QUANTITY
-                                    ,ISNULL(INV.[QUANTITY_REVISE],0)        AS  INV_QUANTITY_REVISE
-                                    ,ISNULL(INV.[BALANCE],0)                AS  INV_BALANCE
-                                    ,INV.[UNIT_CURRENCY]                    AS  INV_UNIT_CURRENCY
-                                    ,ISNULL(INV.[USD_RATE],0)               AS  INV_USD_RATE
-                                    ,ISNULL(INV.[ORDER_PRICE],0)            AS  INV_ORDER_PRICE
-                                    ,ISNULL(INV.[ORDER_PRICE_REVISE],0)     AS  INV_ORDER_PRICE_REVISE
-                                    ,ISNULL(GLB.[PRICE],0)                  AS  GLOBAL_PRICE
-                                    ,INV.[AMOUNT]                           AS  INV_AMOUNT
-                        FROM 
-                                    [dbo].[TVC_SHIPPING_INV_DETAIL]  INV
-                        LEFT JOIN	(
-                                        SELECT DISTINCT
-                                        	 GLB.GLOBAL_CODE
-                                        	,PRICE_UNIT
-                                        	,PRICE
-                                        	,GLB.APPLYDATE
-                                        FROM
-                                        	[dbo].[SPRICE_GLOBALMF] GLB
-                                        INNER JOIN
-                                        	(
-                                                SELECT
-                                                     GLOBAL_CODE
-                                                    ,MAX(GLB.APPLYDATE) AS  APPLYDATE
-                		                        FROM
-                                                    [dbo].[SPRICE_GLOBALMF] GLB
-						                        INNER JOIN
-                                                    TVC_SHIPPING_INV_DETAIL DT
-						                        ON  GLB.GLOBAL_CODE =	DT.CUS_ITEM_CODE
-						                        --INNER JOIN
-                                                --    TVC_SHIPPING_MS MS
-						                        --ON  MS.SHIPPING_NO	=	DT.SHIPPING_NO
-						                        WHERE
-                                                    GLB.APPLYDATE   <=  GETDATE()
-                                                AND GLB.INV_DV      <> '*'          --PRICE ACTIVE
-                                                AND DT.SHIPPING_NO  =   CONCAT('',@shippingNo,'')
-                		                        GROUP BY
-                                                    GLOBAL_CODE
-                                        	) GLB_MAX
-                                        ON
-                                        	GLB.GLOBAL_CODE	=	GLB_MAX.GLOBAL_CODE
-                                        AND	GLB.APPLYDATE	=	GLB_MAX.APPLYDATE
-                                        WHERE
-                                            GLB.INV_DV      <> '*'
-                                    ) GLB
-                        ON      INV.CUS_ITEM_CODE   =   GLB.GLOBAL_CODE   
-                        AND     INV.UNIT_CURRENCY   =   GLB.PRICE_UNIT
+            using (Takako_Entities db = new Takako_Entities())
+            {
+                StrQuery =
+                @"SELECT 
+                         INV.[INV_DETAIL_NUM]
+                        ,INV.[COMPANY_CODE]
+                        ,INV.[CUSTOMER_CODE]
+                        ,INV.[SHIPPING_NO]
+                        ,INV.[INVOICE_NO]
+                        ,INV.[REVISE_NO]
+                        ,INV.[REVISE_DATE]
+                        ,INV.[REVISE_VERSION]
+                        ,INV.[PART_DESCRIPTION]
+                        ,INV.[CUS_ITEM_CODE]
+                        ,INV.[TVC_ITEM_CODE]
+                        ,INV.[CUSTOMER_PO]
+                        ,INV.[THIRD_PARTY_ITEM_CODE]
+                        ,INV.[THIRD_PARTY_PO]
+                        ,INV.[ORDER_DATE]
+                        ,INV.[DUE_DATE_PO]
+                        ,ISNULL(INV.[QUANTITY],0)               AS  QUANTITY
+                        ,ISNULL(INV.[QUANTITY_REVISE],0)        AS  QUANTITY_REVISE
+                        ,ISNULL(INV.[BALANCE],0)                AS  BALANCE
+                        ,INV.[UNIT_CURRENCY]
+                        ,ISNULL(INV.[USD_RATE],0)               AS  USD_RATE
+                        ,ISNULL(INV.[ORDER_PRICE],0)            AS  ORDER_PRICE
+                        ,ISNULL(INV.[ORDER_PRICE_REVISE],0)     AS  ORDER_PRICE_REVISE
+                        ,ISNULL(GLB.[PRICE],0)                  AS  GLOBAL_PRICE
+                        ,INV.[AMOUNT]
+                        ,INV.[NOTE]
+                        ,INV.[CREATE_BY]
+                        ,INV.[CREATE_AT]
+                        ,INV.[EDIT_BY]
+                        ,INV.[EDIT_AT]
+                FROM 
+                        [dbo].[TVC_SHIPPING_INV_DETAIL]  INV
+                LEFT JOIN (
+                        SELECT DISTINCT
+                        	     GLB.GLOBAL_CODE
+                        	    ,PRICE_UNIT
+                        	    ,PRICE
+                        	    ,GLB.APPLYDATE
+                        FROM
+                        	    [dbo].[SPRICE_GLOBALMF] GLB
+                        INNER JOIN (
+                                SELECT
+                                     GLOBAL_CODE
+                                    ,MAX(GLB.APPLYDATE) AS  APPLYDATE
+                                FROM
+                                    [dbo].[SPRICE_GLOBALMF] GLB
+				                INNER JOIN
+                                    TVC_SHIPPING_INV_DETAIL DT
+				                ON  GLB.GLOBAL_CODE =	DT.CUS_ITEM_CODE
+				                WHERE
+                                    GLB.APPLYDATE   <=  GETDATE()
+                                AND GLB.INV_DV      <> '*'          --PRICE ACTIVE
+                                AND DT.SHIPPING_NO  =   CONCAT('',@shippingNo,'')
+                                GROUP BY
+                                    GLOBAL_CODE
+                        ) GLB_MAX
+                        ON
+                        	GLB.GLOBAL_CODE	=	GLB_MAX.GLOBAL_CODE
+                        AND	GLB.APPLYDATE	=	GLB_MAX.APPLYDATE
                         WHERE
-                                INV.SHIPPING_NO     =   CONCAT('',@shippingNo,'')";
-            SqlParameter[] sqlParameters = new SqlParameter[1];
-            sqlParameters[0] = new SqlParameter("@shippingNo", SqlDbType.VarChar);
-            sqlParameters[0].Value = Convert.ToString(_shippingNo);
+                            GLB.INV_DV      <> '*'
+                ) GLB
+                ON      INV.CUS_ITEM_CODE   =   GLB.GLOBAL_CODE   
+                AND     INV.UNIT_CURRENCY   =   GLB.PRICE_UNIT
+                WHERE
+                        INV.SHIPPING_NO     =   @shippingNo";
 
-            return conn.executeSelectQuery(StrQuery, sqlParameters);
+                List<TVC_SHIPPING_INV_DETAIL> result = db.Database.SqlQuery<TVC_SHIPPING_INV_DETAIL>(StrQuery, new SqlParameter("@shippingNo",_shippingNo)).ToList();
+
+                return result;
+            }
         }
 
         public DataTable GetDetail_ShipPL(string _shippingNo)

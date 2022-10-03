@@ -2971,7 +2971,7 @@ namespace TAKAKO_ERP_3LAYER
                     }
 
                     //Grid data
-                    Grid_Invoice = _shippingDAO.GetDetail_ShipInv(_shippingNo);
+                    //Grid_Invoice = _shippingDAO.GetDetail_ShipInv(_shippingNo);
                     if (Grid_Invoice.Rows.Count == 0)
                     {
                         //MessageBox.Show("Không có dữ liệu!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);

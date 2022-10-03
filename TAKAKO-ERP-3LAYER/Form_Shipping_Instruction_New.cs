@@ -7,7 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 using TAKAKO_ERP_3LAYER.DAL;
+using TAKAKO_ERP_3LAYER.DAO;
 using static TAKAKO_ERP_3LAYER.Model;
 
 namespace TAKAKO_ERP_3LAYER
@@ -16,21 +18,20 @@ namespace TAKAKO_ERP_3LAYER
     {
         public SYSTEM_DAL _systemDAL;
 
+        public SHIPPING_DAO _shippingDAO = new SHIPPING_DAO();
+
+        public enum EnumRevise
+        {
+              Normal = 0
+            , Lock = 1
+        };
+
+        #region Form Event
         public Form_Shipping_Instruction_New(SYSTEM_DAL _formMainSystemDAL)
         {
             InitializeComponent();
 
             _systemDAL = _formMainSystemDAL;
-        }
-
-        private void sLookUp_IssuedTo_CompanyCode_EditValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void sLookUp_ShipTo_CompanyCode_EditValueChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void Form_Shipping_Instruction_New_Load(object sender, EventArgs e)
@@ -54,13 +55,39 @@ namespace TAKAKO_ERP_3LAYER
             GetInfo_sLookUpEdit(sLookUp_PriceCondition);
             GetInfo_sLookUpEdit(sLookUp_PaymentTerm);
 
+            GetInfo_LookUpEdit(lookUpEdit_CompanyCode);
+            GetInfo_LookUpEdit(lookUpEdit_Freight);
+
+            Format_Item();
+
             Setting_Status_Item();
 
             Setting_Init_Item();
         }
 
+        private void Form_Shipping_Instruction_New_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                DialogResult dialogResult = MessageBox.Show("Bạn có muốn thoát khỏi phần mềm SSH19", "Thông Báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                if (dialogResult == DialogResult.OK)
+                {
+                    Application.Exit();
+                }
+                else
+                {
+                    e.Cancel = true;    // Stopping Form Close perocess.
+                }
+            }
+        }
+        #endregion
+
         #region Setting Init
-        //Setting status item
+        private void Format_Item()
+        {
+
+        }
+
         private void Setting_Status_Item()
         {
             // INVOICE NO
@@ -81,14 +108,18 @@ namespace TAKAKO_ERP_3LAYER
 
         private void Setting_Init_Item()
         {
+            DateTime today = DateTime.Now;
+            // Date Create Shipping
+            dateEdit_DateCreateShipping.EditValue = today;
+
             //ETD
-            dateEdit_ETD.EditValue = DateTime.Now;
+            dateEdit_ETD.EditValue = today;
 
             //ETA
-            dateEdit_ETA.EditValue = DateTime.Now;
+            dateEdit_ETA.EditValue = today.AddDays(7);
 
             // Revenue
-            dateEdit_Revenue.EditValue = DateTime.Now;
+            dateEdit_Revenue.EditValue = today;
 
             //Set init focus
             sLookUp_ShippingNo.Focus();
@@ -98,6 +129,8 @@ namespace TAKAKO_ERP_3LAYER
         {
             if (_sLookUpItem.Name.Equals(sLookUp_ShippingNo.Name))
             {
+                sLookUp_ShippingNo.Properties.PopupFormSize = new Size(1043, 0);
+
                 GridColumn gridCol_CustomerCode = new GridColumn();
                 GridColumn gridCol_ShipTo = new GridColumn();
                 GridColumn gridCol_UnitCurrency = new GridColumn();
@@ -220,8 +253,6 @@ namespace TAKAKO_ERP_3LAYER
                 sLookUp_ShippingNo_View.Columns.Add(gridCol_DateCreate);
                 sLookUp_ShippingNo_View.Columns.Add(gridCol_Amount);
 
-                sLookUp_ShippingNo.Properties.PopupFormSize = new Size(998, 0);
-
                 sLookUp_ShippingNo_View.OptionsView.ColumnAutoWidth = false;
 
                 // SET COMMON ATTRIBUTE
@@ -240,6 +271,8 @@ namespace TAKAKO_ERP_3LAYER
             }
             else if (_sLookUpItem.Name.Equals(sLookUp_IssuedTo_CompanyCode.Name))
             {
+                sLookUp_IssuedTo_CompanyCode.Properties.PopupFormSize = new Size(713, 0);
+
                 GridColumn gridCol_CustomerCode = new GridColumn();
                 GridColumn gridCol_CustomerName1 = new GridColumn();
                 GridColumn gridCol_Address = new GridColumn();
@@ -320,8 +353,6 @@ namespace TAKAKO_ERP_3LAYER
                 sLookUp_IssuedTo_CompanyCode_View.Columns.Add(gridCol_FaxNo);
                 sLookUp_IssuedTo_CompanyCode_View.Columns.Add(gridCol_InvoiceFormat);
 
-                sLookUp_IssuedTo_CompanyCode.Properties.PopupFormSize = new Size(720, 0);
-
                 sLookUp_IssuedTo_CompanyCode_View.OptionsView.ColumnAutoWidth = false;
 
                 // SET COMMON ATTRIBUTE
@@ -340,7 +371,7 @@ namespace TAKAKO_ERP_3LAYER
             }
             else if (_sLookUpItem.Name.Equals(sLookUp_ShipTo_CompanyCode.Name))
             {
-                sLookUp_ShipTo_CompanyCode.Properties.PopupFormSize = new Size(720, 0);
+                sLookUp_ShipTo_CompanyCode.Properties.PopupFormSize = new Size(713, 0);
 
                 GridColumn gridCol_CustomerCode = new GridColumn();
                 GridColumn gridCol_CustomerName1 = new GridColumn();
@@ -428,7 +459,7 @@ namespace TAKAKO_ERP_3LAYER
             }
             else if (_sLookUpItem.Name.Equals(sLookUp_PortLoading.Name))
             {
-                sLookUp_PortLoading.Properties.PopupFormSize = new Size(360, 0);
+                sLookUp_PortLoading.Properties.PopupFormSize = new Size(303, 0);
 
                 GridColumn gridCol_Destination = new GridColumn();
 
@@ -463,7 +494,7 @@ namespace TAKAKO_ERP_3LAYER
             }
             else if (_sLookUpItem.Name.Equals(sLookUp_PortDestination.Name))
             {
-                sLookUp_PortDestination.Properties.PopupFormSize = new Size(360, 0);
+                sLookUp_PortDestination.Properties.PopupFormSize = new Size(303, 0);
 
                 GridColumn gridCol_Destination = new GridColumn();
 
@@ -499,7 +530,7 @@ namespace TAKAKO_ERP_3LAYER
             }
             else if (_sLookUpItem.Name.Equals(sLookUp_PriceCondition.Name))
             {
-                sLookUp_PriceCondition.Properties.PopupFormSize = new Size(360, 0);
+                sLookUp_PriceCondition.Properties.PopupFormSize = new Size(253, 0);
 
                 GridColumn gridCol_Price_Condition = new GridColumn();
 
@@ -567,6 +598,33 @@ namespace TAKAKO_ERP_3LAYER
                     c.AppearanceCell.Options.UseBackColor = true;
                 }
             }
+        }
+
+        private void GetInfo_LookUpEdit(LookUpEdit _lookUpEdit)
+        {
+            if(_lookUpEdit.Equals(lookUpEdit_CompanyCode))
+            {
+                var items = new[] {
+                new { Text = "*-No Selected-*"  , Value = "00000" },
+                new { Text = "TVC1"             , Value = "00001" },
+                new { Text = "TVC2"             , Value = "00002" },
+                };
+
+                _lookUpEdit.Properties.DataSource = items;
+                _lookUpEdit.Properties.DisplayMember = "Text";
+                _lookUpEdit.Properties.ValueMember = "Value";
+            } else if (_lookUpEdit.Equals(lookUpEdit_Freight))
+            {
+                var items = new[] {
+                    new { Text = "*-No Selected-*"  , Value = 99 },
+                    new { Text = "COLLECT"          , Value = 0 },
+                    new { Text = "PREPAID"          , Value = 1 },
+                };
+
+                _lookUpEdit.Properties.DataSource = items;
+                _lookUpEdit.Properties.DisplayMember = "Text";
+                _lookUpEdit.Properties.ValueMember = "Value";
+            }    
         }
 
         private void GetInfo_sLookUpEdit(SearchLookUpEdit _sLookUpItem)
@@ -841,7 +899,7 @@ namespace TAKAKO_ERP_3LAYER
                 // BALANCE
                 gridCol_Balance.Name = "gridCol_Balance";
                 gridCol_Balance.Caption = "BALANCE";
-                gridCol_Balance.FieldName = "INV_BALANCE";
+                gridCol_Balance.FieldName = "BALANCE";
                 gridCol_Balance.VisibleIndex = 11;
                 gridCol_Balance.Width = 120;
                 gridCol_Balance.DisplayFormat.FormatString = "#,##0";
@@ -895,7 +953,7 @@ namespace TAKAKO_ERP_3LAYER
                 // GLOBAL PRICE
                 gridCol_Global_Price.Name = "gridCol_Global_Price";
                 gridCol_Global_Price.Caption = "GLOBAL PRICE";
-                gridCol_Global_Price.FieldName = "PRICE";
+                gridCol_Global_Price.FieldName = "GLOBAL_PRICE";
                 gridCol_Global_Price.VisibleIndex = 16;
                 gridCol_Global_Price.Width = 130;
                 gridCol_Global_Price.DisplayFormat.FormatString = "#,##0.####";
@@ -904,16 +962,21 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Global_Price.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
                 // AMOUNT (JPY)
+                //-----Header-----//
                 gridCol_Amount_Total.Name = "gridCol_Amount_Total";
                 gridCol_Amount_Total.Caption = "AMOUNT TOTAL";
                 gridCol_Amount_Total.FieldName = "AMOUNT_JPY";
                 gridCol_Amount_Total.VisibleIndex = 17;
                 gridCol_Amount_Total.Width = 120;
-                gridCol_Amount_Total.DisplayFormat.FormatString = "#,##0.####";
+                gridCol_Amount_Total.UnboundType = UnboundColumnType.Integer;
+                gridCol_Amount_Total.UnboundExpression = "[QUANTITY] * [ORDER_PRICE]";
                 gridCol_Amount_Total.DisplayFormat.FormatType = FormatType.Numeric;
-                gridCol_Amount_Total.SummaryItem.SummaryType = SummaryItemType.Sum;
-
+                gridCol_Amount_Total.DisplayFormat.FormatString = "#,##0.####";
+                //-----Detail-----//
                 gridCol_Amount_Total.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
+                //-----Sumary-----//
+                gridCol_Amount_Total.SummaryItem.SummaryType = SummaryItemType.Sum;
+                gridCol_Amount_Total.SummaryItem.DisplayFormat = "{0:#,##0.####}";
 
                 // Add column to gridview
                 gridView_Invoice.Columns.Add(gridCol_Customer_Code);
@@ -959,10 +1022,10 @@ namespace TAKAKO_ERP_3LAYER
                 gridView_PackingList.HorzScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Always;
 
                 GridColumn gridCol_Customer_Code = new GridColumn();
+                GridColumn gridCol_Packages_No = new GridColumn();
                 GridColumn gridCol_Cus_Item_Code = new GridColumn();
                 GridColumn gridCol_TVC_Item_Code = new GridColumn();
                 GridColumn gridCol_Customer_PO = new GridColumn();
-                GridColumn gridCol_Packages_No = new GridColumn();
                 GridColumn gridCol_Qty_Carton = new GridColumn();
                 GridColumn gridCol_Qty_Per_Carton = new GridColumn();
                 GridColumn gridCol_Qty_Total = new GridColumn();
@@ -981,11 +1044,20 @@ namespace TAKAKO_ERP_3LAYER
 
                 gridCol_Customer_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
+                //PACKAGES NO
+                gridCol_Packages_No.Name = "gridCol_Packages_No";
+                gridCol_Packages_No.Caption = "PACKAGES NO";
+                gridCol_Packages_No.FieldName = "PACKAGES_NO";
+                gridCol_Packages_No.VisibleIndex = 1;
+                gridCol_Packages_No.Width = 90;
+
+                gridCol_Packages_No.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
                 // CUSTOMER ITEM CODE
                 gridCol_Cus_Item_Code.Name = "gridCol_Cus_Item_Code";
                 gridCol_Cus_Item_Code.Caption = "CUSTOMER ITEM CODE";
                 gridCol_Cus_Item_Code.FieldName = "CUS_ITEM_CODE";
-                gridCol_Cus_Item_Code.VisibleIndex = 0;
+                gridCol_Cus_Item_Code.VisibleIndex = 2;
                 gridCol_Cus_Item_Code.Width = 120;
 
                 gridCol_Cus_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
@@ -994,7 +1066,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_TVC_Item_Code.Name = "gridCol_TVC_Item_Code";
                 gridCol_TVC_Item_Code.Caption = "TVC ITEM CODE";
                 gridCol_TVC_Item_Code.FieldName = "TVC_ITEM_CODE";
-                gridCol_TVC_Item_Code.VisibleIndex = 0;
+                gridCol_TVC_Item_Code.VisibleIndex = 3;
                 gridCol_TVC_Item_Code.Width = 120;
 
                 gridCol_TVC_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
@@ -1003,24 +1075,16 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Customer_PO.Name = "gridCol_Customer_PO";
                 gridCol_Customer_PO.Caption = "CUSTOMER PO";
                 gridCol_Customer_PO.FieldName = "CUSTOMER_PO";
-                gridCol_Customer_PO.VisibleIndex = 0;
+                gridCol_Customer_PO.VisibleIndex = 4;
                 gridCol_Customer_PO.Width = 120;
 
                 gridCol_Customer_PO.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
-                //PACKAGES NO
-                gridCol_Packages_No.Name = "gridCol_Packages_No";
-                gridCol_Packages_No.Caption = "PACKAGES NO";
-                gridCol_Packages_No.FieldName = "PACKAGES_NO";
-                gridCol_Packages_No.VisibleIndex = 0;
-                gridCol_Packages_No.Width = 90;
-
-                gridCol_Packages_No.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
                 //QTY CARTON
                 gridCol_Qty_Carton.Name = "gridCol_Qty_Carton";
                 gridCol_Qty_Carton.Caption = "QUANTITY CARTON";
                 gridCol_Qty_Carton.FieldName = "QTY_CARTON";
-                gridCol_Qty_Carton.VisibleIndex = 0;
+                gridCol_Qty_Carton.VisibleIndex = 5;
                 gridCol_Qty_Carton.Width = 90;
                 gridCol_Qty_Carton.DisplayFormat.FormatString = "#,##0.##";
                 gridCol_Qty_Carton.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1030,8 +1094,8 @@ namespace TAKAKO_ERP_3LAYER
                 //QTY PER CARTON
                 gridCol_Qty_Per_Carton.Name = "gridCol_Qty_Per_Carton";
                 gridCol_Qty_Per_Carton.Caption = "QUANTITY / CARTON (PCS)";
-                gridCol_Qty_Per_Carton.FieldName = "BOX_QUANTITY";
-                gridCol_Qty_Per_Carton.VisibleIndex = 0;
+                gridCol_Qty_Per_Carton.FieldName = "QTY_PER_CARTON";
+                gridCol_Qty_Per_Carton.VisibleIndex = 6;
                 gridCol_Qty_Per_Carton.Width = 90;
                 gridCol_Qty_Per_Carton.DisplayFormat.FormatString = "#,##0.##";
                 gridCol_Qty_Per_Carton.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1040,7 +1104,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Qty_Total.Name = "gridCol_Qty_Total";
                 gridCol_Qty_Total.Caption = "QUANTITY TOTAL (PCS)";
                 gridCol_Qty_Total.FieldName = "QTY_TOTAL";
-                gridCol_Qty_Total.VisibleIndex = 0;
+                gridCol_Qty_Total.VisibleIndex = 7;
                 gridCol_Qty_Total.Width = 90;
                 gridCol_Qty_Total.DisplayFormat.FormatString = "#,##0.##";
                 gridCol_Qty_Total.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1053,7 +1117,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Qty_Total_Revise.Name = "gridCol_Qty_Total_Revise";
                 gridCol_Qty_Total_Revise.Caption = "QTY TOTAL REVISE (PCS)";
                 gridCol_Qty_Total_Revise.FieldName = "QTY_TOTAL_REVISE";
-                gridCol_Qty_Total_Revise.VisibleIndex = 0;
+                gridCol_Qty_Total_Revise.VisibleIndex = 8;
                 gridCol_Qty_Total_Revise.Width = 90;
                 gridCol_Qty_Total_Revise.DisplayFormat.FormatString = "#,##0.##";
                 gridCol_Qty_Total_Revise.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1063,8 +1127,8 @@ namespace TAKAKO_ERP_3LAYER
                 //NET WEIGHT
                 gridCol_Net_Weight.Name = "gridCol_Net_Weight";
                 gridCol_Net_Weight.Caption = "N / W (KG)";
-                gridCol_Net_Weight.FieldName = "WEIGHT";
-                gridCol_Net_Weight.VisibleIndex = 0;
+                gridCol_Net_Weight.FieldName = "NET_WEIGHT";
+                gridCol_Net_Weight.VisibleIndex = 9;
                 gridCol_Net_Weight.Width = 90;
                 gridCol_Net_Weight.DisplayFormat.FormatString = "#,##0.##";
                 gridCol_Net_Weight.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1076,8 +1140,8 @@ namespace TAKAKO_ERP_3LAYER
                 //NET WEIGHT TOTAL
                 gridCol_Net_Weight_Total.Name = "gridCol_Net_Weight_Total";
                 gridCol_Net_Weight_Total.Caption = "N / W TOTAL";
-                gridCol_Net_Weight_Total.FieldName = "WEIGHT_TOTAL";
-                gridCol_Net_Weight_Total.VisibleIndex = 0;
+                gridCol_Net_Weight_Total.FieldName = "NET_WEIGHT_TOTAL";
+                gridCol_Net_Weight_Total.VisibleIndex = 10;
                 gridCol_Net_Weight_Total.Width = 90;
                 gridCol_Net_Weight_Total.DisplayFormat.FormatString = "#,##0.##";
                 gridCol_Net_Weight_Total.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1088,7 +1152,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_Gross_Weight.Name = "gridCol_Gross_Weight";
                 gridCol_Gross_Weight.Caption = "G / W (KG)";
                 gridCol_Gross_Weight.FieldName = "GROSS_WEIGHT";
-                gridCol_Gross_Weight.VisibleIndex = 0;
+                gridCol_Gross_Weight.VisibleIndex = 11;
                 gridCol_Gross_Weight.Width = 90;
                 gridCol_Gross_Weight.DisplayFormat.FormatString = "#,##0.##";
                 gridCol_Gross_Weight.DisplayFormat.FormatType = FormatType.Numeric;
@@ -1101,7 +1165,7 @@ namespace TAKAKO_ERP_3LAYER
                 gridCol_LotNo.Name = "gridCol_LotNo";
                 gridCol_LotNo.Caption = "LOT NO";
                 gridCol_LotNo.FieldName = "LOT_NO";
-                gridCol_LotNo.VisibleIndex = 0;
+                gridCol_LotNo.VisibleIndex = 12;
                 gridCol_LotNo.Width = 150;
 
                 gridCol_LotNo.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
@@ -1145,5 +1209,194 @@ namespace TAKAKO_ERP_3LAYER
             }
         }
         #endregion
+
+        private void sLookUp_ShippingNo_EditValueChanged(object sender, EventArgs e)
+        {
+            string _shippingNo = Convert.ToString(this.sLookUp_ShippingNo.EditValue);
+            TVC_SHIPPING_MS _headerShipping = new TVC_SHIPPING_MS();
+            List<TVC_SHIPPING_INV_DETAIL> _detailInvoice = new List<TVC_SHIPPING_INV_DETAIL>();
+            List<TVC_SHIPPING_PL_DETAIL> _detailPackingList = new List<TVC_SHIPPING_PL_DETAIL>();
+
+            // Get Data Shipping No
+            using (Takako_Entities db = new Takako_Entities())
+            {
+                _headerShipping = db.TVC_SHIPPING_MS.Where(x => x.SHIPPING_NO.Equals(_shippingNo)).FirstOrDefault();
+                _detailInvoice = _shippingDAO.GetDetail_ShipInv(_shippingNo);
+                _detailPackingList = db.TVC_SHIPPING_PL_DETAIL.Where(x => x.SHIPPING_NO.Equals(_shippingNo)).ToList();
+            }
+
+            if (_headerShipping != null)
+            {
+                if (_headerShipping.LOCK_STATUS.Equals(0))
+                {
+                    radNormal.Checked = true;
+                }
+                else if (_headerShipping.LOCK_STATUS.Equals(1))
+                {
+                    radLock.Checked = true;
+                }
+
+                //COMPANY CODE
+                lookUpEdit_CompanyCode.EditValue = _headerShipping.COMPANY_CODE;
+
+                //DATE CREATE SHIPPING
+                dateEdit_DateCreateShipping.EditValue = _headerShipping.DATE_CREATE;
+
+                //INVOICE NO
+                txtInvoiceNo.Text = _headerShipping.INVOICE_NO;
+
+                //ISSUEDTO
+                sLookUp_IssuedTo_CompanyCode.EditValue = _headerShipping.ISSUEDTO_CUSTOMER_CODE;
+                txtIssuedTo_CompanyName.EditValue = _headerShipping.ISSUEDTO_CUSTOMER_NAME;
+                memo_IssuedTo_CompanyAddress.EditValue = _headerShipping.ISSUEDTO_CUSTOMER_ADDRESS;
+                txtIssuedTo_TelNo.EditValue = _headerShipping.ISSUEDTO_CUSTOMER_TEL_NO;
+                txtIssuedTo_FaxNo.EditValue = _headerShipping.ISSUEDTO_CUSTOMER_FAX_NO;
+
+                if (_headerShipping.ISSUEDTO_CUSTOMER_CODE.Equals("TTC"))
+                {
+                    gridView_PackingList.Columns["CUSTOMER_PO"].Visible = true;
+                }
+                else
+                {
+                    gridView_PackingList.Columns["CUSTOMER_PO"].Visible = false;
+                }
+
+                //SHIPTO
+                sLookUp_ShipTo_CompanyCode.EditValue = _headerShipping.SHIPTO_CUSTOMER_CODE;
+                txtShipTo_CompanyName.EditValue = _headerShipping.SHIPTO_CUSTOMER_NAME;
+                memo_ShipTo_CompanyAddress.EditValue = _headerShipping.SHIPTO_CUSTOMER_ADDRESS;
+                txtShipTo_TelNo.EditValue = _headerShipping.SHIPTO_CUSTOMER_TEL_NO;
+                txtShipTo_FaxNo.EditValue = _headerShipping.SHIPTO_CUSTOMER_FAX_NO;
+
+                if (!String.IsNullOrEmpty(_headerShipping.REVENUE))
+                {
+                    //REVENUE
+                    dateEdit_Revenue.EditValue = Convert.ToDateTime(_headerShipping.REVENUE);
+                }
+                else
+                {
+                    //REVENUE
+                    dateEdit_Revenue.EditValue = Convert.ToDateTime(DateTime.MinValue);
+                }
+
+                //SHIP VIA
+                txtShipVia.Text = _headerShipping.SHIP_VIA;
+
+                //FREIGHT
+                lookUpEdit_Freight.EditValue = _headerShipping.FREIGHT;
+
+                //VESSEL
+                txtVessel.Text = _headerShipping.VESSEL;
+
+                //PORT OF LOADING
+                sLookUp_PortLoading.EditValue = _headerShipping.PORT_OF_LOADING;
+
+                //PORT OF DESTINATION
+                sLookUp_PortDestination.EditValue = _headerShipping.PORT_OF_DESTINATION;
+
+                //ETD
+                dateEdit_ETD.EditValue = _headerShipping.ETD;
+
+                //ETA
+                dateEdit_ETD.EditValue = _headerShipping.ETA;
+
+                //TRADE CONDITION
+                sLookUp_PriceCondition.Text = _headerShipping.TRADE_CONDITION;
+
+                //PAYMENT TERM
+                sLookUp_PaymentTerm.Text = _headerShipping.PAYMENT_TERM;
+            }
+
+            if (_detailInvoice.Count > 0)
+            {
+                gridControl_Invoice.DataSource = _detailInvoice;
+            }
+
+            if (_detailPackingList.Count > 0)
+            {
+                gridControl_PackingList.DataSource = _detailPackingList;
+            }
+        }
+
+        private void sLookUp_IssuedTo_CompanyCode_EditValueChanged(object sender, EventArgs e)
+        {
+            GridView view = sLookUp_IssuedTo_CompanyCode_View;
+            int index = sLookUp_IssuedTo_CompanyCode.Properties.GetIndexByKeyValue(this.sLookUp_IssuedTo_CompanyCode.EditValue);
+
+            if (index != 0)
+            {
+                string _customerName = Convert.ToString(view.GetRowCellValue(index, view.Columns["CUSTOMER_NAME1"]));
+                string _customerAddress = Convert.ToString(view.GetRowCellValue(index, view.Columns["ADDRESS"]));
+                string _customerTelNo = Convert.ToString(view.GetRowCellValue(index, view.Columns["TEL_NO"]));
+                string _customerFaxNo = Convert.ToString(view.GetRowCellValue(index, view.Columns["FAX_NO"]));
+
+                txtIssuedTo_CompanyName.EditValue = _customerName;
+                memo_IssuedTo_CompanyAddress.EditValue = _customerAddress;
+                txtIssuedTo_TelNo.EditValue = _customerTelNo;
+                txtIssuedTo_FaxNo.EditValue = _customerFaxNo;
+            }
+        }
+
+        private void sLookUp_ShipTo_CompanyCode_EditValueChanged(object sender, EventArgs e)
+        {
+            GridView view = sLookUp_ShipTo_CompanyCode_View;
+            int index = sLookUp_ShipTo_CompanyCode.Properties.GetIndexByKeyValue(this.sLookUp_ShipTo_CompanyCode.EditValue);
+
+            string _customerName = Convert.ToString(view.GetRowCellValue(index, view.Columns["CUSTOMER_NAME1"]));
+            string _customerAddress = Convert.ToString(view.GetRowCellValue(index, view.Columns["ADDRESS"]));
+            string _customerTelNo = Convert.ToString(view.GetRowCellValue(index, view.Columns["TEL_NO"]));
+            string _customerFaxNo = Convert.ToString(view.GetRowCellValue(index, view.Columns["FAX_NO"]));
+
+            txtShipTo_CompanyName.EditValue = _customerName != null ? _customerName : null;
+            memo_ShipTo_CompanyAddress.EditValue = _customerAddress != null ? _customerAddress : null;
+            txtShipTo_TelNo.EditValue = _customerTelNo != null ? _customerTelNo : null;
+            txtShipTo_FaxNo.EditValue = _customerFaxNo != null ? _customerFaxNo : null;
+        }
+
+        private void barBtn_Lock_Data_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
+        }
+
+        private void barBtn_Unlock_Data_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
+        }
+
+        private void barBtn_Save_Data_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
+        }
+
+        private void barBtn_ClearData_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
+        }
+
+        private void barBtn_Import_Export_PackingList_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+
+        }
+
+        private void barBtn_Add_New_PO_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            //Form_Search_PO_New _formPONew = new Form_Search_PO_New(_systemDAL, );
+            //_formPONew.StartPosition = FormStartPosition.CenterParent();
+        }
+
+        private void barBtn_Back_To_Main_Menu_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (MessageBox.Show(
+                    "Bạn muốn trở về màn hình chính?", 
+                    "Xác nhận", 
+                    MessageBoxButtons.YesNo, 
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                this.Hide();
+                Form_Main _formMain = new Form_Main(_systemDAL);
+                _formMain.StartPosition = FormStartPosition.CenterScreen;
+                _formMain.Show();
+            }
+        }
     }
 }

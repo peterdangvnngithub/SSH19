@@ -203,6 +203,16 @@ namespace TAKAKO_ERP_3LAYER.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap exporttoxlsx_16x162 {
+            get {
+                object obj = ResourceManager.GetObject("exporttoxlsx_16x162", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap exporttoxlsx_32x32 {
             get {
                 object obj = ResourceManager.GetObject("exporttoxlsx_32x32", resourceCulture);
@@ -216,6 +226,16 @@ namespace TAKAKO_ERP_3LAYER.Properties {
         public static System.Drawing.Bitmap exporttoxlsx_32x321 {
             get {
                 object obj = ResourceManager.GetObject("exporttoxlsx_32x321", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap exporttoxlsx_32x322 {
+            get {
+                object obj = ResourceManager.GetObject("exporttoxlsx_32x322", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -383,6 +403,16 @@ namespace TAKAKO_ERP_3LAYER.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap icons8_undo_52 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-undo-52", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap img_454673 {
             get {
                 object obj = ResourceManager.GetObject("img_454673", resourceCulture);
@@ -517,6 +547,16 @@ namespace TAKAKO_ERP_3LAYER.Properties {
             get {
                 object obj = ResourceManager.GetObject("outbox_32x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type DevExpress.Utils.Svg.SvgImage.
+        /// </summary>
+        public static DevExpress.Utils.Svg.SvgImage prev {
+            get {
+                object obj = ResourceManager.GetObject("prev", resourceCulture);
+                return ((DevExpress.Utils.Svg.SvgImage)(obj));
             }
         }
         
