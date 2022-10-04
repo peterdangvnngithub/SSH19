@@ -403,6 +403,8 @@
     <None Include="Resources\insertgroupfooter.svg" />
     <None Include="Resources\prev.svg" />
     <None Include="Resources\icons8-undo-52.png" />
+    <None Include="Resources\exporttoxlsx_32x322.png" />
+    <None Include="Resources\exporttoxlsx_16x162.png" />
     <Content Include="Takako_Entites.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Takako_Entites.edmx</DependentUpon>

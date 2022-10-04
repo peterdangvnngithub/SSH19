@@ -127,7 +127,7 @@
             this.Ribbon = this.ribbon;
             this.StatusBar = this.ribbonStatusBar;
             this.Text = "SEARCH PO";
-            this.Load += new System.EventHandler(this.Form_Import_PO_To_Shipping_Excel_Load);
+            this.Load += new System.EventHandler(this.Form_Search_PO_New_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl_Search_PO)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.View_PO_List)).EndInit();

@@ -5,6 +5,7 @@ using DevExpress.XtraGrid.Columns;
 using DevExpress.XtraGrid.Views.Grid;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -44,7 +45,7 @@ namespace TAKAKO_ERP_3LAYER
             Define_SearchLookUp_View(sLookUp_ShipTo_CompanyCode);
             Define_SearchLookUp_View(sLookUp_PortLoading);
             Define_SearchLookUp_View(sLookUp_PortDestination);
-            Define_SearchLookUp_View(sLookUp_PriceCondition);
+            Define_SearchLookUp_View(sLookUp_TradeCondition);
 
             // Get init value sLookUpEdit
             GetInfo_sLookUpEdit(sLookUp_ShippingNo);
@@ -52,7 +53,7 @@ namespace TAKAKO_ERP_3LAYER
             GetInfo_sLookUpEdit(sLookUp_ShipTo_CompanyCode);
             GetInfo_sLookUpEdit(sLookUp_PortLoading);
             GetInfo_sLookUpEdit(sLookUp_PortDestination);
-            GetInfo_sLookUpEdit(sLookUp_PriceCondition);
+            GetInfo_sLookUpEdit(sLookUp_TradeCondition);
             GetInfo_sLookUpEdit(sLookUp_PaymentTerm);
 
             GetInfo_LookUpEdit(lookUpEdit_CompanyCode);
@@ -108,6 +109,8 @@ namespace TAKAKO_ERP_3LAYER
 
         private void Setting_Init_Item()
         {
+            lookUpEdit_CompanyCode.EditValue = _systemDAL.CompanyCode;
+
             DateTime today = DateTime.Now;
             // Date Create Shipping
             dateEdit_DateCreateShipping.EditValue = today;
@@ -528,9 +531,9 @@ namespace TAKAKO_ERP_3LAYER
                     c.AppearanceCell.Options.UseTextOptions = true;
                 }
             }
-            else if (_sLookUpItem.Name.Equals(sLookUp_PriceCondition.Name))
+            else if (_sLookUpItem.Name.Equals(sLookUp_TradeCondition.Name))
             {
-                sLookUp_PriceCondition.Properties.PopupFormSize = new Size(253, 0);
+                sLookUp_TradeCondition.Properties.PopupFormSize = new Size(253, 0);
 
                 GridColumn gridCol_Price_Condition = new GridColumn();
 
@@ -722,7 +725,7 @@ namespace TAKAKO_ERP_3LAYER
                     {
                         _sLookUpItem.Properties.DataSource = "";
                     }
-                } else if (_sLookUpItem.Equals(sLookUp_PriceCondition))
+                } else if (_sLookUpItem.Equals(sLookUp_TradeCondition))
                 {
                     List<PRICE_CONDITIONMF> result = db.PRICE_CONDITIONMF.ToList();
 
@@ -1301,7 +1304,7 @@ namespace TAKAKO_ERP_3LAYER
                 dateEdit_ETD.EditValue = _headerShipping.ETA;
 
                 //TRADE CONDITION
-                sLookUp_PriceCondition.Text = _headerShipping.TRADE_CONDITION;
+                sLookUp_TradeCondition.Text = _headerShipping.TRADE_CONDITION;
 
                 //PAYMENT TERM
                 sLookUp_PaymentTerm.Text = _headerShipping.PAYMENT_TERM;
@@ -1370,7 +1373,37 @@ namespace TAKAKO_ERP_3LAYER
 
         private void barBtn_ClearData_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            Clear_Data();
+        }
 
+        private void Clear_Data()
+        {
+            DateTime toDay = DateTime.Now;
+
+            radNormal.Checked = true;
+
+            dateEdit_DateCreateShipping.EditValue = toDay;
+            dateEdit_Revenue.EditValue = toDay;
+            dateEdit_ETD.EditValue = toDay;
+            dateEdit_ETA.EditValue = toDay;
+
+            lookUpEdit_CompanyCode.EditValue = _systemDAL.CompanyCode;
+            lookUpEdit_Freight.EditValue = null;
+
+            sLookUp_ShippingNo.EditValue = null;
+            sLookUp_IssuedTo_CompanyCode.EditValue = null;
+            sLookUp_ShipTo_CompanyCode.EditValue = null;
+            sLookUp_PortLoading.EditValue = null;
+            sLookUp_PortDestination.EditValue = null;
+            sLookUp_TradeCondition.EditValue = null;
+            sLookUp_PaymentTerm.EditValue = null;
+
+            txtInvoiceNo.EditValue = null;
+            txtShipVia.EditValue = null;
+            txtVessel.EditValue = null;
+
+            gridControl_Invoice.DataSource = null;
+            gridControl_PackingList.DataSource = null;
         }
 
         private void barBtn_Import_Export_PackingList_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -1380,8 +1413,56 @@ namespace TAKAKO_ERP_3LAYER
 
         private void barBtn_Add_New_PO_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            //Form_Search_PO_New _formPONew = new Form_Search_PO_New(_systemDAL, );
-            //_formPONew.StartPosition = FormStartPosition.CenterParent();
+            if(Check_Error_Add_New_PO())
+            {
+                string _unitCurrency = "";
+
+                for (int i = 0; i < gridView_PackingList.DataRowCount; i++)
+                {
+                    if (gridView_PackingList.GetRowCellValue(i, "FieldName") == value)
+                    {
+
+                    }    
+
+                }
+
+                Form_Search_PO_New _formPONew = new Form_Search_PO_New(
+                    _systemDAL, 
+                    Convert.ToString(lookUpEdit_CompanyCode.EditValue),
+                    Convert.ToString(sLookUp_IssuedTo_CompanyCode.EditValue),
+                    null,
+                    this);
+                _formPONew.StartPosition = FormStartPosition.CenterParent;
+                _formPONew.Show();
+            }
+        }
+
+        public static void RefreshGridView(DataRow _poData)
+        {
+            ////Load Invoice
+            //btn_SearchShipping_Click(sender, e);
+
+            ////Setting enable item
+            //SettingInitGridView();
+            MessageBox.Show("Clicked");
+        }
+
+        private Boolean Check_Error_Add_New_PO()
+        {
+            if(Convert.ToString(lookUpEdit_CompanyCode.EditValue).Equals("00000") || Convert.ToString(lookUpEdit_CompanyCode.EditValue).Equals(""))
+            {
+                MessageBox.Show("Chưa chọn nhà máy", "Cảnh Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                lookUpEdit_CompanyCode.Focus();
+                return false;
+            }
+
+            if (Convert.ToString(sLookUp_IssuedTo_CompanyCode.EditValue).Equals(""))
+            {
+                MessageBox.Show("Chưa chọn mã khách hàng", "Cảnh Báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                sLookUp_IssuedTo_CompanyCode.Focus();
+                return false;
+            }
+            return true;
         }
 
         private void barBtn_Back_To_Main_Menu_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)

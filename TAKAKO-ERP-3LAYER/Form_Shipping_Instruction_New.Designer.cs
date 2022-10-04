@@ -59,7 +59,7 @@ namespace TAKAKO_ERP_3LAYER
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.sLookUp_PriceCondition = new DevExpress.XtraEditors.SearchLookUpEdit();
+            this.sLookUp_TradeCondition = new DevExpress.XtraEditors.SearchLookUpEdit();
             this.sLookUp_PriceCondition_View = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.label16 = new System.Windows.Forms.Label();
             this.sLookUp_PaymentTerm = new DevExpress.XtraEditors.SearchLookUpEdit();
@@ -120,7 +120,7 @@ namespace TAKAKO_ERP_3LAYER
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortLoading_View)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortDestination.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortDestination_View)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PriceCondition.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_TradeCondition.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PriceCondition_View)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PaymentTerm.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PaymentTerm_View)).BeginInit();
@@ -289,7 +289,7 @@ namespace TAKAKO_ERP_3LAYER
             this.panel_Header.Controls.Add(this.label13);
             this.panel_Header.Controls.Add(this.label14);
             this.panel_Header.Controls.Add(this.label15);
-            this.panel_Header.Controls.Add(this.sLookUp_PriceCondition);
+            this.panel_Header.Controls.Add(this.sLookUp_TradeCondition);
             this.panel_Header.Controls.Add(this.label16);
             this.panel_Header.Controls.Add(this.sLookUp_PaymentTerm);
             this.panel_Header.Controls.Add(this.label18);
@@ -497,15 +497,15 @@ namespace TAKAKO_ERP_3LAYER
             this.label15.Text = "ETD";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // sLookUp_PriceCondition
+            // sLookUp_TradeCondition
             // 
-            this.sLookUp_PriceCondition.Location = new System.Drawing.Point(648, 225);
-            this.sLookUp_PriceCondition.Name = "sLookUp_PriceCondition";
-            this.sLookUp_PriceCondition.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.sLookUp_TradeCondition.Location = new System.Drawing.Point(648, 225);
+            this.sLookUp_TradeCondition.Name = "sLookUp_TradeCondition";
+            this.sLookUp_TradeCondition.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.sLookUp_PriceCondition.Properties.PopupView = this.sLookUp_PriceCondition_View;
-            this.sLookUp_PriceCondition.Size = new System.Drawing.Size(335, 20);
-            this.sLookUp_PriceCondition.TabIndex = 14;
+            this.sLookUp_TradeCondition.Properties.PopupView = this.sLookUp_PriceCondition_View;
+            this.sLookUp_TradeCondition.Size = new System.Drawing.Size(335, 20);
+            this.sLookUp_TradeCondition.TabIndex = 14;
             // 
             // sLookUp_PriceCondition_View
             // 
@@ -959,7 +959,7 @@ namespace TAKAKO_ERP_3LAYER
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortLoading_View)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortDestination.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PortDestination_View)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PriceCondition.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.sLookUp_TradeCondition.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PriceCondition_View)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PaymentTerm.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sLookUp_PaymentTerm_View)).EndInit();
@@ -1054,7 +1054,7 @@ namespace TAKAKO_ERP_3LAYER
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private DevExpress.XtraEditors.SearchLookUpEdit sLookUp_PriceCondition;
+        private DevExpress.XtraEditors.SearchLookUpEdit sLookUp_TradeCondition;
         private DevExpress.XtraGrid.Views.Grid.GridView sLookUp_PriceCondition_View;
         private System.Windows.Forms.Label label16;
         private DevExpress.XtraEditors.SearchLookUpEdit sLookUp_PaymentTerm;

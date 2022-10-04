@@ -1784,15 +1784,16 @@ namespace TAKAKO_ERP_3LAYER
                     //        }
                     //    }
                     //}
-                    Form_Search_PO_New _formSearch = new Form_Search_PO_New(
-                        _systemDAL
-                        , Convert.ToString(cb_CompanyCode.SelectedValue)
-                        , Convert.ToString(sLookUp_IssuedTo_CompanyCode.EditValue)
-                        , _unitCurrency
-                        , _dateCreateInvoice
-                        , this);
-                    _formSearch.StartPosition = FormStartPosition.CenterParent;
-                    _formSearch.Show();
+
+                    //Form_Search_PO_New _formSearch = new Form_Search_PO_New(
+                    //    _systemDAL
+                    //    , Convert.ToString(cb_CompanyCode.SelectedValue)
+                    //    , Convert.ToString(sLookUp_IssuedTo_CompanyCode.EditValue)
+                    //    , _unitCurrency
+                    //    , _dateCreateInvoice
+                    //    , this);
+                    //_formSearch.StartPosition = FormStartPosition.CenterParent;
+                    //_formSearch.Show();
 
                     ////Move data from form search to current Form
                     //GetSelectedItem(_listItemCodeInfo);

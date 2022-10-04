@@ -8,6 +8,7 @@ using DevExpress.Utils;
 using TAKAKO_ERP_3LAYER.DAL;
 using System.Data.SqlClient;
 using static TAKAKO_ERP_3LAYER.Common;
+using System.Data;
 
 namespace TAKAKO_ERP_3LAYER
 {
@@ -17,7 +18,7 @@ namespace TAKAKO_ERP_3LAYER
         string customerCode;
         string unitCurrency;
         string companyCode;
-        private readonly Form_Shipping_Instruction form_Shipping_Instruction;
+        private readonly Form_Shipping_Instruction_New form_Shipping_Instruction;
 
         private GridColumn gridCol_Company_Code = new GridColumn();
         private GridColumn gridCol_Customer_Code = new GridColumn();
@@ -38,7 +39,7 @@ namespace TAKAKO_ERP_3LAYER
             string _companyCode,
             string _customerCode,
             string _unitCurrency,
-            Form_Shipping_Instruction _formShippingIns)
+            Form_Shipping_Instruction_New _formShippingIns)
         {
             InitializeComponent();
 
@@ -50,7 +51,7 @@ namespace TAKAKO_ERP_3LAYER
             form_Shipping_Instruction = _formShippingIns;
         }
 
-        private void Form_Import_PO_To_Shipping_Excel_Load(object sender, EventArgs e)
+        private void Form_Search_PO_New_Load(object sender, EventArgs e)
         {
             Define_GridView();
 
@@ -65,7 +66,7 @@ namespace TAKAKO_ERP_3LAYER
                     {
                     new SqlParameter("@CompanyCode", companyCode),
                     new SqlParameter("@CustomerCode", customerCode),
-                    new SqlParameter("@UnitCurrency", unitCurrency)
+                    new SqlParameter("@UnitCurrency",unitCurrency ?? Convert.DBNull)
                 };
 
                 string sqlQuery =
@@ -154,7 +155,7 @@ namespace TAKAKO_ERP_3LAYER
             gridCol_Company_Code.Caption = "COMPANY CODE";
             gridCol_Company_Code.FieldName = "COMPANY_CODE";
             gridCol_Company_Code.VisibleIndex = 0;
-            gridCol_Company_Code.Width = 90;
+            gridCol_Company_Code.Width = 80;
 
             gridCol_Company_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
@@ -162,8 +163,8 @@ namespace TAKAKO_ERP_3LAYER
             gridCol_Customer_Code.Name = "gridCol_Customer_Code";
             gridCol_Customer_Code.Caption = "CUSTOMER CODE";
             gridCol_Customer_Code.FieldName = "CUSTOMER_CODE";
-            gridCol_Customer_Code.VisibleIndex = 0;
-            gridCol_Customer_Code.Width = 100;
+            gridCol_Customer_Code.VisibleIndex = 1;
+            gridCol_Customer_Code.Width = 90;
 
             gridCol_Customer_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
@@ -171,8 +172,8 @@ namespace TAKAKO_ERP_3LAYER
             gridCol_ReceiveNo.Name = "gridCol_ReceiveNo";
             gridCol_ReceiveNo.Caption = "RECEIVE NO";
             gridCol_ReceiveNo.FieldName = "RECEIVE_NO";
-            gridCol_ReceiveNo.VisibleIndex = 0;
-            gridCol_ReceiveNo.Width = 120;
+            gridCol_ReceiveNo.VisibleIndex = 2;
+            gridCol_ReceiveNo.Width = 100;
 
             gridCol_ReceiveNo.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
@@ -180,8 +181,8 @@ namespace TAKAKO_ERP_3LAYER
             gridCol_Cus_Item_Code.Name = "gridCol_Cus_Item_Code";
             gridCol_Cus_Item_Code.Caption = "CUSTOMER ITEM CODE";
             gridCol_Cus_Item_Code.FieldName = "CUSTOMER_ITEM_CODE";
-            gridCol_Cus_Item_Code.VisibleIndex = 0;
-            gridCol_Cus_Item_Code.Width = 120;
+            gridCol_Cus_Item_Code.VisibleIndex = 3;
+            gridCol_Cus_Item_Code.Width = 110;
             
             gridCol_Cus_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
@@ -189,56 +190,34 @@ namespace TAKAKO_ERP_3LAYER
             gridCol_TVC_Item_Code.Name = "gridCol_TVC_Item_Code";
             gridCol_TVC_Item_Code.Caption = "TVC ITEM CODE";
             gridCol_TVC_Item_Code.FieldName = "TVC_ITEM_CODE";
-            gridCol_TVC_Item_Code.VisibleIndex = 0;
-            gridCol_TVC_Item_Code.Width = 120;
+            gridCol_TVC_Item_Code.VisibleIndex = 4;
+            gridCol_TVC_Item_Code.Width = 110;
 
             gridCol_TVC_Item_Code.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
-
-            // CUSTOMER PO
-            gridCol_Customer_PO.Name = "gridCol_Customer_PO";
-            gridCol_Customer_PO.Caption = "CUSTOMER PO";
-            gridCol_Customer_PO.FieldName = "CUSTOMER_PO";
-            gridCol_Customer_PO.VisibleIndex = 0;
-            gridCol_Customer_PO.Width = 120;
-
-            gridCol_Customer_PO.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
             // ITEM NAME
             gridCol_Item_Name.Name = "gridCol_Item_Name";
             gridCol_Item_Name.Caption = "ITEM NAME";
             gridCol_Item_Name.FieldName = "ITEM_NAME";
-            gridCol_Item_Name.VisibleIndex = 0;
-            gridCol_Item_Name.Width = 140;
+            gridCol_Item_Name.VisibleIndex = 5;
+            gridCol_Item_Name.Width = 120;
 
             gridCol_Item_Name.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
-            // DUE DATE
-            gridCol_DueDate.Name = "gridCol_DueDate";
-            gridCol_DueDate.Caption = "DUE DATE";
-            gridCol_DueDate.FieldName = "DUE_DATE";
-            gridCol_DueDate.VisibleIndex = 0;
-            gridCol_DueDate.Width = 110;
-            gridCol_DueDate.DisplayFormat.FormatString = "dd/MM/yyyy";
-            gridCol_DueDate.DisplayFormat.FormatType = FormatType.DateTime;
+            // CUSTOMER PO
+            gridCol_Customer_PO.Name = "gridCol_Customer_PO";
+            gridCol_Customer_PO.Caption = "CUSTOMER PO";
+            gridCol_Customer_PO.FieldName = "CUSTOMER_PO";
+            gridCol_Customer_PO.VisibleIndex = 6;
+            gridCol_Customer_PO.Width = 100;
 
-            gridCol_DueDate.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
-
-            // ORDER DATE
-            gridCol_OrderDate.Name = "gridCol_OrderDate";
-            gridCol_OrderDate.Caption = "ORDER DATE";
-            gridCol_OrderDate.FieldName = "ORDER_DATE";
-            gridCol_OrderDate.VisibleIndex = 0;
-            gridCol_OrderDate.Width = 110;
-            gridCol_OrderDate.DisplayFormat.FormatString = "dd/MM/yyyy";
-            gridCol_OrderDate.DisplayFormat.FormatType = FormatType.DateTime;
-                
-            gridCol_OrderDate.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+            gridCol_Customer_PO.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
 
             // UNIT CURRENCY
             gridCol_Unit_Currency.Name = "gridCol_Unit_Currency";
             gridCol_Unit_Currency.Caption = "UNIT CURRENTCY";
             gridCol_Unit_Currency.FieldName = "UNIT_CURRENCY";
-            gridCol_Unit_Currency.VisibleIndex = 0;
+            gridCol_Unit_Currency.VisibleIndex = 7;
             gridCol_Unit_Currency.Width = 100;
 
             gridCol_Unit_Currency.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
@@ -247,8 +226,8 @@ namespace TAKAKO_ERP_3LAYER
             gridCol_Qty_Balance_Qty.Name = "gridCol_Qty_Balance_Qty";
             gridCol_Qty_Balance_Qty.Caption = "QUANTITY BALANCE";
             gridCol_Qty_Balance_Qty.FieldName = "BALANCE";
-            gridCol_Qty_Balance_Qty.VisibleIndex = 0;
-            gridCol_Qty_Balance_Qty.Width = 120;
+            gridCol_Qty_Balance_Qty.VisibleIndex = 8;
+            gridCol_Qty_Balance_Qty.Width = 100;
             gridCol_Qty_Balance_Qty.DisplayFormat.FormatString = "#,##0";
             gridCol_Qty_Balance_Qty.DisplayFormat.FormatType = FormatType.Numeric;
 
@@ -258,19 +237,41 @@ namespace TAKAKO_ERP_3LAYER
             gridCol_Order_Price.Name = "gridCol_Order_Price";
             gridCol_Order_Price.Caption = "ORDER PRICE";
             gridCol_Order_Price.FieldName = "ORDER_PRICE";
-            gridCol_Order_Price.VisibleIndex = 0;
-            gridCol_Order_Price.Width = 120;
+            gridCol_Order_Price.VisibleIndex = 9;
+            gridCol_Order_Price.Width = 100;
             gridCol_Order_Price.DisplayFormat.FormatString = "#,##0";
             gridCol_Order_Price.DisplayFormat.FormatType = FormatType.Numeric;
 
             gridCol_Order_Price.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Far;
 
+            // DUE DATE
+            gridCol_DueDate.Name = "gridCol_DueDate";
+            gridCol_DueDate.Caption = "DUE DATE";
+            gridCol_DueDate.FieldName = "DUE_DATE";
+            gridCol_DueDate.VisibleIndex = 10;
+            gridCol_DueDate.Width = 100;
+            gridCol_DueDate.DisplayFormat.FormatString = "dd/MM/yyyy";
+            gridCol_DueDate.DisplayFormat.FormatType = FormatType.DateTime;
+
+            gridCol_DueDate.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
+            // ORDER DATE
+            gridCol_OrderDate.Name = "gridCol_OrderDate";
+            gridCol_OrderDate.Caption = "ORDER DATE";
+            gridCol_OrderDate.FieldName = "ORDER_DATE";
+            gridCol_OrderDate.VisibleIndex = 11;
+            gridCol_OrderDate.Width = 100;
+            gridCol_OrderDate.DisplayFormat.FormatString = "dd/MM/yyyy";
+            gridCol_OrderDate.DisplayFormat.FormatType = FormatType.DateTime;
+
+            gridCol_OrderDate.AppearanceCell.TextOptions.HAlignment = HorzAlignment.Center;
+
             // NOTE
             gridCol_Note.Name = "gridCol_Note";
             gridCol_Note.Caption = "NOTE";
             gridCol_Note.FieldName = "NOTE";
-            gridCol_Note.VisibleIndex = 0;
-            gridCol_Note.Width = 150;
+            gridCol_Note.VisibleIndex = 12;
+            gridCol_Note.Width = 120;
 
             // Not allow edit data gridview
             View_PO_List.OptionsBehavior.Editable = false;
@@ -325,7 +326,8 @@ namespace TAKAKO_ERP_3LAYER
             //MessageBox.Show(balance.ToString());
             SearchPOInfo curSearchPOInfo = (SearchPOInfo)View_PO_List.GetRow(View_PO_List.GetFocusedDataSourceRowIndex());
             MessageBox.Show(curSearchPOInfo.BALANCE.ToString());
-            form_Shipping_Instruction.RefreshGridView(sender, e);
+            // TODO
+            Form_Shipping_Instruction_New.RefreshGridView(View_PO_List.GetFocusedDataRow());
         }
 
         private void gridControl_Search_PO_Click(object sender, EventArgs e)
